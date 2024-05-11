@@ -1,0 +1,86 @@
+<div class="page-wrapper">
+    <div class="content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Especialidad </a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">Edición</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card-box">
+                    <h4 class="card-title">Editar Especialidad : {{ name }}</h4>
+                    <form action="#">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2">Nombre</label>
+                            <div class="col-md-10">
+                                <input type="text" name="name" [(ngModel)]="name" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-xl-6">
+                            <div class="form-group select-gender">
+                                <label class="gen-label">State<span class="login-danger">*</span></label>
+                                <div class="form-check-inline">
+                                    <label class="form-check-label">
+                                        <input type="radio" name="state" [value]="1" [(ngModel)]="state" class="form-check-input">Activo
+                                    </label>
+                                </div>
+                                <div class="form-check-inline">
+                                    <label class="form-check-label">
+                                        <input type="radio" name="state" [value]="2" [(ngModel)]="state" class="form-check-input">Inactivo
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12 text-end">
+                                <button class="btn btn-primary" (click)="save()">EDITAR</button>
+                            </div>
+                        </div>   
+                        <div class="form-group row" *ngIf="valid_form">
+                            <div class="col-md-8">
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>Error!</strong> ES NECESARIO LLENAR UN NOMBRE Y SELECCIONAR UN PERMISO.
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true"> </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row" *ngIf="valid_form_success">
+                            <div class="col-md-8">
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>Exito!</strong> LA ESPECIALIDAD SE EDITO CORRECTAMENTE.
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true"> </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row" *ngIf="text_validation">
+                            <div class="col-md-8">
+                                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <strong>!</strong> {{ text_validation }}.
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true"> </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

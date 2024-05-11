@@ -1,0 +1,69 @@
+<div class="page-wrapper">
+    <div class="content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Especialidad </a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">Registro</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card-box">
+                    <h4 class="card-title">Creación Especialidad</h4>
+                    <form action="#">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2">Nombre</label>
+                            <div class="col-md-10">
+                                <input type="text" name="name" [(ngModel)]="name" class="form-control">
+                            </div>
+                        </div>        
+                        <div class="form-group row">
+                            <div class="col-md-12 text-end">
+                                <button class="btn btn-primary" (click)="save()">GUARDAR</button>
+                            </div>
+                        </div>   
+                        <div class="form-group row" *ngIf="valid_form">
+                            <div class="col-md-8">
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>Error!</strong> ES NECESARIO LLENAR UN NOMBRE Y SELECCIONAR UN PERMISO.
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true"> </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row" *ngIf="valid_form_success">
+                            <div class="col-md-8">
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>Exito!</strong> LA ESPECIALIDAD SE CREO CORRECTAMENTE.
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true"> </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row" *ngIf="text_validation">
+                            <div class="col-md-8">
+                                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <strong>!</strong> {{ text_validation }}.
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true"> </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
