@@ -1,0 +1,255 @@
+<div class="page-wrapper">
+  <div class="content">
+
+      <!-- Page Header -->
+      <div class="page-header">
+          <div class="row">
+              <div class="col-sm-12">
+                  <ul class="breadcrumb">
+                      <li class="breadcrumb-item"><a href="#">Appointment </a></li>
+                      <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                      <li class="breadcrumb-item active">Add Appointment</li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+      <!-- /Page Header -->
+      <div class="row">
+          <div class="col-sm-12">
+
+              <div class="card">
+                  <div class="card-body">
+                      <form>
+                          <div class="row align-items-center">
+                              <div class="col-12">
+                                  <div class="form-heading">
+                                      <h4>Appointment Add</h4>
+                                  </div>
+                              </div>
+                              <div class="col-12 col-md-6 col-xl-3">
+                                  <div class="form-group local-forms">
+                                      <label >Date Of Appointment  <span class="login-danger">*</span></label>
+                                      <input class="form-control datetimepicker" [(ngModel)]="date_appointment" name="birth_date" type="text" matInput [matDatepicker]="picker"  >
+                                      <mat-datepicker #picker></mat-datepicker>
+                                      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                  </div>
+                              </div>
+                              <div class="col-12 col-md-6 col-xl-3">
+                                  <div class="form-group local-forms">
+                                      <label >Hora <span class="login-danger">*</span></label>
+                                      <mat-select [(ngModel)]="hour" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select  Hour">
+                                          <mat-option *ngFor="let data of hours" [value]="data.id">
+                                          {{data.name}}
+                                          </mat-option>
+                                      </mat-select>
+                                  </div>
+                              </div>
+                              <div class="col-12 col-md-6 col-xl-3">
+                                  <div class="form-group local-forms">
+                                      <label >Specialities <span class="login-danger">*</span></label>
+                                      <mat-select [(ngModel)]="specialitie_id" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select  Speciality">
+                                          <mat-option *ngFor="let data of specialities" [value]="data.id">
+                                          {{data.name}}
+                                          </mat-option>
+                                      </mat-select>
+                                  </div>
+                              </div>
+
+                              <div class="col-12 col-md-6 col-xl-3">
+                                  <div class="form-group local-forms">
+                                      <button class="btn btn-sm btn-primary" (click)="filtro()">Filtro</button>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="row align-items-center">
+                              <div class="col-8">
+                                  <div class="table-responsive">
+                                      <table class="table mb-0">
+                                          <thead>
+                                              <tr class="bg-info text-white">
+                                                  <th>DOCTOR</th>
+                                                  <th>DISPONIBILIDAD</th>
+                                                  <th>VER</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                              <ng-container *ngFor="let DOCTOR of DOCTORS">
+                                                  <tr>
+                                                      <td>{{ DOCTOR.doctor.full_name }}</td>
+                                                      <td>{{ countDisponibilidad(DOCTOR) }}</td>
+                                                      <td>
+                                                          <button class="btn btn-primary btn-sm" (click)="showSegment(DOCTOR)">+</button>
+                                                      </td>
+                                                  </tr>
+                                              </ng-container>
+
+
+
+                                          </tbody>
+                                      </table>
+                                  </div>
+                              </div>
+                              <div class="col-4" *ngIf="DOCTOR_SELECTED">
+                                  <div class="table-responsive">
+                                      <table class="table mb-0">
+                                          <thead>
+                                              <tr class="bg-info text-white">
+                                                  <th>HORA</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                              <tr>
+                                                  <td>
+                                                      <ng-container *ngFor="let SEGMENT of DOCTOR_SELECTED.segments">
+                                                          <div class="radio">
+                                                              <label>
+                                                                  <input type="radio" *ngIf="!SEGMENT.is_appointment" name="radio" (click)="selectSegment(SEGMENT)">
+                                                                   {{ SEGMENT.format_segment.format_hour_start }} a {{ SEGMENT.format_segment.format_hour_end }}
+                                                              </label>
+                                                          </div>
+
+                                                      </ng-container>
+
+
+                                                  </td>
+                                              </tr>
+                                          </tbody>
+                                      </table>
+                                  </div>
+                              </div>
+
+                              <div class="col-12">
+                                  <div class="form-group row my-4" *ngIf="text_success">
+                                      <div class="col-md-8">
+                                          <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                              <strong>Exito!</strong> {{ text_success }}.
+                                              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                                  <span aria-hidden="true"> </span>
+                                              </button>
+                                          </div>
+                                      </div>
+                                  </div>
+
+                                  <div class="form-group row my-4" *ngIf="text_validation">
+                                      <div class="col-md-8">
+                                          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                              <strong>!</strong> {{ text_validation }}.
+                                              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                                  <span aria-hidden="true"> </span>
+                                              </button>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+
+                          </div>
+
+                          <div class="row align-items-center py-4">
+                              <div class="col-12 py-4">
+                                  <h4>Datos del paciente: </h4>
+                                  <button class="btn btn-sm btn-dark" (click)="resetPatient()">O</button>
+                              </div>
+                              <div class="col-12 col-md-6 col-xl-4">
+                                  <div class="form-group local-forms">
+                                      <label >First Name <span class="login-danger">*</span></label>
+                                      <input class="form-control" [(ngModel)]="name" name="name" type="text"  >
+                                  </div>
+                              </div>
+
+                              <div class="col-12 col-md-6 col-xl-4">
+                                  <div class="form-group local-forms">
+                                      <label >Surname <span class="login-danger">*</span></label>
+                                      <input class="form-control" [(ngModel)]="surname" name="surname" type="text"  >
+                                  </div>
+                              </div>
+
+                              <div class="col-12 col-md-6 col-xl-4">
+                                  <div class="form-group local-forms">
+                                      <label >Mobile <span class="login-danger">*</span></label>
+                                      <input class="form-control" [(ngModel)]="mobile" name="mobile" type="text"  >
+                                  </div>
+                              </div>
+
+                              <div class="col-12 col-md-6 col-xl-4">
+                                  <div class="form-group local-forms">
+                                      <label >N° Documento <span class="login-danger">*</span></label>
+                                      <input class="form-control" (keyup.enter)="filterPatient()"  [(ngModel)]="n_document" name="n_document"  type="number"  >
+                                  </div>
+                              </div>
+
+                              <div class="col-12 col-sm-3">
+                                  <div class="form-group local-forms">
+                                      <label>Nombre del Acompañante  <span class="login-danger">*</span></label>
+                                      <input class="form-control" [(ngModel)]="name_companion" type="text" name="name_companion">
+                                  </div>
+                              </div>
+
+                              <div class="col-12 col-sm-3">
+                                  <div class="form-group local-forms">
+                                      <label>Apellido del Acompañante  <span class="login-danger">*</span></label>
+                                      <input type="text" class="form-control" [(ngModel)]="surname_companion" name="surname_companion" >
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="row align-items-center py-4">
+                              <div class="col-12 py-4">
+                                  <h4>Pago: </h4>
+                              </div>
+                              <div class="col-12 col-md-6 col-xl-4">
+                                  <div class="form-group local-forms">
+                                      <label >Monto de pago <span class="login-danger">*</span></label>
+                                      <input class="form-control" [(ngModel)]="amount" name="amount"  type="number"  >
+                                  </div>
+                              </div>
+
+                              <div class="col-12 col-md-6 col-xl-4">
+                                  <div class="form-group local-forms">
+                                      <label >Metodo de pago <span class="login-danger">*</span></label>
+                                      <mat-select [(ngModel)]="method_payment" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select  Metodo">
+                                          <mat-option value="EFECTIVO">
+                                              EFECTIVO
+                                          </mat-option>
+                                          <mat-option value="TRANSFERENCIA">
+                                              TRANSFERENCIA
+                                          </mat-option>
+                                          <mat-option value="YAPE">
+                                              YAPE
+                                          </mat-option>
+                                          <mat-option value="PLIN">
+                                              PLIN
+                                          </mat-option>
+                                      </mat-select>
+                                  </div>
+                              </div>
+
+                              <div class="col-12 col-md-6 col-xl-4">
+                                  <div class="form-group local-forms">
+                                      <label >Monto de adelanto <span class="login-danger">*</span></label>
+                                      <input class="form-control" [(ngModel)]="amount_add" name="amount_add"  type="number"  >
+                                  </div>
+                              </div>
+
+
+                          </div>
+
+
+                          <div class="row align-items-center">
+                              <div class="col-12">
+                                  <div class="doctor-submit text-end">
+                                      <button type="button" (click)="save()" class="btn btn-primary submit-form me-2">Guardar</button>
+                                  </div>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+
+
+
+
+      </div>
+  </div>
+</div>

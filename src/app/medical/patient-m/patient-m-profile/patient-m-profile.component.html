@@ -1,0 +1,311 @@
+<div class="page-wrapper">
+  <div class="content">
+
+      <!-- Page Header -->
+      <div class="page-header">
+          <div class="row">
+              <div class="col-sm-12">
+                  <ul class="breadcrumb">
+                      <li class="breadcrumb-item"><a href="#" onclick="return false;">Patients </a></li>
+                      <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                      <li class="breadcrumb-item active">Patient Profile</li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+      <!-- /Page Header -->
+      <div class="row">
+          <div class="col-sm-12" *ngIf="patient_selected">
+              <div class="card">
+                  <div class="card-body">
+                      <div class="row">
+                          <div class="col-md-12">
+                              <div class="about-info">
+                                  <h4>Patients Profile  <span><a href="javascript:;"><i class="feather icon-more-vertical"></i></a></span></h4>
+                              </div>
+                              <div class="doctor-profile-head">
+                                  <!-- <div class="profile-bg-img">
+                                      <img  src="assets/img/profile-bg.jpg"  alt="Profile">
+                                  </div> -->
+                                  <div class="row">
+                                      <div class="col-lg-4 col-md-4">
+                                          <div class="profile-user-box">
+                                              <div class="profile-user-img">
+                                                  <img  [src]="patient_selected.avatar"  alt="Profile">
+                                                  <div class="form-group doctor-up-files profile-edit-icon mb-0">
+                                                      <div class="uplod d-flex">
+                                                          <label class="file-upload profile-upbtn mb-0">
+                                                              <img  src="assets/img/icons/camera-icon.svg"  alt="Profile"><input type="file">
+                                                          </label>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                              <div class="names-profiles">
+                                                  <h4>{{ patient_selected.full_name }}</h4>
+                                                  <h5>Patient</h5>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-lg-4 col-md-4 d-flex align-items-center">
+                                          <div class="follow-group">
+                                              <div class="doctor-follows">
+                                                  <h5>Appointment</h5>
+                                                  <h4>{{ num_appointment }}</h4>
+                                              </div>
+                                              <div class="doctor-follows">
+                                                  <h5>Money</h5>
+                                                  <h4>{{ money_of_appointments }} PEN</h4>
+                                              </div>
+                                              <div class="doctor-follows">
+                                                  <h5>Appointment Pendings</h5>
+                                                  <h4>{{ num_appointment_pendings }}</h4>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-lg-4 col-md-4 d-flex align-items-center">
+                                          <div class="follow-btn-group">
+                                              <a [routerLink]="[ '/patient-m/list/edit/', patient_id ]" class="btn btn-info follow-btns">Edit</a>
+                                              <button type="submit" class="btn btn-info message-btns">Message</button>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-lg-4">
+                      <div class="doctor-personals-grp">
+                          <div class="card">
+                              <div class="card-body">
+                                  <div class="heading-detail ">
+                                      <h4 class="mb-3">About me</h4>
+                                      <p>Hello I am Smith Bruklin a Gynaecologist in Sanjivni Hospital Surat. I love to work with all my hospital staff and seniour doctors.</p>
+                                  </div>
+                                  <div class="about-me-list">
+                                      <ul class="list-space">
+                                          <li>
+                                              <h4>Gender</h4>
+                                              <span *ngIf="patient_selected.gender == 2">Femenino</span>
+                                              <span *ngIf="patient_selected.gender == 1">Masculino</span>
+                                          </li>
+                                          <li>
+                                              <h4>Education</h4>
+                                              <span>{{ patient_selected.education }}</span>
+                                          </li>
+                                          <li>
+                                              <h4>Birth Day</h4>
+                                              <span>{{ patient_selected.birth_date }}</span>
+                                          </li>
+                                      </ul>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="doctor-personals-grp">
+                          <div class="card">
+                              <div class="card-body">
+                                  <div class="about-me-list">
+                                      <ul class="list-space">
+
+
+
+                                          <li>
+                                              <h4>Email</h4>
+                                              <span>{{ patient_selected.email }}</span>
+                                          </li>
+                                          <li>
+                                              <h4>Mobile</h4>
+                                              <span>{{ patient_selected.mobile }}</span>
+                                          </li>
+                                          <li>
+                                              <h4>N° de documento</h4>
+                                              <span>{{ patient_selected.n_document }}</span>
+                                          </li>
+
+                                          <li>
+                                              <h4>Nombre y Apellido del acompañante: </h4>
+                                              <span *ngIf="patient_selected.person && patient_selected.person.name_companion">{{ patient_selected.person.name_companion+ ' '+ patient_selected.person.surname_companion }}</span>
+                                          </li>
+                                          <li>
+                                              <h4>Nombre y Apellido del responsable:</h4>
+                                              <span *ngIf="patient_selected.person && patient_selected.person.name_responsible" >{{ patient_selected.person.name_responsible+ ' '+ patient_selected.person.surname_responsible }}</span>
+                                          </li>
+
+                                      </ul>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="doctor-personals-grp">
+                          <div class="card">
+                              <div class="card-body">
+                                  <div class="about-me-list">
+                                      <ul class="list-space">
+                                          <li>
+                                              <h4>TA</h4>
+                                              <span>{{ patient_selected.ta }}</span>
+                                          </li>
+                                          <li>
+                                              <h4>TEMPERATURA</h4>
+                                              <span>{{ patient_selected.temperatura }}</span>
+                                          </li>
+                                          <li>
+                                              <h4>FC</h4>
+                                              <span>{{ patient_selected.fc }}</span>
+                                          </li>
+
+                                          <li>
+                                              <h4>FR: </h4>
+                                              <span>{{ patient_selected.fr }}</span>
+                                          </li>
+                                          <li>
+                                              <h4>PESO:</h4>
+                                              <span >{{ patient_selected.peso }}</span>
+                                          </li>
+
+                                      </ul>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-lg-8">
+                      <div class="doctor-personals-grp">
+                          <div class="card">
+                              <div class="card-body">
+                                  <div class="tab-content-set">
+                                      <ul class="nav">
+                                          <li>
+                                              <a href="#" onclick="return false;" [ngClass]="{'active': option_selected == 1}" (click)="optionSelected(1)"><span class="set-about-icon me-2"><img src="assets/img/icons/menu-icon-02.svg" alt=""></span>About me</a>
+                                          </li>
+                                          <li>
+                                              <a href="#" onclick="return false;" [ngClass]="{'active': option_selected == 2}" (click)="optionSelected(2)"><span class="set-about-icon me-2"><img src="assets/img/icons/menu-icon-16.svg" alt=""></span>List Appointments</a>
+                                          </li>
+                                      </ul>
+                                  </div>
+                                  <ng-container *ngIf="option_selected == 1">
+                                      <div class="personal-list-out">
+                                          <div class="row">
+                                              <div class="col-xl-3 col-md-6">
+                                                  <div class="detail-personal">
+                                                      <h2>Full Name</h2>
+                                                      <h3>{{ patient_selected.full_name }}</h3>
+                                                  </div>
+                                              </div>
+                                              <div class="col-xl-3 col-md-6">
+                                                  <div class="detail-personal">
+                                                      <h2>Mobile </h2>
+                                                      <h3>{{ patient_selected.mobile }}</h3>
+                                                  </div>
+                                              </div>
+                                              <div class="col-xl-3 col-md-6">
+                                                  <div class="detail-personal">
+                                                      <h2>Email</h2>
+                                                      <h3>{{ patient_selected.email }}</h3>
+                                                  </div>
+                                              </div>
+                                              <div class="col-xl-3 col-md-6">
+                                                  <div class="detail-personal">
+                                                      <h2>Location</h2>
+                                                      <h3>{{ patient_selected.address }}</h3>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="hello-park">
+                                          <p> <b>ANTECENDETE FAMILIAR: </b>{{ patient_selected.antecedent_family }} </p>
+                                          <p> <b>ANTECENDETE PERSONAL: </b>{{ patient_selected.antecedent_personal }} </p>
+                                          <p> <b>ANTECENDETE ALERGICO: </b>{{ patient_selected.antecedent_allergic }} </p>
+                                      </div>
+                                  </ng-container>
+                                  <ng-container *ngIf="option_selected == 2">
+                                      <div class="activity">
+                                          <div class="activity-box">
+                                              <ul class="activity-list">
+                                                  <ng-container *ngFor="let appointment of appointments">
+
+                                                      <li>
+                                                          <div class="activity-user">
+                                                              <a href="#" onclick="return false;" [attr.title]="appointment.doctor.full_name" data-bs-toggle="tooltip" class="avatar">
+                                                                  <img [attr.alt]="appointment.doctor.full_name" [src]="appointment.doctor.avatar" class="img-fluid rounded-circle">
+                                                              </a>
+                                                          </div>
+                                                          <div class="activity-content timeline-group-blk">
+                                                              <div class="timeline-group flex-shrink-0">
+                                                                  <h4>{{ appointment.date_appointment_format }}</h4>
+                                                                  <span class="time">{{ appointment.format_hour_start + ' - ' + appointment.format_hour_end}}</span>
+                                                              </div>
+                                                              <div class="comman-activitys flex-grow-1">
+                                                                  <h3>{{ appointment.doctor.full_name }} <span> MONTO : {{ appointment.amount }}  PEN.</span></h3>
+                                                                  <p *ngIf="appointment.appointment_attention">
+                                                                      {{ appointment.appointment_attention.description }}
+                                                                  </p>
+                                                                  <ng-container *ngIf="!appointment.appointment_attention">
+                                                                      <button class="custom-badge status-pink">PENDIENTE</button>
+                                                                  </ng-container>
+
+                                                              </div>
+                                                          </div>
+                                                      </li>
+
+                                                  </ng-container>
+
+
+                                              </ul>
+                                          </div>
+                                      </div>
+                                  </ng-container>
+                              </div>
+                          </div>
+                          <div class="card">
+                              <div class="card-header">
+                                  <h4 class="card-title ">Appointment Pendings</h4>
+                              </div>
+                              <div class="card-body p-0 table-dash">
+                                  <div class="table-responsive">
+                                      <!-- (matSortChange)="sortData($event)" -->
+                                      <table matSort  class="table mb-0 border-0 datatable custom-table patient-profile-table">
+                                          <thead>
+                                              <tr>
+                                                  <th mat-sort-header="date">Date</th>
+                                                  <th mat-sort-header="doctor">Doctor</th>
+                                                  <th mat-sort-header="status">Status</th>
+                                                  <th mat-sort-header="status_pay">Status Pay</th>
+                                                  <th mat-sort-header="charges">Charges ($)</th>
+                                                  <th></th>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                              <tr *ngFor="let data of appointment_pendings">
+                                                  <td >{{data.date_appointment_format}} </td>
+                                                  <td >{{data.doctor.full_name}}</td>
+                                                  <td>
+                                                      <button [ngClass]="{'status-pink' : data.status === 1, 'status-green' : data.status === 2}" class="custom-badge">{{data.status == 1 ? 'PENDIENTE' : 'ATENDIDO'}}</button>
+                                                  </td>
+                                                  <td>
+                                                      <button [ngClass]="{'status-green' : data.status_pay === 1, 'status-pink' : data.status_pay === 2}" class="custom-badge">{{data.status_pay == 1 ? 'PAGADO' : 'DEUDA'}}</button>
+                                                  </td>
+                                                  <td>{{data.amount }} PEN</td>
+                                                  <td class="text-end">
+                                                      <div class="dropdown dropdown-action">
+                                                          <a href="javascript:void(0);" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                                          <div class="dropdown-menu dropdown-menu-end">
+                                                              <a class="dropdown-item" [routerLink]="[ '/appointment-m/list/edit/', data.id ]"><i class="fa-solid fa-pen-to-square m-r-5"></i> Edit</a>
+                                                              <!-- <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#delete_appointment"><i class="fa fa-trash-alt m-r-5"></i> Delete</a> -->
+                                                          </div>
+                                                      </div>
+                                                  </td>
+                                          </tbody>
+                                      </table>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

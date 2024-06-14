@@ -15,6 +15,7 @@ export class HeaderComponent {
   public miniSidebar  = false;
   public addClass = false;
   public user:any;
+  public IMAGEN_PREVUZUALIZADA:any;
 
   constructor(
     public router: Router,
@@ -30,6 +31,7 @@ export class HeaderComponent {
     });
     let USER = localStorage.getItem('user')
     this.user = JSON.parse(USER ? USER : '');
+    this.IMAGEN_PREVUZUALIZADA=`http://127.0.0.1:8000/storage/`+this.user.avatar;//this.user.avatar;
     console.log(this.user)
   }
 

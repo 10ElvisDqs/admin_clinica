@@ -1,0 +1,470 @@
+<p>list-appointment-pay works!</p>
+<div class="page-wrapper">
+  <div class="content">
+
+      <!-- Page Header -->
+      <div class="page-header">
+          <div class="row">
+              <div class="col-sm-12">
+                  <ul class="breadcrumb">
+                      <li class="breadcrumb-item"><a href="#" onclick="return false;">Appointment Pays </a></li>
+                      <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                      <li class="breadcrumb-item active">Pays</li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+      <!-- /Page Header -->
+
+      <div class="row">
+          <div class="col-sm-12">
+
+              <div class="card card-table show-entire">
+                  <div class="card-body">
+
+                      <!-- Table Header -->
+                      <div class="page-table-header mb-2">
+                          <div class="row align-items-center">
+                              <div class="col">
+                                  <div class="doctor-table-blk">
+                                      <h3>Pays</h3>
+                                      <!-- <div class="doctor-search-blk">
+                                          <div class="top-nav-search table-search-blk">
+                                                  <input type="text" class="form-control" placeholder="Search here" [(ngModel)]="searchDataValue"
+                                                  (ngModelChange)="searchData(searchDataValue)">
+                                                  <a class="btn"><img src="assets/img/icons/search-normal.svg" alt=""></a>
+                                          </div>
+                                          <div class="add-group">
+
+                                              <a href="javascript:;" class="btn btn-primary doctor-refresh ms-2"><img src="assets/img/icons/re-fresh.svg" alt=""></a>
+                                          </div>
+                                      </div> -->
+                                  </div>
+                              </div>
+                              <div class="col-auto text-end float-end ms-auto download-grp">
+                                  <a href="javascript:;" class=" me-2"><img src="assets/img/icons/pdf-icon-01.svg" alt=""></a>
+                                  <a href="javascript:;" class=" me-2"><img src="assets/img/icons/pdf-icon-02.svg" alt=""></a>
+                                  <a href="javascript:;" class=" me-2"><img src="assets/img/icons/pdf-icon-03.svg" alt=""></a>
+                                  <a href="javascript:;" ><img src="assets/img/icons/pdf-icon-04.svg" alt=""></a>
+
+                              </div>
+                          </div>
+                      </div>
+                      <!-- /Table Header -->
+                      <div class="staff-search-table">
+                          <form>
+                              <div class="row">
+                                  <div class="col-12 col-md-6 col-xl-4">
+                                      <div class="form-group local-forms">
+                                          <label >Doctor Name </label>
+                                          <input class="form-control" [(ngModel)]="searchDataDoctor" name="searchDataDoctor" type="text"  >
+                                      </div>
+                                  </div>
+                                  <div class="col-12 col-md-6 col-xl-4">
+                                      <div class="form-group local-forms">
+                                          <label >Patient Name </label>
+                                          <input class="form-control" [(ngModel)]="searchDataValue" name="searchDataValue" type="text"  >
+                                      </div>
+                                  </div>
+                                  <div class="col-12 col-md-6 col-xl-4">
+                                      <div class="form-group local-forms">
+                                          <label >Specialities </label>
+                                          <mat-select [(ngModel)]="specialitie_id" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select Specialitie">
+                                            <mat-option *ngFor="let data of specialities" [value]="data.id">
+                                            {{data.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                      </div>
+                                  </div>
+                                  <!-- <div class="col-12 col-md-6 col-xl-4">
+                                      <div class="form-group local-forms">
+                                          <label >Leave Status </label>
+                                          <mat-select [(ngModel)]="selectedValue" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select Leave Status">
+                                            <mat-option *ngFor="let data of selectedList2" [value]="data.value">
+                                            {{data.value}}
+                                            </mat-option>
+                                        </mat-select>
+                                      </div>
+                                  </div> -->
+                                  <div class="col-12 col-md-6 col-xl-4">
+                                      <div class="form-group local-forms">
+                                          <label >From </label>
+                                          <!-- <input class="form-control datetimepicker" [(ngModel)]="date_start" name="date_start" type="text" matInput [matDatepicker]="picker1" >
+                                          <mat-datepicker #picker1></mat-datepicker>
+                                          <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle> -->
+                                           <input class="form-control datetimepicker" [(ngModel)]="date_start" name="date_start" type="date" >
+                                      </div>
+                                  </div>
+                                  <div class="col-12 col-md-6 col-xl-4">
+                                      <div class="form-group local-forms">
+                                          <label >To </label>
+                                          <!-- <input class="form-control datetimepicker" [(ngModel)]="date_end" name="date_end" type="text" matInput [matDatepicker]="picker2"  >
+                                          <mat-datepicker #picker2></mat-datepicker>
+                                          <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle> -->
+                                           <input class="form-control datetimepicker" [(ngModel)]="date_end" name="date_end" type="date" >
+                                      </div>
+                                  </div>
+                                  <div class="col-12 col-md-6 col-xl-4">
+                                      <div class="doctor-submit">
+                                          <button type="button" class="btn btn-primary submit-list-form me-2" (click)="searchData()">Search</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </form>
+                      </div>
+
+                      <div class="table-responsive">
+                          <table matSort (matSortChange)="sortData($event)" class="table border-0 custom-table comman-table datatable mb-0">
+                              <thead>
+                                  <tr>
+                                      <th mat-sort-header="name">Doctor</th>
+                                      <th mat-sort-header="email">Paciente</th>
+                                      <th mat-sort-header="mobile">Fecha</th>
+                                      <th mat-sort-header="birth_date">Hora</th>
+                                      <th mat-sort-header="n_document">Especialidad</th>
+                                      <th mat-sort-header="state">Status Pay</th>
+                                      <th mat-sort-header="created_at">Costo de la cita</th>
+                                      <!-- <th ></th> -->
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <ng-container *ngFor="let data of appointmentList">
+                                      <tr >
+
+                                          <td>{{data.doctor.full_name }}</td>
+                                          <td>{{data.patient.full_name }}</td>
+                                          <td>{{data.date_appointment_format}}</td>
+                                          <td>{{ data.segment_hour.format_segment.format_hour_start + ' - '+ data.segment_hour.format_segment.format_hour_end  }}</td>
+                                          <td>{{data.specialitie.name }}</td>
+                                          <td>
+                                              <button [ngClass]="{'status-green' : data.status_pay === 1, 'status-pink' : data.status_pay === 2}" class="custom-badge">{{data.status_pay == 1 ? 'PAGADO' : 'DEUDA'}}</button>
+                                          </td>
+                                          <td>{{data.amount }} Bs</td>
+
+
+                                      </tr>
+
+                                      <tr *ngFor="let payment of data.payments;let i = index" style="border-bottom: 1px solid #2e37a4;">
+                                          <td></td>
+                                          <td>
+                                              <button class="btn btn-success" data-bs-toggle="modal" *ngIf="i == 0"
+                                              [attr.data-bs-target]="'#add_payment-'+data.id" (click)="clearData()">Nuevo Pago</button>
+                                          </td>
+                                          <td></td>
+                                          <td>#{{ payment.id }}</td>
+                                          <td>{{ payment.method_payment }}</td>
+                                          <td>{{ payment.amount }} Bs</td>
+                                          <td>
+                                              <div class="dropdown dropdown-action" >
+                                                  <a href="javascript:void(0);" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                                  <div class="dropdown-menu dropdown-menu-end">
+                                                      <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                                                      [attr.data-bs-target]="'#edit_payment-'+data.id" (click)="selectEditPayment(payment)" ><i class="fa-solid fa-pen-to-square m-r-5"></i> Edit</a>
+                                                      <a class="dropdown-item" href="javascript:void(0);" (click)="selectEditPayment(payment)" data-bs-toggle="modal"
+                                                      [attr.data-bs-target]="'#delete_payment-'+payment.id"
+                                                      ><i class="fa fa-trash-alt m-r-5"></i> Delete</a>
+                                                  </div>
+                                              </div>
+                                              <div [attr.id]="'delete_payment-'+payment.id" class="modal fade delete-modal" role="dialog">
+                                                  <div class="modal-dialog modal-dialog-centered">
+                                                      <div class="modal-content">
+                                                          <div class="modal-body text-center">
+                                                              <img src="assets/img/sent.png" alt="" width="50" height="46">
+                                                              <h3 *ngIf="payment_selected">Are you sure want to delete this payment {{ payment_selected.id }}?</h3>
+                                                              <div class="m-t-20"> <a href="javascript:void(0);" class="btn btn-white me-1" data-bs-dismiss="modal">Close</a>
+                                                                  <button type="submit" class="btn btn-danger" (click)="deleteAppointmentPay(data)">Delete</button>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                                </div>
+                                          </td>
+                                      </tr>
+
+                                      <div [attr.id]="'add_payment-'+data.id" class="modal fade delete-modal" role="dialog">
+                                          <div class="modal-dialog modal-dialog-centered">
+                                              <div class="modal-content">
+                                                  <div class="modal-body text-center">
+
+                                                      <div class="row">
+                                                          <div class="col-12 col-md-12 col-xl-6">
+                                                              <div class="form-group local-forms">
+                                                                  <label >Metodo de pago <span class="login-danger">*</span></label>
+                                                                  <mat-select [(ngModel)]="method_payment" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select  Metodo">
+                                                                      <mat-option value="EFECTIVO">
+                                                                          EFECTIVO
+                                                                      </mat-option>
+                                                                      <mat-option value="TRANSFERENCIA">
+                                                                          TRANSFERENCIA
+                                                                      </mat-option>
+                                                                      <mat-option value="YAPE">
+                                                                          YAPE
+                                                                      </mat-option>
+                                                                      <mat-option value="PLIN">
+                                                                          PLIN
+                                                                      </mat-option>
+                                                                  </mat-select>
+                                                              </div>
+                                                          </div>
+
+                                                          <div class="col-12 col-md-12 col-xl-6">
+                                                              <div class="form-group local-forms">
+                                                                  <label >Monto de adelanto <span class="login-danger">*</span></label>
+                                                                  <input class="form-control" [(ngModel)]="amount_add" name="amount_add"  type="number"  >
+                                                              </div>
+                                                          </div>
+
+                                                          <div class="col-12">
+                                                              <div class="form-group row my-4" *ngIf="text_success">
+                                                                  <div class="col-12">
+                                                                      <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                                                          <strong>Exito!</strong> {{ text_success }}.
+                                                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                                                              <span aria-hidden="true"> </span>
+                                                                          </button>
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+
+                                                              <div class="form-group row my-4" *ngIf="text_validation">
+                                                                  <div class="col-12">
+                                                                      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                                          <strong>!</strong> {{ text_validation }}.
+                                                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                                                              <span aria-hidden="true"> </span>
+                                                                          </button>
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+
+                                                      </div>
+
+                                                      <div class="row">
+                                                          <div class="col-12 col-md-12 col-xl-6 text-center">
+                                                              <a href="javascript:void(0);" class="btn btn-white me-1" data-bs-dismiss="modal">Close</a>
+                                                          </div>
+                                                          <div class="col-12 col-md-12 col-xl-6 text-center">
+                                                              <button type="button" class="btn btn-primary text-white" style="width: auto !important;" (click)="addPayment(data)">Guardar</button>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div [attr.id]="'edit_payment-'+data.id" class="modal fade delete-modal" role="dialog">
+                                          <div class="modal-dialog modal-dialog-centered">
+                                              <div class="modal-content">
+                                                  <div class="modal-body text-center">
+
+                                                      <div class="row">
+                                                          <div class="col-12 col-md-12 col-xl-6">
+                                                              <div class="form-group local-forms">
+                                                                  <label >Metodo de pago <span class="login-danger">*</span></label>
+                                                                  <mat-select [(ngModel)]="method_payment" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select  Metodo">
+                                                                      <mat-option value="EFECTIVO">
+                                                                          EFECTIVO
+                                                                      </mat-option>
+                                                                      <mat-option value="TRANSFERENCIA">
+                                                                          TRANSFERENCIA
+                                                                      </mat-option>
+                                                                      <mat-option value="YAPE">
+                                                                          YAPE
+                                                                      </mat-option>
+                                                                      <mat-option value="PLIN">
+                                                                          PLIN
+                                                                      </mat-option>
+                                                                  </mat-select>
+                                                              </div>
+                                                          </div>
+
+                                                          <div class="col-12 col-md-12 col-xl-6">
+                                                              <div class="form-group local-forms">
+                                                                  <label >Monto de adelanto <span class="login-danger">*</span></label>
+                                                                  <input class="form-control" [(ngModel)]="amount_add" name="amount_add"  type="number"  >
+                                                              </div>
+                                                          </div>
+
+                                                          <div class="col-12">
+                                                              <div class="form-group row my-4" *ngIf="text_success">
+                                                                  <div class="col-12">
+                                                                      <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                                                          <strong>Exito!</strong> {{ text_success }}.
+                                                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                                                              <span aria-hidden="true"> </span>
+                                                                          </button>
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+
+                                                              <div class="form-group row my-4" *ngIf="text_validation">
+                                                                  <div class="col-12">
+                                                                      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                                          <strong>!</strong> {{ text_validation }}.
+                                                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                                                              <span aria-hidden="true"> </span>
+                                                                          </button>
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+
+                                                      </div>
+
+                                                      <div class="row">
+                                                          <div class="col-12 col-md-12 col-xl-6 text-center">
+                                                              <a href="javascript:void(0);" class="btn btn-white me-1" data-bs-dismiss="modal">Close</a>
+                                                          </div>
+                                                          <div class="col-12 col-md-12 col-xl-6 text-center">
+                                                              <button type="button" class="btn btn-primary text-white" style="width: auto !important;" (click)="editPayment(data)">Editar</button>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+
+                                  </ng-container>
+
+                              </tbody>
+                          </table>
+                          <div class="table_footer">
+                              <div class="col-sm-12 col-md-5">
+                                <div class="dataTables_info">
+                                  Showing {{ serialNumberArray[0] }} to
+                                  {{ serialNumberArray[serialNumberArray.length - 1] }} of
+                                  {{ totalData }} entries
+                                </div>
+                              </div>
+
+                              <div class="col-sm-12 col-md-7">
+                                <div class="pagination_section">
+                                  <ul class="pagination">
+                                    <li
+                                      class="page-item"
+                                      [ngClass]="{
+                                        disabled: currentPage === 1
+                                      }"
+                                    >
+                                      <a
+                                        (click)="getMoreData('previous')"
+                                        class="page-link"
+                                        href="javascript:void(0);"
+                                        tabindex="-1"
+                                        >Previous</a
+                                      >
+                                    </li>
+
+                                    <ng-container
+                                      *ngFor="let item of pageNumberArray; let i = index"
+                                    >
+                                      <li
+                                        class="page-item"
+                                        [class.active]="item === currentPage"
+                                        [ngClass]="
+                                          (pageNumberArray[currentPage - 2] > item &&
+                                            item !== 1 &&
+                                            pageNumberArray.length > 6) ||
+                                          (pageNumberArray[currentPage] < item &&
+                                            item !== 1 &&
+                                            pageNumberArray.length > 6 &&
+                                            pageNumberArray.length !== item)
+                                            ? 'hide-page-no'
+                                            : 'show-page-no'
+                                        "
+                                      >
+                                        <a
+                                          (click)="moveToPage(item)"
+                                          class="page-link"
+                                          href="javascript:void(0);"
+                                        >
+                                          {{ item }}
+                                        </a>
+                                      </li>
+                                      <li
+                                        class="page-item"
+                                        *ngIf="
+                                          i === 0 &&
+                                          pageNumberArray.length > 6 &&
+                                          currentPage > 2
+                                        "
+                                        [hidden]="currentPage === 1"
+                                        (click)="moveToPage(currentPage - 2)"
+                                      >
+                                        <a class="page-link" href="javascript:void(0);">
+                                          ...
+                                        </a>
+                                      </li>
+                                      <li
+                                        *ngIf="
+                                          i === pageNumberArray.length - 2 &&
+                                          pageNumberArray.length > 6
+                                        "
+                                        [hidden]="
+                                          currentPage >=
+                                            pageNumberArray[pageNumberArray.length - 2] ||
+                                          totalData <
+                                            serialNumberArray[serialNumberArray.length - 1]
+                                        "
+                                        class="page-item"
+                                        (click)="moveToPage(currentPage + 2)"
+                                      >
+                                        <a class="page-link" href="javascript:void(0);">
+                                          ...
+                                        </a>
+                                      </li>
+                                    </ng-container>
+
+                                    <li
+                                      class="page-item"
+                                      [ngClass]="{
+                                        disabled:
+                                          currentPage ===
+                                            pageNumberArray[pageNumberArray.length - 1] ||
+                                            appointmentList.length === 0
+                                      }"
+                                    >
+                                      <a
+                                        (click)="getMoreData('next')"
+                                        class="page-link"
+                                        href="javascript:void(0);"
+                                        >Next
+                                      </a>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- <td class="text-end">
+  <div class="dropdown dropdown-action" *ngIf="data.id != 1">
+      <a href="javascript:void(0);" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+      <div class="dropdown-menu dropdown-menu-end">
+          <a class="dropdown-item" [routerLink]="[ '/appointment-m/list/edit/', data.id ]" ><i class="fa-solid fa-pen-to-square m-r-5"></i> Edit</a>
+          <a class="dropdown-item" href="javascript:void(0);" (click)="selectUser(data)" data-bs-toggle="modal"
+          [attr.data-bs-target]="'#delete_staff-'+data.id"
+          ><i class="fa fa-trash-alt m-r-5"></i> Delete</a>
+      </div>
+  </div>
+</td>
+
+<div [attr.id]="'delete_staff-'+data.id" class="modal fade delete-modal" role="dialog">
+<div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-body text-center">
+            <img src="assets/img/sent.png" alt="" width="50" height="46">
+            <h3 *ngIf="appointment_selected">Are you sure want to delete this appointment {{ appointment_selected.id }}?</h3>
+            <div class="m-t-20"> <a href="javascript:void(0);" class="btn btn-white me-1" data-bs-dismiss="modal">Close</a>
+                <button type="submit" class="btn btn-danger" (click)="deleteAppointment()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div> -->

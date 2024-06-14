@@ -93,7 +93,29 @@
                                   <tr *ngFor="let data of rolesList">
 
                                       <td>{{ data.name}}</td>
-                                      <td>{{ data.permission_pluck.length > 0 ? data.permission_pluck:'TODOS LOS PERMISOS'}}</td>
+
+                                      <td>
+
+                                            <ng-container *ngIf="data.permission_pluck.length > 0">
+                                                <!-- Usamos la entidad HTML para el salto de línea -->
+                                                <!-- <span class="badge rounded-pill text-bg-primary mr-2">
+                                                  {{ data.permission_pluck.join('&#10;') }}
+                                                </span> -->
+                                                <span
+                                                  *ngFor="let permission of data.permission_pluck"
+                                                  class="badge rounded-pill text-bg-info m-1"
+                                                  >
+                                                  {{ permission }}
+                                                </span>
+                                            </ng-container>
+                                            <ng-container *ngIf="data.permission_pluck.length === 0">
+                                                <span class="badge rounded-pill text-bg-success">
+                                                  TODOS LOS PERMISOS
+                                                </span>
+                                            </ng-container>
+
+                                    </td>
+                                      <!-- <td> <span class="badge text-bg-info"> {{ data.permission_pluck.length > 0 ?  data.permission_pluck :'TODOS LOS PERMISOS'}}</span> </td> -->
                                       <td>{{ data.created_at}}</td>
 
 

@@ -1,0 +1,268 @@
+<div class="page-wrapper">
+  <div class="content">
+
+      <!-- Page Header -->
+      <div class="page-header">
+          <div class="row">
+              <div class="col-sm-12">
+                  <ul class="breadcrumb">
+                      <li class="breadcrumb-item"><a href="#">Doctors </a></li>
+                      <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                      <li class="breadcrumb-item active">Edit Doctor: # {{ doctor_id }}</li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+      <!-- /Page Header -->
+      <div class="row">
+          <div class="col-sm-12">
+
+              <div class="card">
+                  <div class="card-body">
+                      <form>
+                          <div class="row">
+                              <div class="col-12">
+                                  <div class="form-heading">
+                                      <h4>Doctor Edit</h4>
+                                  </div>
+                              </div>
+                              <div class="col-12 col-md-6 col-xl-4">
+                                  <div class="form-group local-forms">
+                                      <label >First Name <span class="login-danger">*</span></label>
+                                      <input class="form-control" [(ngModel)]="name" name="name" type="text"  >
+                                  </div>
+                              </div>
+                              <div class="col-12 col-md-6 col-xl-4">
+                                  <div class="form-group local-forms">
+                                      <label >Surname <span class="login-danger">*</span></label>
+                                      <input class="form-control" [(ngModel)]="surname" name="surname" type="text"  >
+                                  </div>
+                              </div>
+
+                              <div class="col-12 col-md-6 col-xl-4">
+                                  <div class="form-group local-forms">
+                                      <label >Mobile <span class="login-danger">*</span></label>
+                                      <input class="form-control" [(ngModel)]="mobile" name="mobile" type="text"  >
+                                  </div>
+                              </div>
+                              <div class="col-12 col-md-6 col-xl-6">
+                                  <div class="form-group local-forms">
+                                      <label >Email <span class="login-danger">*</span></label>
+                                      <input class="form-control" [(ngModel)]="email" name="email" type="email"  >
+                                  </div>
+                              </div>
+                              <div class="col-12 col-md-6 col-xl-6">
+                                  <div class="form-group local-forms">
+                                      <label >Password <span class="login-danger">*</span></label>
+                                      <input class="form-control" [(ngModel)]="password" name="password" type="password"  >
+                                  </div>
+                              </div>
+                              <div class="col-12 col-md-6 col-xl-6">
+                                  <div class="form-group local-forms">
+                                      <label >Confirm Password <span class="login-danger">*</span></label>
+                                      <input class="form-control"  [(ngModel)]="password_confirmation" name="password_confirmation" type="password"  >
+                                  </div>
+                              </div>
+                              <div class="col-12 col-md-6 col-xl-6">
+                                  <div class="form-group local-forms">
+                                      <label >Date Of Birth  <span class="login-danger">*</span></label>
+                                      <input class="form-control datetimepicker" [(ngModel)]="birth_date" name="birth_data"  type="text" matInput [matDatepicker]="picker"  >
+                                      <mat-datepicker #picker></mat-datepicker>
+                                      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                  </div>
+                              </div>
+                              <div class="col-12 col-md-6 col-xl-6">
+                                  <div class="form-group select-gender">
+                                      <label class="gen-label">Gender<span class="login-danger">*</span></label>
+                                      <div class="form-check-inline">
+                                          <label class="form-check-label">
+                                              <input type="radio" name="gender" [value]="1" [(ngModel)]="gender" class="form-check-input">Male
+                                          </label>
+                                      </div>
+                                      <div class="form-check-inline">
+                                          <label class="form-check-label">
+                                              <input type="radio" name="gender" [value]="2" [(ngModel)]="gender" class="form-check-input">Female
+                                          </label>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-12 col-md-6 col-xl-4">
+                                  <div class="form-group local-forms">
+                                      <label >Education <span class="login-danger">*</span></label>
+                                      <input class="form-control" [(ngModel)]="education" name="education" type="text"  >
+                                  </div>
+                              </div>
+                              <div class="col-12 col-md-6 col-xl-4">
+                                  <div class="form-group local-forms">
+                                      <label >Designation <span class="login-danger">*</span></label>
+                                      <input class="form-control" [(ngModel)]="designation" name="designation" type="text"  >
+                                  </div>
+                              </div>
+                              <div class="col-12 col-md-6 col-xl-4">
+                                  <div class="form-group local-forms">
+                                      <label >Roles <span class="login-danger">*</span></label>
+                                       <mat-select [(ngModel)]="selectedValue" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select  Role">
+                                          <mat-option *ngFor="let data of roles" [value]="data.id">
+                                          {{data.name}}
+                                          </mat-option>
+                                      </mat-select>
+                                  </div>
+                              </div>
+
+                              <div class="col-12 col-md-6 col-xl-4">
+                                  <div class="form-group local-forms">
+                                      <label >Specialities <span class="login-danger">*</span></label>
+                                       <mat-select [(ngModel)]="specialitie_id" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select  Speciality">
+                                          <mat-option *ngFor="let data of specialities" [value]="data.id">
+                                          {{data.name}}
+                                          </mat-option>
+                                      </mat-select>
+                                  </div>
+                              </div>
+                              <div class="col-12 col-sm-12">
+                                  <div class="form-group local-forms">
+                                      <label>Address  <span class="login-danger">*</span></label>
+                                      <textarea class="form-control" [(ngModel)]="address" name="address" rows="3" cols="30"></textarea>
+                                  </div>
+                              </div>
+
+                              <div class="col-12 col-md-6 col-xl-6">
+                                  <div class="form-group local-top-form">
+                                      <label class="local-top">Avatar <span class="login-danger">*</span></label>
+                                      <div class="settings-btn upload-files-avator">
+                                          <input type="file" accept="image/*" name="image" id="file" (change)="loadFile($event)" class="hide-input">
+                                          <label for="file" class="upload">Choose File</label>
+                                      </div>
+                                  </div>
+                                  <div class=""  *ngIf="IMAGEN_PREVUZUALIZADA">
+                                    <img [src]="IMAGEN_PREVUZUALIZADA" width="250" alt="" srcset="">
+                                  </div>
+                              </div>
+                              <!-- <div class="col-12 col-md-6 col-xl-6">
+                                  <div class="form-group select-gender">
+                                      <label class="gen-label">Status <span class="login-danger">*</span></label>
+                                      <div class="form-check-inline">
+                                          <label class="form-check-label">
+                                              <input type="radio" name="gender" class="form-check-input">Active
+                                          </label>
+                                      </div>
+                                      <div class="form-check-inline">
+                                          <label class="form-check-label">
+                                              <input type="radio" name="gender" class="form-check-input">In Active
+                                          </label>
+                                      </div>
+                                  </div>
+                              </div> -->
+                              <div class="col-12">
+                                <div class="form-group row my-4" *ngIf="text_success">
+                                  <div class="col-md-12">
+
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert" >
+                                      <strong>Exito!</strong> {{ text_success }}
+                                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                          <span aria-hidden="true"> </span>
+                                      </button>
+                                    </div>
+
+                                  </div>
+                                </div>
+
+                                <div class="form-group row my-4" *ngIf="text_validation">
+                                  <div class="col-md-12">
+
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                      <strong>!</strong> {{ text_validation }}
+                                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                          <span aria-hidden="true"> </span>
+                                      </button>
+                                    </div>
+
+                                  </div>
+                                </div>
+
+                                <div class="col-12">
+                                  <div class="card-box">
+                                    <div class="card-block">
+                                        <h4 class="card-title">Disponibilidad de Horario</h4>
+                                        <div class="table-responsive">
+                                            <table class="table mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>DIAS/HORAS</th>
+                                                        <ng-container *ngFor="let day of days_week">
+                                                          <th [class]="day.class">{{ day.day }}</th>
+
+                                                        </ng-container>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    <ng-container *ngFor="let hours_day of hours_days">
+                                                      <tr>
+                                                          <td>
+                                                            <div class="checkbok">
+                                                              <label>
+                                                                <input
+                                                                  type="checkbox"
+                                                                  name="checkbok"
+                                                                  [checked]=""
+                                                                  (change)="addHourAllDay($event,hours_day)"
+                                                                >
+                                                                  {{ hours_day.format_hour }}
+                                                              </label>
+                                                            </div>
+                                                          </td>
+                                                          <ng-container *ngFor="let day of days_week">
+                                                            <td>
+
+                                                              <div class="checkbok">
+                                                                <label>
+                                                                  <input type="checkbox" name="checkbok" [checked]="isCheckedHourAll(hours_day,day)"  (click)="addHourAll(hours_day,day)" > {{ hours_day.format_hour }} : TODOS
+                                                                </label>
+                                                              </div>
+
+
+                                                              <br>
+                                                              <ng-container *ngFor="let item of hours_day.items">
+                                                                <div class="checkbok">
+                                                                  <label>
+                                                                    <input type="checkbox" name="checkbok" [checked]="isCheckedHour(hours_day,day,item)" (click)="addHourItem(hours_day,day,item)" > {{ item.format_hour_start }} - {{ item.format_hour_end }}
+                                                                  </label>
+                                                                </div>
+
+                                                              </ng-container>
+
+
+
+                                                            </td>
+                                                          </ng-container>
+
+                                                      </tr>
+
+                                                    </ng-container>
+
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                </div>
+
+                              </div>
+                              <div class="col-12">
+                                  <div class="doctor-submit text-end">
+                                      <button type="button" (click)="save()" class="btn btn-primary submit-form me-2">Guardar</button>
+
+                                  </div>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

@@ -35,6 +35,7 @@ export class SidebarComponent {
     if (this.user && this.user.roles.includes("Super-Admin")) {
 
       console.log('ingreso al super admin');
+
       this.sidebarData = this.data.sideBar;
       console.log(this.sidebarData);
     }else{

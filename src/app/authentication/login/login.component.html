@@ -43,12 +43,12 @@
                       <div
                       *ngIf="f['email'].errors && f['email'].errors['required']"
                       >
-                        Email is required.
+                        El Email es requerido.
                       </div>
                       <div
                         *ngIf="f['email'].errors && f['email'].errors['email']"
                       >
-                        Please, enter valid email address.
+                      Por favor ingrese una dirección de correo electrónico válida.
                       </div>
                     </div>
                   </div>
@@ -73,7 +73,7 @@
                           f['password'].errors['required']
                         "
                       >
-                        Password is required.
+                        El Password es requerido.
                       </div>
                     </div>
                     <span (click)="togglePassword()" [ngClass] = "passwordClass ? 'feather icon-eye' : 'feather icon-eye-off'"
@@ -93,7 +93,7 @@
                     <a [routerLink]="routes.forgotPassword">Forgot Password?</a>
                   </div> -->
                   <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="this.ERROR">
-                    <strong>Error!</strong> A <a href="javascript:void(0);" class="alert-link">problem</a> EL USUARIO O CONTRASENIA SON INCORRECTOS, NO EXISTE.
+                    <strong>Error!</strong> Un <a href="javascript:void(0);" class="alert-link">problema</a> EL USUARIO O CONTRASENIA SON INCORRECTOS.
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true"> </span>
                     </button>

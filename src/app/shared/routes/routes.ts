@@ -66,10 +66,10 @@ export class routes {
     return this.baseUrl + '/activities';
   }
   public static get addAppointment(): string {
-    return this.baseUrl + '/appointments/add-appointment';
+    return this.baseUrl + '/appointment-m/register';
   }
-  public static get appointmentList(): string {
-    return this.baseUrl + '/appointments/appointment-list';
+  public static get appointmentList(): string {///////////
+    return this.baseUrl + '/appointment-m/list';
   }
   public static get editAppointment(): string {
     return this.baseUrl + '/appointments/edit-appointment';
@@ -99,7 +99,7 @@ export class routes {
     return this.baseUrl + '/blogs/edit-blog';
   }
   public static get calendar(): string {
-    return this.baseUrl + '/calendar';
+    return this.baseUrl + '/appointment-calendar/show';
   }
   public static get incomingCall(): string {
     return this.baseUrl + '/calls/incoming-call';
@@ -143,7 +143,7 @@ export class routes {
   }
 /////////////
   public static get addDoctor(): string {
-    return this.baseUrl + '/doctor/add-doctor';
+    return this.baseUrl + '/doctors/register';
   }
   public static get doctorProfile(): string {
     return this.baseUrl + '/doctor/doctor-profile';
@@ -152,7 +152,7 @@ export class routes {
     return this.baseUrl + '/doctor/doctor-setting';
   }
   public static get doctorsList(): string {
-    return this.baseUrl + '/doctor/doctors-list';
+    return this.baseUrl + '/doctors/list';
   }
   public static get editDoctor(): string {
     return this.baseUrl + '/doctor/edit-doctor';
@@ -242,7 +242,7 @@ export class routes {
     return this.baseUrl + '/invoice/view-invoice';
   }
   public static get addPatient(): string {
-    return this.baseUrl + '/patient/add-patient';
+    return this.baseUrl + '/patient-m/register';
   }
   public static get editPatient(): string {
     return this.baseUrl + '/patient/edit-patient';
@@ -254,7 +254,7 @@ export class routes {
     return this.baseUrl + '/patient/patient-setting';
   }
   public static get patientsList(): string {
-    return this.baseUrl + '/patient/patients-list';
+    return this.baseUrl + '/patient-m/list';
   }
   public static get addSalary(): string {
     return this.baseUrl + '/payroll/add-salary';
@@ -262,8 +262,8 @@ export class routes {
   public static get editSalary(): string {
     return this.baseUrl + '/payroll/edit-salary';
   }
-  public static get salary(): string {
-    return this.baseUrl + '/payroll/salary';
+  public static get salary(): string {//////////////////////////////////////////
+    return this.baseUrl + '/appointment-pay/list';
   }
   public static get salaryView(): string {
     return this.baseUrl + '/payroll/salary-view';
