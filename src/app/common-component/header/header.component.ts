@@ -12,16 +12,16 @@ import { SideBarService } from 'src/app/shared/side-bar/side-bar.service';
 export class HeaderComponent {
   public routes = routes;
   public openBox = false;
-  public miniSidebar  = false;
+  public miniSidebar = false;
   public addClass = false;
-  public user:any;
-  public IMAGEN_PREVUZUALIZADA:any;
+  public user: any;
+  public IMAGEN_PREVUZUALIZADA: any;
 
   constructor(
     public router: Router,
     private sideBar: SideBarService,
-    private auth:AuthService,
-    ) {
+    private auth: AuthService
+  ) {
     this.sideBar.toggleSideBar.subscribe((res: string) => {
       if (res == 'true') {
         this.miniSidebar = true;
@@ -29,15 +29,16 @@ export class HeaderComponent {
         this.miniSidebar = false;
       }
     });
-    let USER = localStorage.getItem('user')
+    let USER = localStorage.getItem('user');
     this.user = JSON.parse(USER ? USER : '');
-    this.IMAGEN_PREVUZUALIZADA=`http://127.0.0.1:8000/storage/`+this.user.avatar;//this.user.avatar;
-    console.log(this.user)
+    this.IMAGEN_PREVUZUALIZADA =
+      `http://127.0.0.1:8080/storage/` + this.user.avatar; //this.user.avatar;
+    console.log(this.user);
   }
 
-  getRole(){
-    let RoleName = "";
-    this.user.roles.forEach((rol:any) => {
+  getRole() {
+    let RoleName = '';
+    this.user.roles.forEach((rol: any) => {
       RoleName = rol;
     });
     return RoleName;
@@ -59,25 +60,22 @@ export class HeaderComponent {
   public toggleMobileSideBar(): void {
     this.sideBar.switchMobileSideBarPosition();
 
-      this.addClass = !this.addClass;
-      /* eslint no-var: off */
-      var root = document.getElementsByTagName( 'html' )[0];
-      /* eslint no-var: off */
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      var sidebar:any = document.getElementById('sidebar')
+    this.addClass = !this.addClass;
+    /* eslint no-var: off */
+    var root = document.getElementsByTagName('html')[0];
+    /* eslint no-var: off */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    var sidebar: any = document.getElementById('sidebar');
 
-      if (this.addClass) {
-        root.classList.add('menu-opened');
-        sidebar.classList.add('opened');
-      }
-      else {
-        root.classList.remove('menu-opened');
-        sidebar.classList.remove('opened');
-      }
+    if (this.addClass) {
+      root.classList.add('menu-opened');
+      sidebar.classList.add('opened');
+    } else {
+      root.classList.remove('menu-opened');
+      sidebar.classList.remove('opened');
+    }
   }
- public logout(){
+  public logout() {
     this.auth.logout();
-
- }
-
+  }
 }
