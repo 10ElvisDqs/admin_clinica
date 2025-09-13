@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { DoctorService } from '../service/doctor.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-doctor',
@@ -7,6 +8,7 @@ import { DoctorService } from '../service/doctor.service';
   styleUrls: ['./add-doctor.component.scss']
 })
 export class AddDoctorComponent {
+  myForm: FormGroup;
   public selectedValue !: string  ;
   public name:string = '';
   public surname:string = '';
@@ -51,7 +53,11 @@ export class AddDoctorComponent {
     {
       day:'Viernes',
       class:'table-info'
-    }
+    },
+    // {
+    //   day:'Sabado',
+    //   class:'table-info'
+    // }
   ];
   public hours_selecteds:any = [];
   public hours_days:any = [];
@@ -59,8 +65,25 @@ export class AddDoctorComponent {
 
   constructor(
     public doctorService:DoctorService,
+    private fb: FormBuilder
 
   ){
+
+    this.myForm = this.fb.group({
+      name: ['', [Validators.required]],
+      surname: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      mobile: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+      birth_date: ['', [Validators.required]],
+      gender: ['', [Validators.required]],
+      education: ['', [Validators.required]],
+      designation: ['', [Validators.required]],
+      address: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      role_id: ['', [Validators.required]],
+      specialitie_id: ['', [Validators.required]],
+      imagen: [null, [Validators.required]]
+    });
   }
 
   ngOnInit(): void {
@@ -73,13 +96,36 @@ export class AddDoctorComponent {
         this.hours_days = resp.hours_days;
      })
   }
+  onFileChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      this.myForm.patchValue({
+        imagen: file
+      });
+    }
+  }
+
+  onSubmit() {
+    if (this.myForm.valid) {
+      const formData = new FormData();
+      Object.keys(this.myForm.controls).forEach(key => {
+        const value = this.myForm.get(key)?.value;
+        formData.append(key, value ?? '');
+      });
+      // Aquí puedes manejar el FormData, por ejemplo, enviándolo a un servidor.
+      console.log('Form Data: ', formData);
+    } else {
+      console.log('Form is not valid');
+    }
+  }
 
 
   save(){
 
     this.text_validation='';
-    if (!this.name || !this.email || !this.surname || !this.FILE_AVATAR || !this.password) {
-      this.text_validation='LOS CAMPOS SON NECESARIOS (name,surname,email,avatar)';
+    if (!this.name || !this.email || !this.surname || !this.FILE_AVATAR ||  !this.password || !this.password_confirmation || !this.selectedValue ||!this.specialitie_id) {
+      this.text_validation='LOS CAMPOS SON NECESARIOS (name, surname, email, password, confirm password, role, specialitie, avatar)';
       return;
     }
 
@@ -105,7 +151,7 @@ export class AddDoctorComponent {
     formData.append('designation',this.designation);
     formData.append('address',this.address);
     formData.append('password',this.password);
-    formData.append('role_id',this.selectedValue);
+    formData.append('role_id',this.selectedValue);//doctorTest1
     formData.append('specialitie_id',this.specialitie_id);
     formData.append('imagen',this.FILE_AVATAR);
 

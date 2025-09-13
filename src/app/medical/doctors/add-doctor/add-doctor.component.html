@@ -1,6 +1,7 @@
 <div class="page-wrapper">
   <div class="content">
 
+
       <!-- Page Header -->
       <div class="page-header">
           <div class="row">
@@ -13,10 +14,13 @@
               </div>
           </div>
       </div>
+
       <!-- /Page Header -->
       <div class="row">
           <div class="col-sm-12">
+            <!--  -->
 
+            <!--  -->
               <div class="card">
                   <div class="card-body">
                       <form>
@@ -154,31 +158,7 @@
                                   </div>
                               </div> -->
                               <div class="col-12">
-                                <div class="form-group row my-4" *ngIf="text_success">
-                                  <div class="col-md-12">
 
-                                    <div class="alert alert-success alert-dismissible fade show" role="alert" >
-                                      <strong>Exito!</strong> {{ text_success }}
-                                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                                          <span aria-hidden="true"> </span>
-                                      </button>
-                                    </div>
-
-                                  </div>
-                                </div>
-
-                                <div class="form-group row my-4" *ngIf="text_validation">
-                                  <div class="col-md-12">
-
-                                    <div class="alert alert-warning alert-dismissible fade show" role="alert" >
-                                      <strong>!</strong> {{ text_validation }}
-                                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                                          <span aria-hidden="true"> </span>
-                                      </button>
-                                    </div>
-
-                                  </div>
-                                </div>
 
                                 <div class="col-12">
                                   <div class="card-box">
@@ -238,20 +218,47 @@
                                                             </td>
                                                           </ng-container>
 
-                                                      </tr>
+                                                        </tr>
 
-                                                    </ng-container>
+                                                      </ng-container>
 
 
-                                                </tbody>
+                                                    </tbody>
                                             </table>
+                                          </div>
                                         </div>
+                                      </div>
+
                                     </div>
-                                </div>
 
-                                </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="form-group row my-4" *ngIf="text_success">
+                                      <div class="col-md-12">
 
-                              </div>
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert" >
+                                          <strong>Exito!</strong> {{ text_success }}
+                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                              <span aria-hidden="true"> </span>
+                                          </button>
+                                        </div>
+
+                                      </div>
+                                    </div>
+
+                                    <div class="form-group row my-4" *ngIf="text_validation">
+                                      <div class="col-md-12">
+
+                                        <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                          <strong>!</strong> {{ text_validation }}
+                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                              <span aria-hidden="true"> </span>
+                                          </button>
+                                        </div>
+
+                                      </div>
+                                    </div>
+                                  </div>
                               <div class="col-12">
                                   <div class="doctor-submit text-end">
                                       <button type="button" (click)="save()" class="btn btn-primary submit-form me-2">Guardar</button>

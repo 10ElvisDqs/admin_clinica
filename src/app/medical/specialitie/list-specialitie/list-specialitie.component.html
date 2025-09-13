@@ -1,6 +1,6 @@
 <div class="page-wrapper">
     <div class="content">
-    
+
         <!-- Page Header -->
         <div class="page-header">
             <div class="row">
@@ -14,13 +14,13 @@
             </div>
         </div>
         <!-- /Page Header -->
-        
+
         <div class="row">
             <div class="col-sm-12">
-            
+
                 <div class="card card-table show-entire">
                     <div class="card-body">
-                    
+
                         <!-- Table Header -->
                         <div class="page-table-header mb-2">
                             <div class="row align-items-center">
@@ -41,16 +41,13 @@
                                     </div>
                                 </div>
                                 <div class="col-auto text-end float-end ms-auto download-grp">
-                                    <a href="javascript:;" class=" me-2"><img src="assets/img/icons/pdf-icon-01.svg" alt=""></a>
-                                    <a href="javascript:;" class=" me-2"><img src="assets/img/icons/pdf-icon-02.svg" alt=""></a>
-                                    <a href="javascript:;" class=" me-2"><img src="assets/img/icons/pdf-icon-03.svg" alt=""></a>
-                                    <a href="javascript:;" ><img src="assets/img/icons/pdf-icon-04.svg" alt=""></a>
-                                    
+                                  <a href="javascript:;" (click)="generarPDF()" class="me-2"><img src="assets/img/icons/pdf-icon-01.svg" alt=""></a>
+
                                 </div>
                             </div>
                         </div>
                         <!-- /Table Header -->
-                        
+
                         <div class="table-responsive">
                             <table matSort (matSortChange)="sortData($event)" class="table border-0 custom-table comman-table datatable mb-0">
                                 <thead>
@@ -63,7 +60,7 @@
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let data of specialitiesList">
-                                       
+
                                         <td>{{data.name}}</td>
                                         <td>
                                           <button [ngClass]="{'status-green' : data.state === 1, 'status-pink' : data.state === 2}" class="custom-badge">
@@ -76,8 +73,8 @@
                                                 <a href="javascript:void(0);" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                   <!--  -->
-                                                    <a class="dropdown-item" [routerLink]="[ '/specialities/list/edit/', data.id ]" ><i class="fa-solid fa-pen-to-square m-r-5"></i> Edit</a>
-                                                    <a class="dropdown-item" href="javascript:void(0);" (click)="selectSpecialitie(data)" data-bs-toggle="modal" 
+                                                    <a class="dropdown-item" *ngIf="isPermision('edit_specialty')"   [routerLink]="[ '/specialities/list/edit/', data.id ]" ><i class="fa-solid fa-pen-to-square m-r-5"></i> Edit</a>
+                                                    <a class="dropdown-item" *ngIf="isPermision('delete_specialty')" href="javascript:void(0);" (click)="selectSpecialitie(data)" data-bs-toggle="modal"
                                                     [attr.data-bs-target]="'#delete_patient-'+data.id"
                                                     ><i class="fa fa-trash-alt m-r-5"></i> Delete</a>
                                                 </div>
@@ -109,7 +106,7 @@
                                     {{ totalData }} entries
                                   </div>
                                 </div>
-                
+
                                 <div class="col-sm-12 col-md-7">
                                   <div class="pagination_section">
                                     <ul class="pagination">
@@ -127,7 +124,7 @@
                                           >Previous</a
                                         >
                                       </li>
-                
+
                                       <ng-container
                                         *ngFor="let item of pageNumberArray; let i = index"
                                       >
@@ -187,7 +184,7 @@
                                           </a>
                                         </li>
                                       </ng-container>
-                
+
                                       <li
                                         class="page-item"
                                         [ngClass]="{
@@ -210,8 +207,8 @@
                               </div>
                         </div>
                     </div>
-                </div>							
-            </div>					
+                </div>
+            </div>
         </div>
     </div>
 </div>

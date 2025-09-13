@@ -1,7 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { URL_SERVICIOS } from 'src/app/config/config';
 import { AuthService } from 'src/app/shared/auth/auth.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,20 +14,23 @@ export class AppointmentService {
     public authService: AuthService,
   ) { }
 
-  listAppointments(page:number=1,search:string = '',specialitie_id:string = '',date:any = null){
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authService.token});
+  listAppointments(page=1, search = '', specialitie_id = '', date_start: any = null, date_end: any = null) {
+    const headers = new HttpHeaders({'Authorization': 'Bearer ' + this.authService.token});
     let LINK = "";
-    if(search){
-      LINK+="&search="+search;
+    if (search) {
+      LINK += "&search=" + search;
     }
-    if(specialitie_id){
-      LINK+="&specialitie_id="+specialitie_id;
+    if (specialitie_id) {
+      LINK += "&specialitie_id=" + specialitie_id;
     }
-    if(date){
-      LINK+="&date="+date;
+    if (date_start) {
+      LINK += "&date_start=" + date_start;
     }
-    let URL = URL_SERVICIOS+"/appointmet?page="+page+LINK;
-    return this.http.get(URL,{headers: headers});
+    if (date_end) {
+      LINK += "&date_end=" + date_end;
+    }
+    const URL = URL_SERVICIOS + "/appointmet?page=" + page + LINK;
+    return this.http.get(URL, {headers: headers});
   }
 
   listConfig(){
@@ -82,5 +86,45 @@ export class AppointmentService {
     let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authService.token});
     let URL = URL_SERVICIOS+"/appointmet-attention/"+appointmet_id;
     return this.http.get(URL,{headers: headers});
+  }
+
+  generateReport(specialitie_id = '', search: string ='', date_start: any = null, date_end: any = null): Observable<Blob> {
+    const headers = new HttpHeaders({ 'Authorization': 'Bearer ' + localStorage.getItem('token') });
+    // let params = new HttpParams();
+    let LINK = "";
+    if (search) {
+      LINK += "&search=" + search;
+    }
+    if (specialitie_id) {
+      LINK += "&specialitie_id=" + specialitie_id;
+    }
+    if (date_start) {
+      LINK += "&date_start=" + date_start;
+    }
+    if (date_end) {
+      LINK += "&date_end=" + date_end;
+    }
+    const URL = URL_SERVICIOS + "/appointmet/reporte?page=1"+ LINK;
+    console.log(URL);
+    return this.http.get(URL, {headers: headers, responseType: 'blob' });
+    // return this.http.get(`${URL_SERVICIOS}/appointmet/reporte`, { headers: headers, params: params, responseType: 'blob' });
+  }
+
+  generateReceta(appointment_id:number, patient_id:number): Observable<Blob> {
+    const headers = new HttpHeaders({ 'Authorization': 'Bearer ' + localStorage.getItem('token') });
+    // let params = new HttpParams();
+    let LINK = "";
+
+    if (appointment_id) {
+      LINK += "appointment_id=" + appointment_id;
+    }
+    if (patient_id) {
+      LINK += "&patient_id=" + patient_id;
+    }
+
+    const URL = URL_SERVICIOS + "/appointmet-attention/receta?"+ LINK;
+    console.log(URL);
+    return this.http.get(URL, {headers: headers, responseType: 'blob' });
+    // return this.http.get(`${URL_SERVICIOS}/appointmet/reporte`, { headers: headers, params: params, responseType: 'blob' });
   }
 }

@@ -41,10 +41,11 @@
                                   </div>
                               </div>
                               <div class="col-auto text-end float-end ms-auto download-grp">
-                                  <a href="javascript:;" class=" me-2"><img src="assets/img/icons/pdf-icon-01.svg" alt=""></a>
+                                <a href="javascript:;" (click)="generarPDF()" class="me-2"><img src="assets/img/icons/pdf-icon-01.svg" alt=""></a>
+                                  <!-- <a href="javascript:;" class=" me-2"><img src="assets/img/icons/pdf-icon-01.svg" alt=""></a>
                                   <a href="javascript:;" class=" me-2"><img src="assets/img/icons/pdf-icon-02.svg" alt=""></a>
                                   <a href="javascript:;" class=" me-2"><img src="assets/img/icons/pdf-icon-03.svg" alt=""></a>
-                                  <a href="javascript:;" ><img src="assets/img/icons/pdf-icon-04.svg" alt=""></a>
+                                  <a href="javascript:;" ><img src="assets/img/icons/pdf-icon-04.svg" alt=""></a> -->
 
                               </div>
                           </div>
@@ -79,11 +80,11 @@
                                               <a href="javascript:void(0);" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                               <div class="dropdown-menu dropdown-menu-end">
                                                 <!--  -->
-                                                  <a class="dropdown-item" [routerLink]="[ '/patient-m/list/edit/', data.id ]" ><i class="fa-solid fa-pen-to-square m-r-5"></i> Edit</a>
-                                                  <a class="dropdown-item" href="javascript:void(0);" (click)="selectUser(data)" data-bs-toggle="modal"
+                                                  <a class="dropdown-item" *ngIf="isPermision('edit_patient')"    [routerLink]="[ '/patient-m/list/edit/', data.id ]" ><i class="fa-solid fa-pen-to-square m-r-5"></i> Edit</a>
+                                                  <a class="dropdown-item" *ngIf="isPermision('delete_patient')"  href="javascript:void(0);" (click)="selectUser(data)" data-bs-toggle="modal"
                                                   [attr.data-bs-target]="'#delete_staff-'+data.id"
                                                   ><i class="fa fa-trash-alt m-r-5"></i> Delete</a>
-                                                  <a class="dropdown-item" [routerLink]="[ '/patient-m/list/profile/', data.id ]" >+ Perfil Paciente</a>
+                                                  <a class="dropdown-item" *ngIf="isPermision('profile_patient')" [routerLink]="[ '/patient-m/list/profile/', data.id ]" >+ Perfil Paciente</a>
                                               </div>
                                           </div>
                                       </td>

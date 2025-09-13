@@ -19,7 +19,7 @@
           <div class="row">
               <div class="col-md-6">
                   <div class="morning-user">
-                      <h2>Good Morning, <span>Daniel Bruk</span></h2>
+                      <h2>Good Morning, <span>{{ user.name + ' ' + user.surname }}</span></h2>
                       <p>Have a nice day at work</p>
                   </div>
               </div>
@@ -146,7 +146,7 @@
               <div class="card">
                   <div class="card-body">
                       <div class="chart-title">
-                          <h4>Patient by Department</h4>
+                          <h4>Patient by Speciality</h4>
                       </div>
                       <div id="donut-chart-dash" class="chart-user-icon">
                           <apx-chart class="donut-chart-custom"

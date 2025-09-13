@@ -125,6 +125,7 @@ export class AdminDashboardComponent {
   public query_patients_speciality:any = [];
   public query_patients_speciality_percentage:any = [];
   public query_income_year:any = [];
+  public user:any;
 
   constructor(public data : DataService,public dashboardService: DashboardService,) {
     this.chartOptionsOne = {
@@ -284,27 +285,30 @@ export class AdminDashboardComponent {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
 
-    this.dashboardService.dashboardAdmin({}).subscribe((resp:any) => {
-      console.log(resp);
-      this.appointments = resp.appointments.data;
+    this.user = this.dashboardService.authService.user;
+    if(this.user.roles.includes("Super-Admin") || this.user.permissions.includes("admin_dashboard")){
+      this.dashboardService.dashboardAdmin({}).subscribe((resp:any) => {
+        console.log(resp);
+        this.appointments = resp.appointments.data;
 
-      this.num_appointments_current = resp.num_appointments_current;
-      this.num_appointments_before = resp.num_appointments_before;
-      this.porcentaje_d = resp.porcentaje_d;
+        this.num_appointments_current = resp.num_appointments_current;
+        this.num_appointments_before = resp.num_appointments_before;
+        this.porcentaje_d = resp.porcentaje_d;
 
-      this.num_patients_current = resp.num_patients_current;
-      this.num_patients_before = resp.num_patients_before;
-      this.porcentaje_dp = resp.porcentaje_dp;
+        this.num_patients_current = resp.num_patients_current;
+        this.num_patients_before = resp.num_patients_before;
+        this.porcentaje_dp = resp.porcentaje_dp;
 
-      this.num_appointments_attetion_current = resp.num_appointments_attetion_current;
-      this.num_appointments_attetion_before = resp.num_appointments_attetion_before;
-      this.porcentaje_da = resp.porcentaje_da;
+        this.num_appointments_attetion_current = resp.num_appointments_attetion_current;
+        this.num_appointments_attetion_before = resp.num_appointments_attetion_before;
+        this.porcentaje_da = resp.porcentaje_da;
 
-      this.appointments_total_current = resp.num_appointments_total_current;
-      this.appointments_total_before = resp.num_appointments_total_before;
-      this.porcentaje_dt = resp.porcentaje_dt;
-    })
-    this.dashboardAdminYear();
+        this.appointments_total_current = resp.num_appointments_total_current;
+        this.appointments_total_before = resp.num_appointments_total_before;
+        this.porcentaje_dt = resp.porcentaje_dt;
+      })
+      this.dashboardAdminYear();
+    }
   }
 
   dashboardAdminYear(){

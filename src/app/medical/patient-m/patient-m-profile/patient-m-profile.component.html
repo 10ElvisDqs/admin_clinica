@@ -6,7 +6,7 @@
           <div class="row">
               <div class="col-sm-12">
                   <ul class="breadcrumb">
-                      <li class="breadcrumb-item"><a href="#" onclick="return false;">Patients </a></li>
+                      <li class="breadcrumb-item"><a routerLink="/patient-m/list" onclick="return false;">Patients </a></li>
                       <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
                       <li class="breadcrumb-item active">Patient Profile</li>
                   </ul>
@@ -21,7 +21,9 @@
                       <div class="row">
                           <div class="col-md-12">
                               <div class="about-info">
-                                  <h4>Patients Profile  <span><a href="javascript:;"><i class="feather icon-more-vertical"></i></a></span></h4>
+                                  <h4>Patients Profile  <span><a href="javascript:;">
+                                    <!-- <i class="feather icon-more-vertical"></i> -->
+                                  </a></span></h4>
                               </div>
                               <div class="doctor-profile-head">
                                   <!-- <div class="profile-bg-img">
@@ -35,7 +37,7 @@
                                                   <div class="form-group doctor-up-files profile-edit-icon mb-0">
                                                       <div class="uplod d-flex">
                                                           <label class="file-upload profile-upbtn mb-0">
-                                                              <img  src="assets/img/icons/camera-icon.svg"  alt="Profile"><input type="file">
+                                                              <!-- <img  src="assets/img/icons/camera-icon.svg"  alt="Profile"><input type="file"> -->
                                                           </label>
                                                       </div>
                                                   </div>
@@ -54,7 +56,7 @@
                                               </div>
                                               <div class="doctor-follows">
                                                   <h5>Money</h5>
-                                                  <h4>{{ money_of_appointments }} PEN</h4>
+                                                  <h4>{{ money_of_appointments }} Bs</h4>
                                               </div>
                                               <div class="doctor-follows">
                                                   <h5>Appointment Pendings</h5>
@@ -65,7 +67,7 @@
                                       <div class="col-lg-4 col-md-4 d-flex align-items-center">
                                           <div class="follow-btn-group">
                                               <a [routerLink]="[ '/patient-m/list/edit/', patient_id ]" class="btn btn-info follow-btns">Edit</a>
-                                              <button type="submit" class="btn btn-info message-btns">Message</button>
+                                              <!-- <button type="submit" class="btn btn-info message-btns">Message</button> -->
                                           </div>
                                       </div>
                                   </div>
@@ -238,7 +240,7 @@
                                                                   <span class="time">{{ appointment.format_hour_start + ' - ' + appointment.format_hour_end}}</span>
                                                               </div>
                                                               <div class="comman-activitys flex-grow-1">
-                                                                  <h3>{{ appointment.doctor.full_name }} <span> MONTO : {{ appointment.amount }}  PEN.</span></h3>
+                                                                  <h3>{{ appointment.doctor.full_name }} <span> MONTO : {{ appointment.amount }}  Bs.</span></h3>
                                                                   <p *ngIf="appointment.appointment_attention">
                                                                       {{ appointment.appointment_attention.description }}
                                                                   </p>

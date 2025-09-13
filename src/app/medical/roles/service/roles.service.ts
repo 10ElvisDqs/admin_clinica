@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { URL_SERVICIOS } from 'src/app/config/config';
 import { AuthService } from 'src/app/shared/auth/auth.service';
-
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -42,5 +42,10 @@ export class RolesService {
     let headers = new HttpHeaders({'Authorization':'Bearer '+this.authService.token });
     let URL = URL_SERVICIOS+"/roles/"+id_role;
     return this.http.delete(URL,{headers:headers});
+  }
+  generateReport(): Observable<Blob> {
+    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authService.token});
+    let URL = URL_SERVICIOS+"/roles/reporte";
+    return this.http.get(URL,{headers: headers, responseType: 'blob' });
   }
 }

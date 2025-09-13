@@ -84,14 +84,14 @@ export class EditPatientMComponent {
       this.antecedent_personal = resp.patient.antecedent_personal;
       this.antecedent_allergic = resp.patient.antecedent_allergic;
 
-      this.name_companion = resp.patient.person.name_companion;
-      this.surname_companion = resp.patient.person.surname_companion;
-      this.mobile_companion = resp.patient.person.mobile_companion;
-      this.relationship_companion = resp.patient.person.relationship_companion;
-      this.name_responsible = resp.patient.person.name_responsible;
-      this.surname_responsible = resp.patient.person.surname_responsible;
-      this.mobile_responsible = resp.patient.person.mobile_responsible;
-      this.relationship_responsible = resp.patient.person.relationship_responsible;
+      this.name_companion = resp.patient.person ? resp.patient.person.name_companion : '';
+      this.surname_companion = resp.patient.person ? resp.patient.person.surname_companion : '';
+      this.mobile_companion = resp.patient.person ? resp.patient.person.mobile_companion:'';
+      this.relationship_companion = resp.patient.person ? resp.patient.person.relationship_companion:'';
+      this.name_responsible = resp.patient.person ? resp.patient.person.name_responsible : '';
+      this.surname_responsible = resp.patient.person ? resp.patient.person.surname_responsible:'';
+      this.mobile_responsible = resp.patient.person ? resp.patient.person.mobile_responsible:'';
+      this.relationship_responsible = resp.patient.person ? resp.patient.person.relationship_responsible :'';
 
       this.current_disease = resp.patient.current_disease;
       this.ta = resp.patient.ta;
@@ -109,15 +109,15 @@ export class EditPatientMComponent {
       this.text_validation = "LOS CAMPOS SON NECESARIOS (Nombre,Apellido,° n de document, telefono)";
       return;
     }
-    if(!this.name_companion || !this.surname_companion){
-      this.text_validation = "EL NOPMBRE Y APELLIDO DEL ACOMPAÑANTE ES OBLIGATORIO (Nombre,Apellido)";
-      return;
-    }
+    // if(!this.name_companion || !this.surname_companion){
+    //   this.text_validation = "EL NOPMBRE Y APELLIDO DEL ACOMPAÑANTE ES OBLIGATORIO (Nombre,Apellido)";
+    //   return;
+    // }
 
-    if(!this.ta || !this.temperatura || !this.fc || !this.fr || !this.peso){
-      this.text_validation = "LOS SIGNOS VITALES SON OBLIGATORIO";
-      return;
-    }
+    // if(!this.ta || !this.temperatura || !this.fc || !this.fr || !this.peso){
+    //   this.text_validation = "LOS SIGNOS VITALES SON OBLIGATORIO";
+    //   return;
+    // }
 
     console.log(this.selectedValue);
 
@@ -151,9 +151,13 @@ export class EditPatientMComponent {
     if(this.antecedent_allergic){
       formData.append("antecedent_allergic",this.antecedent_allergic);
     }
+    if (this.name_companion) {
+      formData.append("name_companion",this.name_companion);
+    }
+    if (this.surname_companion) {
+      formData.append("surname_companion",this.surname_companion);
 
-    formData.append("name_companion",this.name_companion);
-    formData.append("surname_companion",this.surname_companion);
+    }
     if(this.mobile_companion){
       formData.append("mobile_companion",this.mobile_companion);
     }
@@ -175,12 +179,24 @@ export class EditPatientMComponent {
     if(this.current_disease){
       formData.append("current_disease",this.current_disease);
     }
+    if (this.ta) {
+      formData.append("ta",this.ta+"");
+    }
+    if (this.temperatura) {
+      formData.append("temperatura",this.temperatura+"");
+    }
+    if (this.fc) {
+      formData.append("fc",this.fc+"");
 
-    formData.append("ta",this.ta+"");
-    formData.append("temperatura",this.temperatura+"");
-    formData.append("fc",this.fc+"");
-    formData.append("fr",this.fr+"");
-    formData.append("peso",this.peso+"");
+    }
+    if (this.fr) {
+      formData.append("fr",this.fr+"");
+
+    }
+    if (this.peso) {
+      formData.append("peso",this.peso+"");
+
+    }
     this.patientService.updatePatient(this.patient_id,formData).subscribe((resp:any) => {
       console.log(resp);
 

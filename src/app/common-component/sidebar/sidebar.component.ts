@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { AuthService } from 'src/app/shared/auth/auth.service';
 import { DataService } from 'src/app/shared/data/data.service';
 import { MenuItem, SideBarData } from 'src/app/shared/models/models';
 import { routes } from 'src/app/shared/routes/routes';
 import { SideBarService } from 'src/app/shared/side-bar/side-bar.service';
-import { AuthService } from '../../shared/auth/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -26,50 +26,44 @@ export class SidebarComponent {
     private data: DataService,
     private router: Router,
     private sideBar: SideBarService,
-    public authService:AuthService,
+    public authService: AuthService,
   ) {
-    //this.user=this.authService.user;
-    let USER= localStorage.getItem("user");
-    this.user=JSON.parse(USER ? USER : '');
-    //INICIO
-    if (this.user && this.user.roles.includes("Super-Admin")) {
-
-      console.log('ingreso al super admin');
-
+    // this.user = this.authService.user;
+    let USER = localStorage.getItem("user");
+    this.user = JSON.parse(USER ? USER : '');
+    // INICIO
+    if(this.user && this.user.roles.includes("Super-Admin")){
       this.sidebarData = this.data.sideBar;
-      console.log(this.sidebarData);
     }else{
-      //VAMOS A FILTRAR Y VALIDAR QUE OPCIONES PUEDE VER ESE ROL
-      let permissions=this.user.permissions;
+      // VAMOS A FILTRAR Y VALIDAR QUE OPCIONES PUEDE VER ESE ROL
+      let permissions = this.user.permissions;
 
-      let SIDE_BAR_G:any=[];
-      this.data.sideBar.forEach((side:any)=>{
-        let SIDE_B:any=[];
-
+      let SIDE_BAR_G:any = [];
+      this.data.sideBar.forEach((side:any) => {
+        let SIDE_B:any = [];
         side.menu.forEach((menu_s:any) => {
-          if (menu_s.subMenus.length >0 ) {
-            let SUB_MENUS = menu_s.subMenus.filter((submenu:any)=> permissions.includes(submenu.permision) && submenu.show_nav);
-            if (SUB_MENUS.length > 0) {
-              menu_s.subMenus=SUB_MENUS;
+          if(menu_s.subMenus.length > 0){
+            let SUB_MENUS = menu_s.subMenus.filter((submenu:any) => permissions.includes(submenu.permision) && submenu.show_nav);
+            if(SUB_MENUS.length > 0){
+              menu_s.subMenus = SUB_MENUS;
               SIDE_B.push(menu_s);
             }
-          } else {
-            if (permissions.includes(menu_s.permision)) {
-              menu_s.subMenus=[];
+          }else{
+            if(permissions.includes(menu_s.permision)){
+              menu_s.subMenus = [];
               SIDE_B.push(menu_s);
             }
           }
         });
-
-        if (SIDE_B.length > 0) {
-          side.menu=SIDE_B;
+        if(SIDE_B.length > 0){
+          side.menu = SIDE_B;
           SIDE_BAR_G.push(side);
         }
-      });
+      })
       this.sidebarData = SIDE_BAR_G;
     }
 
-    //FIN
+    // FIN
     router.events.subscribe((event: object) => {
       if (event instanceof NavigationEnd) {
         this.getRoutes(event);

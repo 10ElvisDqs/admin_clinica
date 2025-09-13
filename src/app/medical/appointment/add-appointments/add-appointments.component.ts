@@ -54,7 +54,7 @@ export class AddAppointmentsComponent {
       return;
     }
 
-    if(!this.name || !this.surname || !this.mobile || !this.n_document || !this.name_companion || !this.surname_companion || !this.date_appointment
+    if(!this.name || !this.surname || !this.mobile || !this.n_document || !this.date_appointment
       || !this.specialitie_id || !this.selected_segment_hour || !this.amount || !this.amount_add || !this.method_payment){
       this.text_validation = "LOS CAMPOS SON NECESARIOS (SEGMENTO DE HORA, LA FECHA , LA ESPECIALIDAD, PACIENTE Y PAGOS)";
       return;

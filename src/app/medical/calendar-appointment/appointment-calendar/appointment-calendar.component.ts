@@ -22,6 +22,7 @@ export class AppointmentCalendarComponent {
   public search_doctor = '';
   public search_patient = '';
 
+  public user:any;
   constructor(
     public appointmentPayService: AppointmentPayService,
     public appointmentCalendarService: CalendarAppointmentService,
@@ -50,6 +51,16 @@ export class AppointmentCalendarComponent {
     };
   }
 
+  isPermited(){
+    let band = false;
+    this.user.roles.forEach((rol:any) => {
+      if((rol).toUpperCase().indexOf("DOCTOR") != -1){
+        band = true;
+      }
+    });
+    return band;
+  }
+
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
@@ -57,6 +68,7 @@ export class AppointmentCalendarComponent {
       this.specialities = resp.specialities;
 
     })
+    this.user = this.appointmentPayService.authService.user;
     this.calendarAppointment();
   }
   calendarAppointment() {

@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { URL_SERVICIOS } from 'src/app/config/config';
 import { AuthService } from 'src/app/shared/auth/auth.service';
 
@@ -47,6 +48,14 @@ export class PatientMService {
     let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authService.token});
     let URL = URL_SERVICIOS+"/patients/profile/"+staff_id;
     return this.http.get(URL,{headers: headers});
+  }
+
+  generateReport(page:number=1,search:string=''): Observable<Blob> {
+    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authService.token});
+
+    let URL = URL_SERVICIOS+"/patients/reporte?page="+page+"&search="+search;
+    return this.http.get(URL, {headers: headers, responseType: 'blob' });
+    // return this.http.get(`${URL_SERVICIOS}/appointmet/reporte`, { headers: headers, params: params, responseType: 'blob' });
   }
 
 }

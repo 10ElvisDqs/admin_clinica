@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { AppointmentPayService } from '../service/appointment-pay.service';
+import { Router } from '@angular/router';
+
 declare var $:any;
 @Component({
   selector: 'app-list-appointment-pay',
@@ -43,7 +45,9 @@ export class ListAppointmentPayComponent {
   public text_validation:string = '';
 
   public payment_selected:any;
+  public user:any;
   constructor(
+    private router: Router,
     public appointmentPayService: AppointmentPayService,
   ){
 
@@ -54,6 +58,28 @@ export class ListAppointmentPayComponent {
     this.appointmentPayService.listConfig().subscribe((resp:any) => {
       this.specialities = resp.specialities;
     })
+    this.user = this.appointmentPayService.authService.user;
+
+  }
+
+  isPermited(){
+    let band = false;
+    this.user.roles.forEach((rol:any) => {
+      if((rol).toUpperCase().indexOf("DOCTOR") != -1){
+        band = true;
+      }
+    });
+    return band;
+  }
+
+ isPermision(permission:string){
+    if(this.user.roles.includes('Super-Admin')){
+      return true;
+    }
+    if(this.user.permissions.includes(permission)){
+      return true;
+    }
+    return false;
   }
   private getTableData(page=1): void {
     this.appointmentList = [];
@@ -104,8 +130,17 @@ export class ListAppointmentPayComponent {
     this.text_success = '';
     this.amount_add = this.payment_selected.amount;
     this.method_payment = this.payment_selected.method_payment;
-  }
+    //location.reload();
 
+  }
+  reloadPage() {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    const currentUrl = this.router.url + '?';
+    this.router.navigateByUrl(currentUrl).then(() => {
+      this.router.navigated = false;
+      this.router.navigate([this.router.url]);
+    });
+  }
   addPayment(data:any){
     this.text_validation = '';
     if(!this.method_payment || !this.amount_add){
@@ -120,6 +155,7 @@ export class ListAppointmentPayComponent {
       method_payment: this.method_payment,
     }
 
+
     this.appointmentPayService.registerAppointmentPay(dataD).subscribe((resp:any) => {
       if(resp.message == 403){
         this.text_validation = resp.message_text;
@@ -133,6 +169,11 @@ export class ListAppointmentPayComponent {
         }
         this.amount_add = 0;
         this.method_payment = '';
+        location.reload();
+        // Ejemplo de uso
+        // this.reloadPage(); // Llama a este método cuando necesites recargar la página
+        // this.getTableData();
+
       }
     })
   }
@@ -167,6 +208,7 @@ export class ListAppointmentPayComponent {
 
         this.amount_add = 0;
         this.method_payment = '';
+        location.reload();
       }
     })
   }
@@ -192,6 +234,7 @@ export class ListAppointmentPayComponent {
         $("body").removeAttr("style");
 
         this.payment_selected = null;
+        location.reload();
       }
     })
   }
@@ -286,4 +329,44 @@ export class ListAppointmentPayComponent {
   filter(){
 
   }
+  generarPDF(): void {
+    console.log('Ingreso');
+    this.appointmentPayService.generateReport(1,this.searchDataDoctor,this.searchDataValue,this.specialitie_id,this.date_start,this.date_end).subscribe(
+      (blob: Blob) => {
+        const file = new File([blob], 'reporte_citas.pdf', { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(file);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'reporte.pdf';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      },
+      (error) => {
+        console.error('Error al generar el PDF:', error);
+        // Aquí puedes mostrar un mensaje de error al usuario o depurar el problema
+      }
+    );
+  }
+
+  generarRecibo(data:any){
+    this.appointmentPayService.generateRecibo(data).subscribe(
+      (blob: Blob) => {
+        const file = new File([blob], 'reporte_citas.pdf', { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(file);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'reporte.pdf';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      },
+      (error) => {
+        console.error('Error al generar el PDF:', error);
+        // Aquí puedes mostrar un mensaje de error al usuario o depurar el problema
+      }
+    );
+
+  }
+
+
+
 }

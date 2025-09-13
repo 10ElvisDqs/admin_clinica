@@ -308,7 +308,7 @@ export class DataService {
              menuValue: 'Attendance',
              route: routes.staffAttendance,
              base: routes.staffAttendance,
-             show_nav: true,
+             show_nav: false,
            },
           ],
         },
@@ -472,6 +472,13 @@ export class DataService {
               permision: 'delete_appointment',
               show_nav: false,
             },
+            {
+              menuValue: 'Attention Appointment',
+              route: '',
+              base: '', //attention_appointment
+              permision: 'attention_appointment',
+              show_nav: false,
+            },
           ]
         },
         {
@@ -500,14 +507,14 @@ export class DataService {
               route: '',
               base: '',
               permision: 'delete_payment',
-              show_nav: true,
+              show_nav: false,
             },
             {
               menuValue: 'Add Pagos',
               route: '',
               base: '',
               permision: 'add_payment',
-              show_nav: true,
+              show_nav: false,
             },
           ],
         },

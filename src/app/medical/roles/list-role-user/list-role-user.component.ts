@@ -40,6 +40,7 @@ export class ListRoleUserComponent {
   public role_generals:any = [];
 
   public role_selected:any;
+  public user:any;
 
   constructor(
     public RoleService:RolesService
@@ -47,6 +48,7 @@ export class ListRoleUserComponent {
 
   }
   ngOnInit() {
+    this.user = this.RoleService.authService.user;
     this.getTableData();
   }
   private getTableData(): void {
@@ -63,21 +65,31 @@ export class ListRoleUserComponent {
 
   }
 
-getTableDataGeneral() {
-  this.rolesList = [];
-  this.serialNumberArray = [];
-
-  this.role_generals.map((res: any, index: number) => {
-    const serialNumber = index + 1;
-    if (index >= this.skip && serialNumber <= this.limit) {
-
-      this.rolesList.push(res);
-      this.serialNumberArray.push(serialNumber);
+  isPermision(permission:string){
+    if(this.user.roles.includes('Super-Admin')){
+      return true;
     }
-  });
-  this.dataSource = new MatTableDataSource<any>(this.rolesList);
-  this.calculateTotalPages(this.totalData, this.pageSize);
-}
+    if(this.user.permissions.includes(permission)){
+      return true;
+    }
+    return false;
+  }
+
+  getTableDataGeneral() {
+    this.rolesList = [];
+    this.serialNumberArray = [];
+
+    this.role_generals.map((res: any, index: number) => {
+      const serialNumber = index + 1;
+      if (index >= this.skip && serialNumber <= this.limit) {
+
+        this.rolesList.push(res);
+        this.serialNumberArray.push(serialNumber);
+      }
+    });
+    this.dataSource = new MatTableDataSource<any>(this.rolesList);
+    this.calculateTotalPages(this.totalData, this.pageSize);
+  }
 
   selecteRole(rol:any){
     this.role_selected=rol;
@@ -184,6 +196,24 @@ getTableDataGeneral() {
     }
   }
 
+  generarPDF(): void {
+
+    this.RoleService.generateReport().subscribe(
+      (blob: Blob) => {
+        const file = new File([blob], 'reporte_citas.pdf', { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(file);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'reporte_roles.pdf';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      },
+      (error:any) => {
+        console.error('Error al generar el PDF:', error);
+        // Aquí puedes mostrar un mensaje de error al usuario o depurar el problema
+      }
+    );
+  }
 
 
 }

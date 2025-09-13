@@ -16,7 +16,7 @@ export class ListAppointmentsComponent {
   public specialitie_id = '';
   public date = null;
   public lastIndex = 0;
-  public pageSize = 2;
+  public pageSize = 150;
   public totalData = 0;
   public skip = 0;//MIN
   public limit: number = this.pageSize;//MAX
@@ -30,7 +30,12 @@ export class ListAppointmentsComponent {
   public patient_generals:any = [];
   public appointment_selected:any;
 
+  // rango de fecha
+  public date_start:any;
+  public date_end:any;
+
   specialities:any = [];
+  public user:any;
   constructor(
     public appointmentService: AppointmentService,
   ){
@@ -42,12 +47,30 @@ export class ListAppointmentsComponent {
     this.appointmentService.listConfig().subscribe((resp:any) => {
       this.specialities = resp.specialities;
     })
+    this.user = this.appointmentService.authService.user;
+  }
+  isPermited(){
+    let band = false;
+    this.user.roles.forEach((rol:any) => {
+      if((rol).toUpperCase().indexOf("DOCTOR") != -1){
+        band = true;
+      }
+    });
+    return band;
+  }
+  isPermision(permission:string){
+    if(this.user.roles.includes('Super-Admin')){
+      return true;
+    }
+    if(this.user.permissions.includes(permission)){
+      return true;
+    }
+    return false;
   }
   private getTableData(page=1): void {
     this.appointmentList = [];
     this.serialNumberArray = [];
-
-    this.appointmentService.listAppointments(page,this.searchDataValue,this.specialitie_id,this.date).subscribe((resp:any) => {
+    this.appointmentService.listAppointments(page,this.searchDataValue,this.specialitie_id,this.date_start,this.date_end).subscribe((resp:any) => {
 
       console.log(resp);
 
@@ -58,8 +81,21 @@ export class ListAppointmentsComponent {
       this.calculateTotalPages(this.totalData, this.pageSize);
     })
 
+    // this.appointmentService.listAppointments(page,this.searchDataValue,this.specialitie_id,this.date).subscribe((resp:any) => {
+
+    //   console.log(resp);
+
+    //   this.totalData = resp.total;
+    //   this.appointmentList = resp.appointments.data;
+    //   // this.getTableDataGeneral();
+    //   this.dataSource = new MatTableDataSource<any>(this.appointmentList);
+    //  this.calculateTotalPages(this.totalData, this.pageSize);
+    // })
+
 
   }
+
+
 
   getTableDataGeneral() {
     this.appointmentList = [];
@@ -186,4 +222,25 @@ export class ListAppointmentsComponent {
       // 20 - 30
     }
   }
+  generarPDF(): void {
+    console.log('Ingreso');
+    ///  generateReport(specialitie_id = '', search: string ='', date_start: any = null, date_end: any = null): Observable<Blob> {
+    this.appointmentService.generateReport(this.specialitie_id,this.searchDataValue,this.date_start,this.date_end).subscribe(
+      (blob: Blob) => {
+        const file = new File([blob], 'reporte_citas.pdf', { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(file);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'reporte.pdf';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      },
+      (error) => {
+        console.error('Error al generar el PDF:', error);
+        // Aquí puedes mostrar un mensaje de error al usuario o depurar el problema
+      }
+    );
+  }
+
+
 }

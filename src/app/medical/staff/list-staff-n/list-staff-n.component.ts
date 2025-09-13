@@ -43,6 +43,7 @@ export class ListStaffNComponent {
   public role_generals:any = [];
 
   public staff_selected:any;
+  public user:any;
 
   constructor(
     public staffService:StaffService
@@ -51,6 +52,7 @@ export class ListStaffNComponent {
   }
   ngOnInit() {
     this.getTableData();
+    this.user = this.staffService.authService.user;
   }
   private getTableData(): void {
     this.usersList = [];
@@ -65,22 +67,31 @@ export class ListStaffNComponent {
     })
 
   }
-
-getTableDataGeneral() {
-  this.usersList = [];
-  this.serialNumberArray = [];
-
-  this.role_generals.map((res: any, index: number) => {
-    const serialNumber = index + 1;
-    if (index >= this.skip && serialNumber <= this.limit) {
-
-      this.usersList.push(res);
-      this.serialNumberArray.push(serialNumber);
+  isPermision(permission:string){
+    if(this.user.roles.includes('Super-Admin')){
+      return true;
     }
-  });
-  this.dataSource = new MatTableDataSource<any>(this.usersList);
-  this.calculateTotalPages(this.totalData, this.pageSize);
-}
+    if(this.user.permissions.includes(permission)){
+      return true;
+    }
+    return false;
+  }
+
+  getTableDataGeneral() {
+    this.usersList = [];
+    this.serialNumberArray = [];
+
+    this.role_generals.map((res: any, index: number) => {
+      const serialNumber = index + 1;
+      if (index >= this.skip && serialNumber <= this.limit) {
+
+        this.usersList.push(res);
+        this.serialNumberArray.push(serialNumber);
+      }
+    });
+    this.dataSource = new MatTableDataSource<any>(this.usersList);
+    this.calculateTotalPages(this.totalData, this.pageSize);
+  }
 
 
   selecteUSer(rol:any){
@@ -189,4 +200,22 @@ getTableDataGeneral() {
     }
   }
 
+  generarPDF(): void {
+    console.log('Ingreso');
+    this.staffService.generateReport().subscribe(
+      (blob: Blob) => {
+        const file = new File([blob], 'reporte_citas.pdf', { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(file);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'reporte_staffs.pdf';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      },
+      (error) => {
+        console.error('Error al generar el PDF:', error);
+        // Aquí puedes mostrar un mensaje de error al usuario o depurar el problema
+      }
+    );
+  }
 }

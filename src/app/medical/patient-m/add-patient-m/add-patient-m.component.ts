@@ -69,15 +69,15 @@ export class AddPatientMComponent {
       this.text_validation = "LOS CAMPOS SON NECESARIOS (Nombre,Apellido,° n de document, telefono)";
       return;
     }
-    if(!this.name_companion || !this.surname_companion){
-      this.text_validation = "EL NOPMBRE Y APELLIDO DEL ACOMPAÑANTE ES OBLIGATORIO (Nombre,Apellido)";
-      return;
-    }
+    // if(!this.name_companion || !this.surname_companion){
+    //   this.text_validation = "EL NOPMBRE Y APELLIDO DEL ACOMPAÑANTE ES OBLIGATORIO (Nombre,Apellido)";
+    //   return;
+    // }
 
-    if(!this.ta || !this.temperatura || !this.fc || !this.fr || !this.peso){
-      this.text_validation = "LOS SIGNOS VITALES SON OBLIGATORIO";
-      return;
-    }
+    // if(!this.ta || !this.temperatura || !this.fc || !this.fr || !this.peso){
+    //   this.text_validation = "LOS SIGNOS VITALES SON OBLIGATORIO";
+    //   return;
+    // }
 
     console.log(this.selectedValue);
 
@@ -111,9 +111,13 @@ export class AddPatientMComponent {
     if(this.antecedent_allergic){
       formData.append("antecedent_allergic",this.antecedent_allergic);
     }
-
-    formData.append("name_companion",this.name_companion);
-    formData.append("surname_companion",this.surname_companion);
+    // Datos del Acompaniante
+    if (this.name_companion) {
+      formData.append("name_companion",this.name_companion);
+    }
+    if (this.surname_companion) {
+      formData.append("surname_companion",this.surname_companion);
+    }
     if(this.mobile_companion){
       formData.append("mobile_companion",this.mobile_companion);
     }
@@ -135,12 +139,24 @@ export class AddPatientMComponent {
     if(this.current_disease){
       formData.append("current_disease",this.current_disease);
     }
+    // fin del los datos del acompaniante
 
-    formData.append("ta",this.ta+"");
-    formData.append("temperatura",this.temperatura+"");
-    formData.append("fc",this.fc+"");
-    formData.append("fr",this.fr+"");
-    formData.append("peso",this.peso+"");
+    //Signos Vitales
+    if (this.ta) {
+      formData.append("ta",this.ta+"");
+    }
+    if (this.temperatura) {
+      formData.append("temperatura",this.temperatura+"");
+    }
+    if (this.fc) {
+      formData.append("fc",this.fc+"");
+    }
+    if (this.fr) {
+      formData.append("fr",this.fr+"");
+    }
+    if (this.peso) {
+      formData.append("peso",this.peso+"");
+    }
     this.patientService.registerPatient(formData).subscribe((resp:any) => {
       console.log(resp);
 

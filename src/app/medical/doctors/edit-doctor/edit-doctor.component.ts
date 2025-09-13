@@ -52,6 +52,10 @@ export class EditDoctorComponent {
     {
       day:'Viernes',
       class:'table-info'
+    },
+    {
+      day:'Sabados',
+      class:'table-info'
     }
   ];
   public hours_selecteds:any = [];

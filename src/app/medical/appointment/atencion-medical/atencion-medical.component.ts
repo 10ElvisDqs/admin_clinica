@@ -96,4 +96,24 @@ export class AtencionMedicalComponent {
     })
 
   }
+
+  generarReceta(): void {
+    console.log('Ingreso');
+    ///  generateReport(specialitie_id = '', search: string ='', date_start: any = null, date_end: any = null): Observable<Blob> {
+    this.appointmentService.generateReceta(this.appointment_id,this.appointment_selected.patient_id).subscribe(
+      (blob: Blob) => {
+        const file = new File([blob], 'receta.pdf', { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(file);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'receta.pdf';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      },
+      (error) => {
+        console.error('Error al generar el PDF:', error);
+        // Aquí puedes mostrar un mensaje de error al usuario o depurar el problema
+      }
+    );
+  }
 }

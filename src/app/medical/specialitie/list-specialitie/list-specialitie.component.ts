@@ -29,6 +29,8 @@ export class ListSpecialitieComponent {
 
   public specialitie_generals:any = [];
   public specialitie_selected:any;
+  public user:any;
+
   constructor(
     public specialitiesService: SpecialitieService,
   ){
@@ -36,6 +38,16 @@ export class ListSpecialitieComponent {
   }
   ngOnInit() {
     this.getTableData();
+    this.user = this.specialitiesService.authService.user;
+  }
+  isPermision(permission:string){
+    if(this.user.roles.includes('Super-Admin')){
+      return true;
+    }
+    if(this.user.permissions.includes(permission)){
+      return true;
+    }
+    return false;
   }
   private getTableData(): void {
     this.specialitiesList = [];
@@ -167,5 +179,24 @@ export class ListSpecialitieComponent {
       // 2
       // 10 - 20
     }
+  }
+
+  generarPDF(): void {
+
+    this.specialitiesService.generateReport().subscribe(
+      (blob: Blob) => {
+        const file = new File([blob], 'reporte_citas.pdf', { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(file);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'reporte_specialities.pdf';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      },
+      (error:any) => {
+        console.error('Error al generar el PDF:', error);
+        // Aquí puedes mostrar un mensaje de error al usuario o depurar el problema
+      }
+    );
   }
 }
