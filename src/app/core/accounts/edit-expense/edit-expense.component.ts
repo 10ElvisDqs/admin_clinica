@@ -6,9 +6,10 @@ interface data {
 }
 
 @Component({
-  selector: 'app-edit-expense',
-  templateUrl: './edit-expense.component.html',
-  styleUrls: ['./edit-expense.component.scss']
+    selector: 'app-edit-expense',
+    templateUrl: './edit-expense.component.html',
+    styleUrls: ['./edit-expense.component.scss'],
+    standalone: false
 })
 export class EditExpenseComponent {
   public routes = routes;

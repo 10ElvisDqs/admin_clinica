@@ -4,9 +4,10 @@ interface data {
   value: string ;
 }
 @Component({
-  selector: 'app-add-tax',
-  templateUrl: './add-tax.component.html',
-  styleUrls: ['./add-tax.component.scss']
+    selector: 'app-add-tax',
+    templateUrl: './add-tax.component.html',
+    styleUrls: ['./add-tax.component.scss'],
+    standalone: false
 })
 export class AddTaxComponent {
   public routes = routes;

@@ -5,9 +5,10 @@ interface data {
   value: string ;
 }
 @Component({
-  selector: 'app-edit-patient',
-  templateUrl: './edit-patient.component.html',
-  styleUrls: ['./edit-patient.component.scss']
+    selector: 'app-edit-patient',
+    templateUrl: './edit-patient.component.html',
+    styleUrls: ['./edit-patient.component.scss'],
+    standalone: false
 })
 export class EditPatientComponent {
   public routes = routes;

@@ -3,9 +3,10 @@ import { PatientMService } from '../service/patient-m.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-edit-patient-m',
-  templateUrl: './edit-patient-m.component.html',
-  styleUrls: ['./edit-patient-m.component.scss']
+    selector: 'app-edit-patient-m',
+    templateUrl: './edit-patient-m.component.html',
+    styleUrls: ['./edit-patient-m.component.scss'],
+    standalone: false
 })
 export class EditPatientMComponent {
   public selectedValue !: string  ;

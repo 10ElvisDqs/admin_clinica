@@ -3,9 +3,10 @@ import { DataService } from 'src/app/shared/data/data.service';
 import { RolesService } from '../service/roles.service';
 
 @Component({
-  selector: 'app-add-role-user',
-  templateUrl: './add-role-user.component.html',
-  styleUrls: ['./add-role-user.component.scss']
+    selector: 'app-add-role-user',
+    templateUrl: './add-role-user.component.html',
+    styleUrls: ['./add-role-user.component.scss'],
+    standalone: false
 })
 export class AddRoleUserComponent {
 

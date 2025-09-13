@@ -6,9 +6,10 @@ import { pageSelection, apiResultFormat, invoiceoverdue } from 'src/app/shared/m
 import { routes } from 'src/app/shared/routes/routes';
 
 @Component({
-  selector: 'app-invoices-overdue',
-  templateUrl: './invoices-overdue.component.html',
-  styleUrls: ['./invoices-overdue.component.scss']
+    selector: 'app-invoices-overdue',
+    templateUrl: './invoices-overdue.component.html',
+    styleUrls: ['./invoices-overdue.component.scss'],
+    standalone: false
 })
 export class InvoicesOverdueComponent implements OnInit {
   public routes = routes;

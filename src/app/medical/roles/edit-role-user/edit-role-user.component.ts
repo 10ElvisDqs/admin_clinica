@@ -6,9 +6,10 @@ import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
-  selector: 'app-edit-role-user',
-  templateUrl: './edit-role-user.component.html',
-  styleUrls: ['./edit-role-user.component.scss']
+    selector: 'app-edit-role-user',
+    templateUrl: './edit-role-user.component.html',
+    styleUrls: ['./edit-role-user.component.scss'],
+    standalone: false
 })
 export class EditRoleUserComponent {
   sideBar:any = [];

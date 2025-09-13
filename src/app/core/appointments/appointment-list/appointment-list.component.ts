@@ -6,9 +6,10 @@ import { pageSelection, apiResultFormat, appointmentList } from 'src/app/shared/
 import { routes } from 'src/app/shared/routes/routes';
 
 @Component({
-  selector: 'app-appointment-list',
-  templateUrl: './appointment-list.component.html',
-  styleUrls: ['./appointment-list.component.scss']
+    selector: 'app-appointment-list',
+    templateUrl: './appointment-list.component.html',
+    styleUrls: ['./appointment-list.component.scss'],
+    standalone: false
 })
 export class AppointmentListComponent  implements OnInit {
   public routes = routes;

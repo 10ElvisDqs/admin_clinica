@@ -6,9 +6,10 @@ import { pageSelection, apiResultFormat, allInvoice } from 'src/app/shared/model
 import { routes } from 'src/app/shared/routes/routes';
 
 @Component({
-  selector: 'app-all-invoice',
-  templateUrl: './all-invoice.component.html',
-  styleUrls: ['./all-invoice.component.scss']
+    selector: 'app-all-invoice',
+    templateUrl: './all-invoice.component.html',
+    styleUrls: ['./all-invoice.component.scss'],
+    standalone: false
 })
 export class AllInvoiceComponent implements OnInit{
   public routes = routes;

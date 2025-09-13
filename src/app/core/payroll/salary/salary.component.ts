@@ -8,9 +8,10 @@ interface data {
   value: string ;
 }
 @Component({
-  selector: 'app-salary',
-  templateUrl: './salary.component.html',
-  styleUrls: ['./salary.component.scss']
+    selector: 'app-salary',
+    templateUrl: './salary.component.html',
+    styleUrls: ['./salary.component.scss'],
+    standalone: false
 })
 export class SalaryComponent implements OnInit{
   public routes = routes;

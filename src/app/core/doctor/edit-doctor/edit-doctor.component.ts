@@ -4,9 +4,10 @@ interface data {
   value: string ;
 }
 @Component({
-  selector: 'app-edit-doctor',
-  templateUrl: './edit-doctor.component.html',
-  styleUrls: ['./edit-doctor.component.scss']
+    selector: 'app-edit-doctor',
+    templateUrl: './edit-doctor.component.html',
+    styleUrls: ['./edit-doctor.component.scss'],
+    standalone: false
 })
 export class EditDoctorComponent {
   public routes = routes;

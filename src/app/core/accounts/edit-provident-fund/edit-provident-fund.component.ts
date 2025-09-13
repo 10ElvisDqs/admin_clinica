@@ -6,9 +6,10 @@ interface data {
   value: string ;
 }
 @Component({
-  selector: 'app-edit-provident-fund',
-  templateUrl: './edit-provident-fund.component.html',
-  styleUrls: ['./edit-provident-fund.component.scss']
+    selector: 'app-edit-provident-fund',
+    templateUrl: './edit-provident-fund.component.html',
+    styleUrls: ['./edit-provident-fund.component.scss'],
+    standalone: false
 })
 export class EditProvidentFundComponent {
   public routes = routes;

@@ -4,9 +4,10 @@ interface data {
   value: string ;
 }
 @Component({
-  selector: 'app-add-appointment',
-  templateUrl: './add-appointment.component.html',
-  styleUrls: ['./add-appointment.component.scss']
+    selector: 'app-add-appointment',
+    templateUrl: './add-appointment.component.html',
+    styleUrls: ['./add-appointment.component.scss'],
+    standalone: false
 })
 export class AddAppointmentComponent {
   public routes = routes;

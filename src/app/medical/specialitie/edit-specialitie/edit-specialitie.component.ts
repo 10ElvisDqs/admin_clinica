@@ -3,9 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { SpecialitieService } from '../service/specialitie.service';
 
 @Component({
-  selector: 'app-edit-specialitie',
-  templateUrl: './edit-specialitie.component.html',
-  styleUrls: ['./edit-specialitie.component.scss']
+    selector: 'app-edit-specialitie',
+    templateUrl: './edit-specialitie.component.html',
+    styleUrls: ['./edit-specialitie.component.scss'],
+    standalone: false
 })
 export class EditSpecialitieComponent {
 

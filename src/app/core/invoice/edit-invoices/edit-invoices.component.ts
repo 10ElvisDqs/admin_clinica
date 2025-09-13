@@ -5,9 +5,10 @@ interface data {
   value: string ;
 }
 @Component({
-  selector: 'app-edit-invoices',
-  templateUrl: './edit-invoices.component.html',
-  styleUrls: ['./edit-invoices.component.scss']
+    selector: 'app-edit-invoices',
+    templateUrl: './edit-invoices.component.html',
+    styleUrls: ['./edit-invoices.component.scss'],
+    standalone: false
 })
 export class EditInvoicesComponent {
   public routes = routes;

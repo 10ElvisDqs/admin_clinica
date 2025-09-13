@@ -4,9 +4,10 @@ interface data {
   value: string ;
 }
 @Component({
-  selector: 'app-general-settings',
-  templateUrl: './general-settings.component.html',
-  styleUrls: ['./general-settings.component.scss']
+    selector: 'app-general-settings',
+    templateUrl: './general-settings.component.html',
+    styleUrls: ['./general-settings.component.scss'],
+    standalone: false
 })
 export class GeneralSettingsComponent {
   public routes = routes;

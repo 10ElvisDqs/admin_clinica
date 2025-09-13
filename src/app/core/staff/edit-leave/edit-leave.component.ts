@@ -5,9 +5,10 @@ interface data {
   value: string ;
 }
 @Component({
-  selector: 'app-edit-leave',
-  templateUrl: './edit-leave.component.html',
-  styleUrls: ['./edit-leave.component.scss']
+    selector: 'app-edit-leave',
+    templateUrl: './edit-leave.component.html',
+    styleUrls: ['./edit-leave.component.scss'],
+    standalone: false
 })
 export class EditLeaveComponent {
   public routes = routes;

@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { PatientMService } from '../service/patient-m.service';
 
 @Component({
-  selector: 'app-add-patient-m',
-  templateUrl: './add-patient-m.component.html',
-  styleUrls: ['./add-patient-m.component.scss']
+    selector: 'app-add-patient-m',
+    templateUrl: './add-patient-m.component.html',
+    styleUrls: ['./add-patient-m.component.scss'],
+    standalone: false
 })
 export class AddPatientMComponent {
   public selectedValue !: string  ;

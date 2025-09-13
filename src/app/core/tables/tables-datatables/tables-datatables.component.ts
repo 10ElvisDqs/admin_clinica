@@ -6,9 +6,10 @@ import { pageSelection, apiResultFormat, datatables } from 'src/app/shared/model
 import { routes } from 'src/app/shared/routes/routes';
 
 @Component({
-  selector: 'app-tables-datatables',
-  templateUrl: './tables-datatables.component.html',
-  styleUrls: ['./tables-datatables.component.scss']
+    selector: 'app-tables-datatables',
+    templateUrl: './tables-datatables.component.html',
+    styleUrls: ['./tables-datatables.component.scss'],
+    standalone: false
 })
 export class TablesDatatablesComponent implements OnInit {
   public routes = routes;

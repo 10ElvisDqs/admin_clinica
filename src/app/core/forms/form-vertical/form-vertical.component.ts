@@ -4,9 +4,10 @@ interface data {
   value: string ;
 }
 @Component({
-  selector: 'app-form-vertical',
-  templateUrl: './form-vertical.component.html',
-  styleUrls: ['./form-vertical.component.scss']
+    selector: 'app-form-vertical',
+    templateUrl: './form-vertical.component.html',
+    styleUrls: ['./form-vertical.component.scss'],
+    standalone: false
 })
 export class FormVerticalComponent {
   public routes = routes;

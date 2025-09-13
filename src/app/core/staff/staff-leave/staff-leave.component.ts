@@ -8,9 +8,10 @@ interface data {
   value: string ;
 }
 @Component({
-  selector: 'app-staff-leave',
-  templateUrl: './staff-leave.component.html',
-  styleUrls: ['./staff-leave.component.scss']
+    selector: 'app-staff-leave',
+    templateUrl: './staff-leave.component.html',
+    styleUrls: ['./staff-leave.component.scss'],
+    standalone: false
 })
 export class StaffLeaveComponent implements OnInit{
   public routes = routes;

@@ -3,9 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { PatientMService } from '../service/patient-m.service';
 
 @Component({
-  selector: 'app-patient-m-profile',
-  templateUrl: './patient-m-profile.component.html',
-  styleUrls: ['./patient-m-profile.component.scss']
+    selector: 'app-patient-m-profile',
+    templateUrl: './patient-m-profile.component.html',
+    styleUrls: ['./patient-m-profile.component.scss'],
+    standalone: false
 })
 export class PatientMProfileComponent {
   patientProfile:any = [];

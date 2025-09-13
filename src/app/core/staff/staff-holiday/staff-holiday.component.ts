@@ -6,9 +6,10 @@ import { pageSelection, apiResultFormat, staffholidays } from 'src/app/shared/mo
 import { DataService } from 'src/app/shared/data/data.service';
 
 @Component({
-  selector: 'app-staff-holiday',
-  templateUrl: './staff-holiday.component.html',
-  styleUrls: ['./staff-holiday.component.scss']
+    selector: 'app-staff-holiday',
+    templateUrl: './staff-holiday.component.html',
+    styleUrls: ['./staff-holiday.component.scss'],
+    standalone: false
 })
 export class StaffHolidayComponent implements OnInit {
   public routes = routes;

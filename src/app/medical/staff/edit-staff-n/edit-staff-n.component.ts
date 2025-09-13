@@ -3,9 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { StaffService } from '../service/staff.service';
 
 @Component({
-  selector: 'app-edit-staff-n',
-  templateUrl: './edit-staff-n.component.html',
-  styleUrls: ['./edit-staff-n.component.scss'],
+    selector: 'app-edit-staff-n',
+    templateUrl: './edit-staff-n.component.html',
+    styleUrls: ['./edit-staff-n.component.scss'],
+    standalone: false
 })
 export class EditStaffNComponent {
   public selectedValue!: string;

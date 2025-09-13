@@ -3,9 +3,10 @@ import { AppointmentService } from '../service/appointment.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-atencion-medical',
-  templateUrl: './atencion-medical.component.html',
-  styleUrls: ['./atencion-medical.component.scss']
+    selector: 'app-atencion-medical',
+    templateUrl: './atencion-medical.component.html',
+    styleUrls: ['./atencion-medical.component.scss'],
+    standalone: false
 })
 export class AtencionMedicalComponent {
 

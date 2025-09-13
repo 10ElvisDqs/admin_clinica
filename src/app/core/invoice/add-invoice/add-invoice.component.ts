@@ -5,9 +5,10 @@ interface data {
   value: string ;
 }
 @Component({
-  selector: 'app-add-invoice',
-  templateUrl: './add-invoice.component.html',
-  styleUrls: ['./add-invoice.component.scss'],
+    selector: 'app-add-invoice',
+    templateUrl: './add-invoice.component.html',
+    styleUrls: ['./add-invoice.component.scss'],
+    standalone: false
 })
 export class AddInvoiceComponent {
   public routes = routes;

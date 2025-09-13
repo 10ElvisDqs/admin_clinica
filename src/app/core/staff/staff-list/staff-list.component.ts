@@ -6,9 +6,10 @@ import { apiResultFormat, pageSelection, staffList } from 'src/app/shared/models
 import { routes } from 'src/app/shared/routes/routes';
 
 @Component({
-  selector: 'app-staff-list',
-  templateUrl: './staff-list.component.html',
-  styleUrls: ['./staff-list.component.scss']
+    selector: 'app-staff-list',
+    templateUrl: './staff-list.component.html',
+    styleUrls: ['./staff-list.component.scss'],
+    standalone: false
 })
 export class StaffListComponent implements OnInit{
   public routes = routes;

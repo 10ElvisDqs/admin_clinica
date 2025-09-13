@@ -5,9 +5,10 @@ interface data {
   value: string ;
 }
 @Component({
-  selector: 'app-staff-attendance',
-  templateUrl: './staff-attendance.component.html',
-  styleUrls: ['./staff-attendance.component.scss']
+    selector: 'app-staff-attendance',
+    templateUrl: './staff-attendance.component.html',
+    styleUrls: ['./staff-attendance.component.scss'],
+    standalone: false
 })
 export class StaffAttendanceComponent {
   public routes = routes;

@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { SpecialitieService } from '../service/specialitie.service';
 
 @Component({
-  selector: 'app-add-specialitie',
-  templateUrl: './add-specialitie.component.html',
-  styleUrls: ['./add-specialitie.component.scss']
+    selector: 'app-add-specialitie',
+    templateUrl: './add-specialitie.component.html',
+    styleUrls: ['./add-specialitie.component.scss'],
+    standalone: false
 })
 export class AddSpecialitieComponent {
 

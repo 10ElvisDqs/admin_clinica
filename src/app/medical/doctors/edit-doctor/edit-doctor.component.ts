@@ -3,9 +3,10 @@ import { DoctorService } from '../service/doctor.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-edit-doctor',
-  templateUrl: './edit-doctor.component.html',
-  styleUrls: ['./edit-doctor.component.scss']
+    selector: 'app-edit-doctor',
+    templateUrl: './edit-doctor.component.html',
+    styleUrls: ['./edit-doctor.component.scss'],
+    standalone: false
 })
 export class EditDoctorComponent {
   public selectedValue !: string  ;

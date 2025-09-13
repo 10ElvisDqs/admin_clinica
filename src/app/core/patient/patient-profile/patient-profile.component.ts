@@ -5,9 +5,10 @@ import { patientProfile } from 'src/app/shared/models/models';
 import { routes } from 'src/app/shared/routes/routes';
 
 @Component({
-  selector: 'app-patient-profile',
-  templateUrl: './patient-profile.component.html',
-  styleUrls: ['./patient-profile.component.scss']
+    selector: 'app-patient-profile',
+    templateUrl: './patient-profile.component.html',
+    styleUrls: ['./patient-profile.component.scss'],
+    standalone: false
 })
 export class PatientProfileComponent {
 public routes = routes;

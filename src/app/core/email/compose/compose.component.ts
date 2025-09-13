@@ -4,9 +4,10 @@ import { Validators, Editor, Toolbar } from 'ngx-editor';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-compose',
-  templateUrl: './compose.component.html',
-  styleUrls: ['./compose.component.scss']
+    selector: 'app-compose',
+    templateUrl: './compose.component.html',
+    styleUrls: ['./compose.component.scss'],
+    standalone: false
 })
 export class ComposeComponent implements OnInit , OnDestroy{
   public routes = routes;

@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { routes } from 'src/app/shared/routes/routes';
 
 @Component({
-  selector: 'app-invoices-list',
-  templateUrl: './invoices-list.component.html',
-  styleUrls: ['./invoices-list.component.scss']
+    selector: 'app-invoices-list',
+    templateUrl: './invoices-list.component.html',
+    styleUrls: ['./invoices-list.component.scss'],
+    standalone: false
 })
 export class InvoicesListComponent {
   public routes = routes;

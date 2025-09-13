@@ -8,9 +8,10 @@ interface data {
   value: string ;
 }
 @Component({
-  selector: 'app-expense-reports',
-  templateUrl: './expense-reports.component.html',
-  styleUrls: ['./expense-reports.component.scss']
+    selector: 'app-expense-reports',
+    templateUrl: './expense-reports.component.html',
+    styleUrls: ['./expense-reports.component.scss'],
+    standalone: false
 })
 export class ExpenseReportsComponent implements OnInit{
   public routes = routes;

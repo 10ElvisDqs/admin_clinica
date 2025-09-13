@@ -3,9 +3,10 @@ import { AppointmentService } from '../service/appointment.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-edit-appointments',
-  templateUrl: './edit-appointments.component.html',
-  styleUrls: ['./edit-appointments.component.scss']
+    selector: 'app-edit-appointments',
+    templateUrl: './edit-appointments.component.html',
+    styleUrls: ['./edit-appointments.component.scss'],
+    standalone: false
 })
 export class EditAppointmentsComponent {
   hours:any = [];

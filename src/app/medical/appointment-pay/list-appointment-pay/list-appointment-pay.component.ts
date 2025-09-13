@@ -5,9 +5,10 @@ import { Router } from '@angular/router';
 
 declare var $:any;
 @Component({
-  selector: 'app-list-appointment-pay',
-  templateUrl: './list-appointment-pay.component.html',
-  styleUrls: ['./list-appointment-pay.component.scss']
+    selector: 'app-list-appointment-pay',
+    templateUrl: './list-appointment-pay.component.html',
+    styleUrls: ['./list-appointment-pay.component.scss'],
+    standalone: false
 })
 export class ListAppointmentPayComponent {
 

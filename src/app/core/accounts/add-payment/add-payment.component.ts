@@ -5,9 +5,10 @@ interface data {
   value: string ;
 }
 @Component({
-  selector: 'app-add-payment',
-  templateUrl: './add-payment.component.html',
-  styleUrls: ['./add-payment.component.scss']
+    selector: 'app-add-payment',
+    templateUrl: './add-payment.component.html',
+    styleUrls: ['./add-payment.component.scss'],
+    standalone: false
 })
 export class AddPaymentComponent {
   public routes = routes;

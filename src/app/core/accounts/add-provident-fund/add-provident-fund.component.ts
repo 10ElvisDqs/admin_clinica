@@ -4,9 +4,10 @@ interface data {
   value: string ;
 }
 @Component({
-  selector: 'app-add-provident-fund',
-  templateUrl: './add-provident-fund.component.html',
-  styleUrls: ['./add-provident-fund.component.scss']
+    selector: 'app-add-provident-fund',
+    templateUrl: './add-provident-fund.component.html',
+    styleUrls: ['./add-provident-fund.component.scss'],
+    standalone: false
 })
 export class AddProvidentFundComponent {
 public routes = routes;

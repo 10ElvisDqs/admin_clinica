@@ -6,9 +6,10 @@ import { pageSelection, apiResultFormat, providentFund } from 'src/app/shared/mo
 import { routes } from 'src/app/shared/routes/routes';
 
 @Component({
-  selector: 'app-provident-fund',
-  templateUrl: './provident-fund.component.html',
-  styleUrls: ['./provident-fund.component.scss']
+    selector: 'app-provident-fund',
+    templateUrl: './provident-fund.component.html',
+    styleUrls: ['./provident-fund.component.scss'],
+    standalone: false
 })
 export class ProvidentFundComponent implements OnInit {
   public routes = routes;

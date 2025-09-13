@@ -4,9 +4,10 @@ import { invoicesGrid } from 'src/app/shared/models/models';
 import { routes } from 'src/app/shared/routes/routes';
 
 @Component({
-  selector: 'app-invoices-grid',
-  templateUrl: './invoices-grid.component.html',
-  styleUrls: ['./invoices-grid.component.scss']
+    selector: 'app-invoices-grid',
+    templateUrl: './invoices-grid.component.html',
+    styleUrls: ['./invoices-grid.component.scss'],
+    standalone: false
 })
 export class InvoicesGridComponent {
   public routes = routes;

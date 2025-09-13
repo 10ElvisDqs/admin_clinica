@@ -5,9 +5,10 @@ interface data {
   value: string ;
 }
 @Component({
-  selector: 'app-add-asset',
-  templateUrl: './add-asset.component.html',
-  styleUrls: ['./add-asset.component.scss']
+    selector: 'app-add-asset',
+    templateUrl: './add-asset.component.html',
+    styleUrls: ['./add-asset.component.scss'],
+    standalone: false
 })
 export class AddAssetComponent {
   public routes = routes;

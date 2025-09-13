@@ -6,9 +6,10 @@ import { pageSelection, apiResultFormat, invoicedraft } from 'src/app/shared/mod
 import { routes } from 'src/app/shared/routes/routes';
 
 @Component({
-  selector: 'app-invoices-draft',
-  templateUrl: './invoices-draft.component.html',
-  styleUrls: ['./invoices-draft.component.scss']
+    selector: 'app-invoices-draft',
+    templateUrl: './invoices-draft.component.html',
+    styleUrls: ['./invoices-draft.component.scss'],
+    standalone: false
 })
 export class InvoicesDraftComponent implements OnInit{
   public routes = routes;

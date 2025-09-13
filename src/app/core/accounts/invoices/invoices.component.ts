@@ -9,9 +9,10 @@ interface data {
   value: string ;
 }
 @Component({
-  selector: 'app-invoices',
-  templateUrl: './invoices.component.html',
-  styleUrls: ['./invoices.component.scss']
+    selector: 'app-invoices',
+    templateUrl: './invoices.component.html',
+    styleUrls: ['./invoices.component.scss'],
+    standalone: false
 })
 export class InvoicesComponent  implements OnInit{
   public routes = routes;

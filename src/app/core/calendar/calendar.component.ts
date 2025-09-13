@@ -7,9 +7,10 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import { DataService } from 'src/app/shared/data/data.service';
 
 @Component({
-  selector: 'app-calendar',
-  templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.scss'],
+    selector: 'app-calendar',
+    templateUrl: './calendar.component.html',
+    styleUrls: ['./calendar.component.scss'],
+    standalone: false
 })
 export class CalendarComponent {
   public routes = routes;

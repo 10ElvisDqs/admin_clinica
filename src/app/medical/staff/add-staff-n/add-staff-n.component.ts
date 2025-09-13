@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { StaffService } from '../service/staff.service';
 
 @Component({
-  selector: 'app-add-staff-n',
-  templateUrl: './add-staff-n.component.html',
-  styleUrls: ['./add-staff-n.component.scss']
+    selector: 'app-add-staff-n',
+    templateUrl: './add-staff-n.component.html',
+    styleUrls: ['./add-staff-n.component.scss'],
+    standalone: false
 })
 export class AddStaffNComponent {
   public selectedValue !: string  ;

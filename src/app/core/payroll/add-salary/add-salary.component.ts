@@ -4,9 +4,10 @@ interface data {
   value: string ;
 }
 @Component({
-  selector: 'app-add-salary',
-  templateUrl: './add-salary.component.html',
-  styleUrls: ['./add-salary.component.scss']
+    selector: 'app-add-salary',
+    templateUrl: './add-salary.component.html',
+    styleUrls: ['./add-salary.component.scss'],
+    standalone: false
 })
 export class AddSalaryComponent {
   public routes = routes;

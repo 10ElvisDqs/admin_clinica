@@ -5,9 +5,10 @@ interface data {
   value: string ;
 }
 @Component({
-  selector: 'app-edit-schedule',
-  templateUrl: './edit-schedule.component.html',
-  styleUrls: ['./edit-schedule.component.scss']
+    selector: 'app-edit-schedule',
+    templateUrl: './edit-schedule.component.html',
+    styleUrls: ['./edit-schedule.component.scss'],
+    standalone: false
 })
 export class EditScheduleComponent {
   public routes = routes;

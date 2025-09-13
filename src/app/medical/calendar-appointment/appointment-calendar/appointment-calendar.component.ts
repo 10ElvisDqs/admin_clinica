@@ -6,9 +6,10 @@ import { AppointmentPayService } from '../../appointment-pay/service/appointment
 import { CalendarAppointmentService } from '../service/calendar-appointment.service';
 
 @Component({
-  selector: 'app-appointment-calendar',
-  templateUrl: './appointment-calendar.component.html',
-  styleUrls: ['./appointment-calendar.component.scss']
+    selector: 'app-appointment-calendar',
+    templateUrl: './appointment-calendar.component.html',
+    styleUrls: ['./appointment-calendar.component.scss'],
+    standalone: false
 })
 export class AppointmentCalendarComponent {
 

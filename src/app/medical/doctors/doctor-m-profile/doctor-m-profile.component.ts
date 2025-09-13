@@ -3,9 +3,10 @@ import { DoctorService } from '../service/doctor.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-doctor-m-profile',
-  templateUrl: './doctor-m-profile.component.html',
-  styleUrls: ['./doctor-m-profile.component.scss']
+    selector: 'app-doctor-m-profile',
+    templateUrl: './doctor-m-profile.component.html',
+    styleUrls: ['./doctor-m-profile.component.scss'],
+    standalone: false
 })
 export class DoctorMProfileComponent {
   doctorProfile:any = [];

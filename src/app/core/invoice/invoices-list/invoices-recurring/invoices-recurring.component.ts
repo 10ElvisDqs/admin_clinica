@@ -6,9 +6,10 @@ import { pageSelection, apiResultFormat, invoicerecurring } from 'src/app/shared
 import { routes } from 'src/app/shared/routes/routes';
 
 @Component({
-  selector: 'app-invoices-recurring',
-  templateUrl: './invoices-recurring.component.html',
-  styleUrls: ['./invoices-recurring.component.scss']
+    selector: 'app-invoices-recurring',
+    templateUrl: './invoices-recurring.component.html',
+    styleUrls: ['./invoices-recurring.component.scss'],
+    standalone: false
 })
 export class InvoicesRecurringComponent  implements OnInit{
   public routes = routes;

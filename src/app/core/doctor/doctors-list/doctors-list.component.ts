@@ -6,9 +6,10 @@ import { MatTableDataSource } from "@angular/material/table";
 import { pageSelection, apiResultFormat, doctorlist } from 'src/app/shared/models/models';
 
 @Component({
-  selector: 'app-doctors-list',
-  templateUrl: './doctors-list.component.html',
-  styleUrls: ['./doctors-list.component.scss']
+    selector: 'app-doctors-list',
+    templateUrl: './doctors-list.component.html',
+    styleUrls: ['./doctors-list.component.scss'],
+    standalone: false
 })
 export class DoctorsListComponent implements OnInit{
   public routes = routes;

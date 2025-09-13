@@ -6,9 +6,10 @@ import { Sort } from '@angular/material/sort';
 import { DataService } from 'src/app/shared/data/data.service';
 
 @Component({
-  selector: 'app-patients-list',
-  templateUrl: './patients-list.component.html',
-  styleUrls: ['./patients-list.component.scss']
+    selector: 'app-patients-list',
+    templateUrl: './patients-list.component.html',
+    styleUrls: ['./patients-list.component.scss'],
+    standalone: false
 })
 export class PatientsListComponent implements OnInit {
   public routes = routes;

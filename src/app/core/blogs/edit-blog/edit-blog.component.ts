@@ -6,9 +6,10 @@ interface data {
   value: string ;
 }
 @Component({
-  selector: 'app-edit-blog',
-  templateUrl: './edit-blog.component.html',
-  styleUrls: ['./edit-blog.component.scss']
+    selector: 'app-edit-blog',
+    templateUrl: './edit-blog.component.html',
+    styleUrls: ['./edit-blog.component.scss'],
+    standalone: false
 })
 export class EditBlogComponent implements OnInit , OnDestroy {
   public deleteIcon  = true;

@@ -58,9 +58,10 @@ export type ChartOptions = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 };
 @Component({
-  selector: 'app-patient-dashboard',
-  templateUrl: './patient-dashboard.component.html',
-  styleUrls: ['./patient-dashboard.component.scss'],
+    selector: 'app-patient-dashboard',
+    templateUrl: './patient-dashboard.component.html',
+    styleUrls: ['./patient-dashboard.component.scss'],
+    standalone: false
 })
 export class PatientDashboardComponent implements OnInit {
   public routes = routes;

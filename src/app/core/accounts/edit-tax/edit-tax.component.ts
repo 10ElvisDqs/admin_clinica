@@ -4,9 +4,10 @@ interface data {
   value: string ;
 }
 @Component({
-  selector: 'app-edit-tax',
-  templateUrl: './edit-tax.component.html',
-  styleUrls: ['./edit-tax.component.scss']
+    selector: 'app-edit-tax',
+    templateUrl: './edit-tax.component.html',
+    styleUrls: ['./edit-tax.component.scss'],
+    standalone: false
 })
 export class EditTaxComponent {
   public routes = routes;

@@ -3,9 +3,10 @@ import { AppointmentService } from '../service/appointment.service';
 import { MatTableDataSource } from '@angular/material/table';
 declare var $:any;
 @Component({
-  selector: 'app-list-appointments',
-  templateUrl: './list-appointments.component.html',
-  styleUrls: ['./list-appointments.component.scss']
+    selector: 'app-list-appointments',
+    templateUrl: './list-appointments.component.html',
+    styleUrls: ['./list-appointments.component.scss'],
+    standalone: false
 })
 export class ListAppointmentsComponent {
   public appointmentList:any = [];

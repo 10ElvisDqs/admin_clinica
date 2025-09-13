@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { AppointmentService } from '../service/appointment.service';
 
 @Component({
-  selector: 'app-add-appointments',
-  templateUrl: './add-appointments.component.html',
-  styleUrls: ['./add-appointments.component.scss']
+    selector: 'app-add-appointments',
+    templateUrl: './add-appointments.component.html',
+    styleUrls: ['./add-appointments.component.scss'],
+    standalone: false
 })
 export class AddAppointmentsComponent {
 

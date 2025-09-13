@@ -6,9 +6,10 @@ import { pageSelection, apiResultFormat, invoicescancelled } from 'src/app/share
 import { routes } from 'src/app/shared/routes/routes';
 
 @Component({
-  selector: 'app-invoices-cancelled',
-  templateUrl: './invoices-cancelled.component.html',
-  styleUrls: ['./invoices-cancelled.component.scss']
+    selector: 'app-invoices-cancelled',
+    templateUrl: './invoices-cancelled.component.html',
+    styleUrls: ['./invoices-cancelled.component.scss'],
+    standalone: false
 })
 export class InvoicesCancelledComponent implements OnInit {
   public routes = routes;

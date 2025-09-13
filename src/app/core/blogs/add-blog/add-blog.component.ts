@@ -6,9 +6,10 @@ interface data {
   value: string ;
 }
 @Component({
-  selector: 'app-add-blog',
-  templateUrl: './add-blog.component.html',
-  styleUrls: ['./add-blog.component.scss']
+    selector: 'app-add-blog',
+    templateUrl: './add-blog.component.html',
+    styleUrls: ['./add-blog.component.scss'],
+    standalone: false
 })
 export class AddBlogComponent  implements OnInit ,OnDestroy{
   public routes = routes;

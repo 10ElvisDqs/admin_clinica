@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { routes } from 'src/app/shared/routes/routes';
 
 @Component({
-  selector: 'app-invoices-settings',
-  templateUrl: './invoices-settings.component.html',
-  styleUrls: ['./invoices-settings.component.scss']
+    selector: 'app-invoices-settings',
+    templateUrl: './invoices-settings.component.html',
+    styleUrls: ['./invoices-settings.component.scss'],
+    standalone: false
 })
 export class InvoicesSettingsComponent {
   public routes = routes;

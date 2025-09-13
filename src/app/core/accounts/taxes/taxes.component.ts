@@ -6,9 +6,10 @@ import { pageSelection, apiResultFormat, taxes } from 'src/app/shared/models/mod
 import { routes } from 'src/app/shared/routes/routes';
 
 @Component({
-  selector: 'app-taxes',
-  templateUrl: './taxes.component.html',
-  styleUrls: ['./taxes.component.scss']
+    selector: 'app-taxes',
+    templateUrl: './taxes.component.html',
+    styleUrls: ['./taxes.component.scss'],
+    standalone: false
 })
 export class TaxesComponent implements OnInit {
   public routes = routes;

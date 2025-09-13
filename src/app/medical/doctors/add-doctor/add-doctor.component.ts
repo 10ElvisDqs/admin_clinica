@@ -3,9 +3,10 @@ import { DoctorService } from '../service/doctor.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-add-doctor',
-  templateUrl: './add-doctor.component.html',
-  styleUrls: ['./add-doctor.component.scss']
+    selector: 'app-add-doctor',
+    templateUrl: './add-doctor.component.html',
+    styleUrls: ['./add-doctor.component.scss'],
+    standalone: false
 })
 export class AddDoctorComponent {
   myForm: FormGroup;

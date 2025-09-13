@@ -5,9 +5,10 @@ interface data {
   value: string ;
 }
 @Component({
-  selector: 'app-localization-details',
-  templateUrl: './localization-details.component.html',
-  styleUrls: ['./localization-details.component.scss'],
+    selector: 'app-localization-details',
+    templateUrl: './localization-details.component.html',
+    styleUrls: ['./localization-details.component.scss'],
+    standalone: false
 })
 export class LocalizationDetailsComponent {
   public routes = routes;

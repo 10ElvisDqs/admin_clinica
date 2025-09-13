@@ -5,9 +5,10 @@ interface data {
   value: string ;
 }
 @Component({
-  selector: 'app-edit-asset', 
-  templateUrl: './edit-asset.component.html',
-  styleUrls: ['./edit-asset.component.scss']
+    selector: 'app-edit-asset',
+    templateUrl: './edit-asset.component.html',
+    styleUrls: ['./edit-asset.component.scss'],
+    standalone: false
 })
 export class EditAssetComponent {
   public routes = routes;

@@ -6,9 +6,10 @@ import { pageSelection, apiResultFormat, invoicespaid } from 'src/app/shared/mod
 import { routes } from 'src/app/shared/routes/routes';
 
 @Component({
-  selector: 'app-invoices-paid',
-  templateUrl: './invoices-paid.component.html',
-  styleUrls: ['./invoices-paid.component.scss']
+    selector: 'app-invoices-paid',
+    templateUrl: './invoices-paid.component.html',
+    styleUrls: ['./invoices-paid.component.scss'],
+    standalone: false
 })
 export class InvoicesPaidComponent implements OnInit{
   public routes = routes;

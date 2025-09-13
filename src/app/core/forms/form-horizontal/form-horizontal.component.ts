@@ -4,9 +4,10 @@ interface data {
   value: string ;
 }
 @Component({
-  selector: 'app-form-horizontal',
-  templateUrl: './form-horizontal.component.html',
-  styleUrls: ['./form-horizontal.component.scss']
+    selector: 'app-form-horizontal',
+    templateUrl: './form-horizontal.component.html',
+    styleUrls: ['./form-horizontal.component.scss'],
+    standalone: false
 })
 export class FormHorizontalComponent {
   public routes = routes;
