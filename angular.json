@@ -81,10 +81,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "preclinic-angular:build:production"
+              "buildTarget": "preclinic-angular:build:production"
             },
             "development": {
-              "browserTarget": "preclinic-angular:build:development"
+              "buildTarget": "preclinic-angular:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -92,7 +92,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "preclinic-angular:build"
+            "buildTarget": "preclinic-angular:build"
           }
         },
         "test": {
