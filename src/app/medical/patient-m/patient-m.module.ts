@@ -8,28 +8,21 @@ import { EditPatientMComponent } from './edit-patient-m/edit-patient-m.component
 import { ListPatientMComponent } from './list-patient-m/list-patient-m.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { PatientMProfileComponent } from './patient-m-profile/patient-m-profile.component';
 
 
-@NgModule({
-  declarations: [
-    PatientMComponent,
-    AddPatientMComponent,
-    EditPatientMComponent,
-    ListPatientMComponent,
-    PatientMProfileComponent
-  ],
-  imports: [
-    CommonModule,
-    PatientMRoutingModule,
-
-    SharedModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    RouterModule
-  ]
-})
+@NgModule({ declarations: [
+        PatientMComponent,
+        AddPatientMComponent,
+        EditPatientMComponent,
+        ListPatientMComponent,
+        PatientMProfileComponent
+    ], imports: [CommonModule,
+        PatientMRoutingModule,
+        SharedModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class PatientMModule { }
