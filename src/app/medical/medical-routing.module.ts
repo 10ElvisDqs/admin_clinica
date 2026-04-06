@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MedicalComponent } from './medical.component';
 import { AuthGuard } from '../shared/gaurd/auth.guard';
 
-// http://localhost:4200/roles/register
+// http://192.168.100.9:4200/roles/register
 const routes: Routes = [
   {
     path:'',
@@ -49,6 +49,21 @@ const routes: Routes = [
         path: 'appointment-calendar',
         loadChildren: () =>
           import('./calendar-appointment/calendar-appointment.module').then((m) => m.CalendarAppointmentModule),
+      },
+      {
+        path: 'ingreso',
+        loadChildren: () =>
+          import('./ingreso/ingreso.module').then((m) => m.IngresoModule),
+      },
+      {
+        path: 'egreso',
+        loadChildren: () =>
+          import('./egreso/egreso.module').then((m) => m.EgresoModule),
+      },
+      {
+        path: 'seguimiento',
+        loadChildren: () =>
+          import('./seguimiento/seguimiento.module').then((m) => m.SeguimientoModule),
       },
     ]
   }

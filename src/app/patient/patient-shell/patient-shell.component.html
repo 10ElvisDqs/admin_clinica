@@ -1,0 +1,98 @@
+<!-- Shell sin sidebar: solo header + content -->
+<div class="main-wrapper">
+
+  <!-- Header paciente -->
+  <div class="header">
+    <div class="header-left">
+      <a routerLink="/patient/dashboard" class="logo">
+        <img src="assets/img/logo.png" width="35" height="35" alt="">
+        <span>Portal Paciente</span>
+      </a>
+    </div>
+
+    <!-- Nav links (desktop) -->
+    <ul class="nav header-navbar-rht d-none d-lg-flex align-items-center me-auto ms-4">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/patient/dashboard"
+          style="font-size:.88rem; font-weight:500; color:#555;">
+          <i class="feather icon-calendar me-1"></i> Mis Citas
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" style="font-size:.88rem; font-weight:500; color:#555; cursor:pointer;">
+          <i class="feather icon-file-text me-1"></i> Historial
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" style="font-size:.88rem; font-weight:500; color:#555; cursor:pointer;">
+          <i class="feather icon-activity me-1"></i> Seguimiento
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/patient/payment-methods"
+          style="font-size:.88rem; font-weight:500; color:#555;">
+          <i class="feather icon-credit-card me-1"></i> Mis Pagos
+        </a>
+      </li>
+    </ul>
+
+    <ul class="nav user-menu float-end">
+      <!-- Notificaciones (indicador visual) -->
+      <li class="nav-item dropdown d-none d-sm-flex">
+        <a class="nav-link" href="javascript:void(0);" style="position:relative;">
+          <i class="feather icon-bell" style="font-size:1.2rem;"></i>
+          <span *ngIf="pendingCount > 0"
+            style="position:absolute;top:8px;right:8px;width:8px;height:8px;
+                   background:#f97316;border-radius:50%;display:block;"></span>
+        </a>
+      </li>
+
+      <!-- Usuario -->
+      <li class="nav-item dropdown has-arrow logged-item">
+        <a href="javascript:void(0);" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
+          <span class="user-img">
+            <!-- Avatar con iniciales si no hay imagen -->
+            <span style="width:31px;height:31px;border-radius:50%;background:#2e37a4;
+                         display:inline-flex;align-items:center;justify-content:center;
+                         font-size:.7rem;font-weight:700;color:#fff;vertical-align:middle;">
+              {{ getInitials(user?.name + ' ' + user?.surname) }}
+            </span>
+            <span class="user-text ms-1">{{ user?.name }}</span>
+          </span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-end">
+          <div class="user-header">
+            <div class="avatar avatar-sm">
+              <span style="width:32px;height:32px;border-radius:50%;background:#2e37a4;
+                           display:inline-flex;align-items:center;justify-content:center;
+                           font-size:.75rem;font-weight:700;color:#fff;">
+                {{ getInitials(user?.name + ' ' + user?.surname) }}
+              </span>
+            </div>
+            <div class="user-text">
+              <h6>{{ user?.name }} {{ user?.surname }}</h6>
+              <p class="text-muted mb-0">Paciente</p>
+            </div>
+          </div>
+          <a class="dropdown-item" routerLink="/patient/dashboard">
+            <i class="feather icon-home me-1"></i> Mi Portal
+          </a>
+          <a class="dropdown-item" routerLink="/patient/payment-methods">
+            <i class="feather icon-credit-card me-1"></i> Mis Métodos de Pago
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="javascript:void(0);" (click)="logout()">
+            <i class="feather icon-log-out me-1"></i> Cerrar Sesión
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <!-- /Header paciente -->
+
+  <!-- Sin sidebar: page-wrapper ocupa todo el ancho -->
+  <div class="patient-no-sidebar">
+    <router-outlet></router-outlet>
+  </div>
+
+</div>

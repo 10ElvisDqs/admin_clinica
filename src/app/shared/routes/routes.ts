@@ -364,4 +364,42 @@ export class routes {
   public static get listadoRole(): string {
     return this.baseUrl + '/roles/list';
   }
+
+  // =================== PORTAL PACIENTE ===================
+  public static get landing(): string {
+    return this.baseUrl + '/';
+  }
+  public static get patientLogin(): string {
+    return this.baseUrl + '/patient/login';
+  }
+  public static get patientRegister(): string {
+    return this.baseUrl + '/patient/register';
+  }
+  public static get patientPortal(): string {
+    return this.baseUrl + '/patient/dashboard';
+  }
+
+  // =================== INGRESO ===================
+  public static get addIngreso(): string {
+    return this.baseUrl + '/ingreso/register';
+  }
+  public static get listIngreso(): string {
+    return this.baseUrl + '/ingreso/list';
+  }
+
+  // =================== EGRESO ====================
+  public static get addEgreso(): string {
+    return this.baseUrl + '/egreso/register';
+  }
+  public static get listEgreso(): string {
+    return this.baseUrl + '/egreso/list';
+  }
+
+  // ================== SEGUIMIENTO ================
+  public static get addSeguimiento(): string {
+    return this.baseUrl + '/seguimiento/register';
+  }
+  public static get listSeguimiento(): string {
+    return this.baseUrl + '/seguimiento/list';
+  }
 }

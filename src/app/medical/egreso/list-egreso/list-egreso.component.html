@@ -1,0 +1,152 @@
+<div class="page-wrapper">
+  <div class="content">
+
+    <div class="page-header">
+      <div class="row">
+        <div class="col-sm-12">
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+            <li class="breadcrumb-item active">Egresos de Pacientes</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="text_success" class="alert alert-success alert-dismissible fade show">
+      {{ text_success }}
+      <button type="button" class="btn-close" (click)="text_success=''"></button>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card card-table show-entire">
+          <div class="card-body">
+
+            <div class="page-table-header mb-2">
+              <div class="row align-items-center">
+                <div class="col">
+                  <div class="doctor-table-blk">
+                    <h3>Listado de Egresos</h3>
+                    <div class="doctor-search-blk">
+                      <div class="input-block doctor-search-block">
+                        <input type="text" class="form-control" placeholder="Buscar paciente..."
+                          [(ngModel)]="searchDataValue" (keyup.enter)="searchData()">
+                        <button class="btn btn-primary ms-2" (click)="searchData()">
+                          <i class="fa fa-search"></i>
+                        </button>
+                      </div>
+                      <div class="input-block ms-2" style="min-width:170px">
+                        <select class="form-select" [(ngModel)]="tipoFiltro" (change)="searchData()">
+                          <option value="">Todos los tipos</option>
+                          <option *ngFor="let t of tiposEgreso" [value]="t.value">{{ t.label }}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-auto d-flex">
+                  <button class="btn btn-secondary me-2" (click)="clearFilters()">
+                    <i class="fa fa-refresh"></i>
+                  </button>
+                  <button class="btn btn-outline-danger me-2" (click)="generarPDF()">
+                    <i class="fa fa-file-pdf-o"></i> PDF
+                  </button>
+                  <a [routerLink]="['/egreso/register']" class="btn btn-primary">
+                    <i class="fa fa-plus"></i> Nuevo Egreso
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table table-hover table-center mb-0">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Paciente</th>
+                    <th>Doctor</th>
+                    <th>F. Ingreso</th>
+                    <th>F. Egreso</th>
+                    <th>Tipo Egreso</th>
+                    <th>Diagnóstico Final</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of egresoList">
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.patient?.full_name ?? '-' }}</td>
+                    <td>{{ item.doctor?.full_name ?? '-' }}</td>
+                    <td>{{ item.ingreso?.fecha_ingreso ?? '-' }}</td>
+                    <td>{{ item.fecha_egreso }}</td>
+                    <td>
+                      <span class="badge bg-info text-dark">{{ getTipoLabel(item.tipo_egreso) }}</span>
+                    </td>
+                    <td>
+                      <span title="{{ item.diagnostico_final }}">
+                        {{ item.diagnostico_final | slice:0:50 }}{{ item.diagnostico_final?.length > 50 ? '...' : '' }}
+                      </span>
+                    </td>
+                    <td>
+                      <div class="d-flex gap-1">
+                        <a [routerLink]="['/egreso/edit', item.id]" class="btn btn-sm btn-warning" title="Editar">
+                          <i class="fa fa-pencil"></i>
+                        </a>
+                        <button class="btn btn-sm btn-danger" title="Eliminar"
+                          data-bs-toggle="modal" data-bs-target="#deleteEgresoModal"
+                          (click)="selectEgreso(item)">
+                          <i class="fa fa-trash"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr *ngIf="egresoList.length === 0">
+                    <td colspan="8" class="text-center text-muted py-4">No hay egresos registrados.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mt-3" *ngIf="total > pageSize">
+              <span class="text-muted">Total: {{ total }} registros</span>
+              <nav>
+                <ul class="pagination mb-0">
+                  <li class="page-item" [class.disabled]="currentPage === 1">
+                    <button class="page-link" (click)="prevPage()">Anterior</button>
+                  </li>
+                  <li class="page-item disabled">
+                    <span class="page-link">{{ currentPage }} / {{ totalPages }}</span>
+                  </li>
+                  <li class="page-item" [class.disabled]="currentPage === totalPages">
+                    <button class="page-link" (click)="nextPage()">Siguiente</button>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal fade" id="deleteEgresoModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmar Eliminación</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" *ngIf="egreso_selected">
+        ¿Desea eliminar el egreso de <strong>{{ egreso_selected.patient?.full_name }}</strong>?
+        <br><small class="text-muted">El ingreso volverá al estado Activo.</small>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button class="btn btn-danger" data-bs-dismiss="modal" (click)="confirmDelete()">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>

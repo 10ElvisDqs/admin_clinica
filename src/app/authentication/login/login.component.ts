@@ -5,10 +5,10 @@ import { AuthService } from 'src/app/shared/auth/auth.service';
 import { routes } from 'src/app/shared/routes/routes';
 
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
-    standalone: false
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
+  standalone: false,
 })
 export class LoginComponent implements OnInit {
   public routes = routes;
@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
     return this.form.controls;
   }
 
-  constructor(public auth: AuthService,public router: Router) {}
+  constructor(public auth: AuthService, public router: Router) {}
   ngOnInit(): void {
     if (localStorage.getItem('authenticated')) {
       // localStorage.removeItem('authenticated');
@@ -37,22 +37,28 @@ export class LoginComponent implements OnInit {
   loginFormSubmit() {
     if (this.form.valid) {
       this.ERROR = false;
-      this.auth.login(this.form.value.email ? this.form.value.email : '' ,this.form.value.password ? this.form.value.password: '')
-      .subscribe((resp:any) => {
-        console.log(resp);
-        if(resp){
-          // EL LOGIN ES EXITOSO
-          setTimeout(() => {
-            document.location.reload();
-          }, 50);
-        }else{
-          // EL LOGIN NO ES EXITOSO
-          this.ERROR = true;
-        }
-      },error => {
-        console.log(error);
-      })
-      ;
+      this.auth
+        .login(
+          this.form.value.email ? this.form.value.email : '',
+          this.form.value.password ? this.form.value.password : ''
+        )
+        .subscribe(
+          (resp: any) => {
+            console.log(resp);
+            if (resp) {
+              // EL LOGIN ES EXITOSO
+              setTimeout(() => {
+                document.location.reload();
+              }, 50);
+            } else {
+              // EL LOGIN NO ES EXITOSO
+              this.ERROR = true;
+            }
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
     }
   }
   togglePassword() {

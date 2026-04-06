@@ -1,0 +1,603 @@
+<div class="page-wrapper">
+  <div class="content">
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item active">Mi Portal</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- /Page Header -->
+
+    <!-- Alerta retorno de Stripe -->
+    <div class="alert alert-success alert-dismissible d-flex align-items-center gap-2" *ngIf="paymentStatus==='success'">
+      <i class="feather icon-check-circle" style="font-size:1.3rem;"></i>
+      <div>
+        <strong>¡Pago exitoso!</strong> Tu cita fue registrada correctamente. Puedes verla en "Mis Citas".
+      </div>
+      <button type="button" class="btn-close ms-auto" (click)="paymentStatus=null"></button>
+    </div>
+    <div class="alert alert-warning alert-dismissible d-flex align-items-center gap-2" *ngIf="paymentStatus==='cancel'">
+      <i class="feather icon-alert-circle" style="font-size:1.3rem;"></i>
+      <div>El pago fue cancelado. Puedes intentarlo de nuevo cuando quieras.</div>
+      <button type="button" class="btn-close ms-auto" (click)="paymentStatus=null"></button>
+    </div>
+
+    <!-- Bienvenida -->
+    <div class="good-morning-blk">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="morning-user">
+            <h2>Bienvenido/a, <span>{{ user?.name }} {{ user?.surname }}</span></h2>
+            <p>Aquí puedes ver tu información médica</p>
+            <button class="btn btn-light btn-sm mt-2" (click)="bookAppointment()"
+              style="border-radius:50px;font-weight:600;">
+              <i class="feather icon-plus me-1"></i>Solicitar Cita
+            </button>
+          </div>
+        </div>
+        <div class="col-md-6 position-blk">
+          <div class="morning-img">
+            <img src="assets/img/morning-img-03.png" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs de navegación -->
+    <div class="row mb-3">
+      <div class="col-12">
+        <ul class="nav nav-tabs nav-tabs-bottom">
+          <li class="nav-item">
+            <a class="nav-link" [class.active]="activeTab==='appointments'" href="javascript:void(0);"
+              (click)="activeTab='appointments'">
+              <i class="feather icon-calendar me-1"></i> Mis Citas
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [class.active]="activeTab==='history'" href="javascript:void(0);"
+              (click)="activeTab='history'">
+              <i class="feather icon-file-text me-1"></i> Mi Historial
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [class.active]="activeTab==='seguimientos'" href="javascript:void(0);"
+              (click)="activeTab='seguimientos'">
+              <i class="feather icon-activity me-1"></i> Seguimiento
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [class.active]="activeTab==='profile'" href="javascript:void(0);"
+              (click)="activeTab='profile'">
+              <i class="feather icon-user me-1"></i> Mi Perfil
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ── MIS CITAS ─────────────────────────────────────── -->
+    <ng-container *ngIf="activeTab==='appointments'">
+
+      <!-- Stats -->
+      <div class="row">
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+          <div class="dash-widget">
+            <div class="dash-boxs comman-flex-center">
+              <img src="assets/img/icons/calendar.svg" alt="">
+            </div>
+            <div class="dash-content dash-count">
+              <h4>Total Citas</h4>
+              <h2>{{ appointments.length }}</h2>
+              <p class="text-muted mb-0" style="font-size:.8rem;">registradas</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+          <div class="dash-widget">
+            <div class="dash-boxs comman-flex-center">
+              <img src="assets/img/icons/tick-circle.svg" alt="">
+            </div>
+            <div class="dash-content dash-count">
+              <h4>Atendidas</h4>
+              <h2>{{ attendedCount }}</h2>
+              <p class="mb-0">
+                <span class="passive-view" *ngIf="attendedPercent > 0">
+                  <i class="feather icon-arrow-up-right me-1"></i>{{ attendedPercent }}%
+                </span>
+                <span class="text-muted" style="font-size:.8rem;" *ngIf="attendedPercent === 0">0%</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+          <div class="dash-widget">
+            <div class="dash-boxs comman-flex-center">
+              <img src="assets/img/icons/timer.svg" alt="">
+            </div>
+            <div class="dash-content dash-count">
+              <h4>Pendientes</h4>
+              <h2>{{ pendingCount }}</h2>
+              <p class="text-muted mb-0" style="font-size:.8rem;">por atender</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+          <div class="dash-widget">
+            <div class="dash-boxs comman-flex-center">
+              <img src="assets/img/icons/document-icon.svg" alt="">
+            </div>
+            <div class="dash-content dash-count">
+              <h4>Historial</h4>
+              <h2>{{ history.length }}</h2>
+              <p class="text-muted mb-0" style="font-size:.8rem;">atenciones</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Próxima cita destacada -->
+      <div class="row mb-3" *ngIf="nextAppointment">
+        <div class="col-12">
+          <div class="card" style="border-left: 4px solid #2e37a4;">
+            <div class="card-body py-3">
+              <div class="row align-items-center">
+                <div class="col-auto">
+                  <div class="dash-boxs comman-flex-center" style="background:#eef0ff; border-radius:12px; width:48px; height:48px;">
+                    <img src="assets/img/icons/calendar.svg" alt="" style="width:24px;">
+                  </div>
+                </div>
+                <div class="col">
+                  <p class="text-muted mb-0" style="font-size:.8rem; font-weight:600; text-transform:uppercase; letter-spacing:.5px;">Próxima Cita</p>
+                  <h6 class="mb-0">
+                    {{ nextAppointment.date_appointment_format }} —
+                    <span *ngIf="nextAppointment.segment_hour">
+                      {{ nextAppointment.segment_hour.format_segment?.format_hour_start }}
+                    </span>
+                  </h6>
+                  <p class="mb-0 text-muted" style="font-size:.85rem;">
+                    Dr. {{ nextAppointment.doctor?.full_name || '—' }}
+                    <span *ngIf="nextAppointment.specialitie" class="ms-2 badge bg-primary-light text-primary">
+                      {{ nextAppointment.specialitie.name }}
+                    </span>
+                  </p>
+                </div>
+                <div class="col-auto">
+                  <span class="custom-badge status-orange">Pendiente</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabla citas -->
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="card card-table show-entire">
+            <div class="card-body">
+              <div class="page-table-header mb-2">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <div class="doctor-table-blk">
+                      <h3>Listado de Citas</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Loading -->
+              <div class="text-center py-4" *ngIf="loadingAppointments">
+                <div class="spinner-border text-primary" role="status"></div>
+                <p class="mt-2 text-muted">Cargando citas...</p>
+              </div>
+
+              <div class="table-responsive" *ngIf="!loadingAppointments">
+                <table class="table border-0 custom-table comman-table datatable mb-0"
+                  *ngIf="appointments.length > 0; else noCitas">
+                  <thead>
+                    <tr>
+                      <th>Fecha</th>
+                      <th>Doctor</th>
+                      <th>Especialidad</th>
+                      <th>Hora</th>
+                      <th>Estado</th>
+                      <th>Pago</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let a of appointments">
+                      <td>{{ a.date_appointment_format }}</td>
+                      <td>
+                        <h2 class="table-avatar">
+                          <span>{{ a.doctor?.full_name || '—' }}</span>
+                        </h2>
+                      </td>
+                      <td>{{ a.specialitie?.name || '—' }}</td>
+                      <td>
+                        <span *ngIf="a.segment_hour">
+                          {{ a.segment_hour.format_segment?.format_hour_start }}
+                        </span>
+                        <span *ngIf="!a.segment_hour">—</span>
+                      </td>
+                      <td>
+                        <span [ngClass]="{
+                          'custom-badge status-green':  a.status === 2,
+                          'custom-badge status-orange': a.status === 1,
+                          'custom-badge status-pink':   a.status === 3
+                        }">{{ statusLabel[a.status] || a.status }}</span>
+                      </td>
+                      <td>
+                        <span [ngClass]="{
+                          'custom-badge status-green':  a.status_pay === 2,
+                          'custom-badge status-orange': a.status_pay === 1,
+                          'custom-badge status-pink':   a.status_pay === 3
+                        }">{{ statusPayLabel[a.status_pay] || a.status_pay }}</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <ng-template #noCitas>
+                  <div class="text-center py-5">
+                    <img src="assets/img/icons/empty-wallet.svg" alt="" width="60" class="mb-3">
+                    <p class="text-muted mb-0">No tienes citas registradas aún.</p>
+                    <p class="text-muted" style="font-size:.85rem;">Comunícate con recepción para agendar una cita.</p>
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- ── MI HISTORIAL ──────────────────────────────────── -->
+    <ng-container *ngIf="activeTab==='history'">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="card card-table show-entire">
+            <div class="card-body">
+              <div class="page-table-header mb-2">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <div class="doctor-table-blk">
+                      <h3>Mi Historial Clínico</h3>
+                    </div>
+                  </div>
+                  <div class="col-auto" *ngIf="history.length > 0">
+                    <span class="badge bg-primary-light text-primary">{{ history.length }} atención(es)</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="text-center py-4" *ngIf="loadingHistory">
+                <div class="spinner-border text-primary" role="status"></div>
+              </div>
+
+              <div *ngIf="!loadingHistory">
+                <div class="text-center py-5" *ngIf="history.length === 0">
+                  <img src="assets/img/icons/document-icon.svg" alt="" width="60" class="mb-3">
+                  <p class="text-muted mb-0">No tienes atenciones registradas.</p>
+                </div>
+
+                <div class="accordion" *ngIf="history.length > 0">
+                  <div class="accordion-item mb-3" *ngFor="let h of history; let i = index"
+                    style="border:none; border-radius:12px; box-shadow:0 2px 10px rgba(0,0,0,.06); overflow:hidden;">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button collapsed" type="button"
+                        data-bs-toggle="collapse" [attr.data-bs-target]="'#hist' + i"
+                        style="border-radius:0; background:#fff;">
+                        <div class="d-flex align-items-center w-100 gap-3">
+                          <div class="dash-boxs comman-flex-center"
+                            style="background:#eef0ff; border-radius:10px; width:40px; height:40px; flex-shrink:0;">
+                            <img src="assets/img/icons/report-icon-01.svg" alt="" style="width:20px;">
+                          </div>
+                          <div class="flex-grow-1">
+                            <div class="d-flex align-items-center gap-2 flex-wrap">
+                              <strong>{{ h.doctor || 'Doctor' }}</strong>
+                              <span class="badge bg-primary-light text-primary" *ngIf="h.specialitie">{{ h.specialitie }}</span>
+                            </div>
+                            <small class="text-muted">{{ h.date }}</small>
+                          </div>
+                          <span class="custom-badge status-green me-4">Atendido</span>
+                        </div>
+                      </button>
+                    </h2>
+                    <div [id]="'hist' + i" class="accordion-collapse collapse">
+                      <div class="accordion-body" style="background:#fafbff;">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group local-forms">
+                              <label>Descripción / Diagnóstico</label>
+                              <textarea class="form-control" rows="3" readonly>{{ h.description }}</textarea>
+                            </div>
+                          </div>
+                          <div class="col-md-6" *ngIf="h.receta_medica?.length > 0">
+                            <div class="heading-detail">
+                              <h4><img src="assets/img/icons/menu-icon-04.svg" alt="" class="me-2" style="width:18px;">Receta Médica</h4>
+                            </div>
+                            <div class="about-me-list">
+                              <ul class="list-space">
+                                <li *ngFor="let r of h.receta_medica">
+                                  <h4>{{ r.name_medical }}</h4>
+                                  <span>{{ r.uso }}</span>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                          <div class="col-md-6" *ngIf="!h.receta_medica?.length">
+                            <div class="text-center py-3 text-muted">
+                              <img src="assets/img/icons/document-icon.svg" alt="" width="36" class="mb-2">
+                              <p class="mb-0" style="font-size:.85rem;">Sin receta médica</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- ── SEGUIMIENTO ───────────────────────────────────── -->
+    <ng-container *ngIf="activeTab==='seguimientos'">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="card card-table show-entire">
+            <div class="card-body">
+              <div class="page-table-header mb-2">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <div class="doctor-table-blk">
+                      <h3>Seguimiento Médico</h3>
+                    </div>
+                  </div>
+                  <div class="col-auto" *ngIf="seguimientos.length > 0">
+                    <span class="badge bg-primary-light text-primary">{{ seguimientos.length }} registro(s)</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="text-center py-4" *ngIf="loadingSeguimientos">
+                <div class="spinner-border text-primary" role="status"></div>
+              </div>
+
+              <div *ngIf="!loadingSeguimientos">
+                <div class="text-center py-5" *ngIf="seguimientos.length === 0">
+                  <img src="assets/img/icons/health-img.svg" alt="" width="60" class="mb-3">
+                  <p class="text-muted mb-0">No tienes seguimientos registrados.</p>
+                </div>
+
+                <!-- Tarjetas de seguimiento -->
+                <div class="row" *ngIf="seguimientos.length > 0">
+                  <div class="col-md-6 col-lg-4 mb-3" *ngFor="let s of seguimientos">
+                    <div class="treat-box" style="border-radius:12px; border:1px solid #e8eaf0;">
+                      <div class="user-imgs-blk">
+                        <div class="dash-boxs comman-flex-center"
+                          style="background:#eef0ff; border-radius:50%; width:44px; height:44px; flex-shrink:0;">
+                          <img src="assets/img/icons/report-icon-03.svg" alt="" style="width:22px;">
+                        </div>
+                        <div class="active-user-detail flex-grow-1">
+                          <h4 style="font-size:.9rem;">{{ s.observacion || s.description || 'Seguimiento médico' }}</h4>
+                          <p>{{ s.created_at | date:'dd/MM/yyyy' }}</p>
+                        </div>
+                      </div>
+                      <span class="custom-badge status-green">{{ s.estado || 'Activo' }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- ── MI PERFIL ─────────────────────────────────────── -->
+    <ng-container *ngIf="activeTab==='profile'">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="card">
+            <div class="card-body">
+
+              <div class="text-center py-4" *ngIf="!patient">
+                <div class="spinner-border text-primary" role="status"></div>
+              </div>
+
+              <div *ngIf="patient">
+                <!-- Header perfil -->
+                <div class="doctor-profile-head">
+                  <div class="profile-bg-img">
+                    <img src="assets/img/profile-bg.jpg" alt="Profile">
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-4 col-md-4">
+                      <div class="profile-user-box">
+                        <div class="profile-user-img">
+                          <img [src]="patient.avatar || 'assets/img/profiles/avatar-01.jpg'" alt="Profile">
+                        </div>
+                        <div class="names-profiles">
+                          <h4>{{ patient.name }} {{ patient.surname }}</h4>
+                          <h5>Paciente</h5>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 d-flex align-items-center">
+                      <div class="follow-group">
+                        <div class="doctor-follows">
+                          <h5>Citas</h5>
+                          <h4>{{ appointments.length }}</h4>
+                        </div>
+                        <div class="doctor-follows">
+                          <h5>Atenciones</h5>
+                          <h4>{{ history.length }}</h4>
+                        </div>
+                        <div class="doctor-follows">
+                          <h5>Seguimientos</h5>
+                          <h4>{{ seguimientos.length }}</h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Datos personales + antecedentes -->
+                <div class="row mt-4">
+                  <div class="col-lg-8">
+                    <div class="doctor-personals-grp">
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="tab-content-set">
+                            <ul class="nav">
+                              <li>
+                                <a href="javascript:void(0);" class="active">
+                                  <span class="set-about-icon me-2">
+                                    <img src="assets/img/icons/menu-icon-02.svg" alt="">
+                                  </span>Información Personal
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                          <div class="personal-list-out">
+                            <div class="row">
+                              <div class="col-xl-3 col-md-6">
+                                <div class="detail-personal">
+                                  <h2>Nombre completo</h2>
+                                  <h3>{{ patient.full_name || (patient.name + ' ' + patient.surname) }}</h3>
+                                </div>
+                              </div>
+                              <div class="col-xl-3 col-md-6">
+                                <div class="detail-personal">
+                                  <h2>DNI / Documento</h2>
+                                  <h3>{{ patient.n_document || '—' }}</h3>
+                                </div>
+                              </div>
+                              <div class="col-xl-3 col-md-6">
+                                <div class="detail-personal">
+                                  <h2>Teléfono</h2>
+                                  <h3>{{ patient.mobile || '—' }}</h3>
+                                </div>
+                              </div>
+                              <div class="col-xl-3 col-md-6">
+                                <div class="detail-personal">
+                                  <h2>Correo electrónico</h2>
+                                  <h3>{{ patient.email || '—' }}</h3>
+                                </div>
+                              </div>
+                              <div class="col-xl-3 col-md-6">
+                                <div class="detail-personal">
+                                  <h2>Fecha de nacimiento</h2>
+                                  <h3>{{ patient.birth_date || '—' }}</h3>
+                                </div>
+                              </div>
+                              <div class="col-xl-3 col-md-6">
+                                <div class="detail-personal">
+                                  <h2>Género</h2>
+                                  <h3>{{ patient.gender === 1 ? 'Masculino' : patient.gender === 2 ? 'Femenino' : '—' }}</h3>
+                                </div>
+                              </div>
+                              <div class="col-xl-3 col-md-6">
+                                <div class="detail-personal">
+                                  <h2>Dirección</h2>
+                                  <h3>{{ patient.address || '—' }}</h3>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Antecedentes -->
+                  <div class="col-lg-4">
+                    <div class="doctor-personals-grp">
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="heading-detail">
+                            <h4 class="mb-3">
+                              <img src="assets/img/icons/report-icon-01.svg" alt="" class="me-2" style="width:18px;">
+                              Antecedentes Médicos
+                            </h4>
+                          </div>
+                          <div class="about-me-list">
+                            <ul class="list-space">
+                              <li>
+                                <h4>Familiares</h4>
+                                <span>{{ patient.antecedent_family || 'No registrado' }}</span>
+                              </li>
+                              <li>
+                                <h4>Personales</h4>
+                                <span>{{ patient.antecedent_personal || 'No registrado' }}</span>
+                              </li>
+                              <li>
+                                <h4>Alergias</h4>
+                                <span>{{ patient.antecedent_allergic || 'No registrado' }}</span>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Resumen de actividad -->
+                    <div class="doctor-personals-grp">
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="heading-detail">
+                            <h4 class="mb-3">
+                              <img src="assets/img/icons/health-img.svg" alt="" class="me-2" style="width:18px;">
+                              Resumen de Actividad
+                            </h4>
+                          </div>
+                          <div class="skill-blk">
+                            <div class="skill-statistics">
+                              <div class="skills-head d-flex justify-content-between mb-1">
+                                <p>Citas atendidas</p>
+                                <p>{{ attendedPercent }}%</p>
+                              </div>
+                              <div class="progress mb-3">
+                                <div class="progress-bar bg-operations" role="progressbar"
+                                  [style.width.%]="attendedPercent"></div>
+                              </div>
+                              <div class="skills-head d-flex justify-content-between mb-1">
+                                <p>Registros en historial</p>
+                                <p>{{ history.length }}</p>
+                              </div>
+                              <div class="progress mb-3">
+                                <div class="progress-bar bg-statistics" role="progressbar"
+                                  [style.width.%]="history.length > 0 ? 100 : 0"></div>
+                              </div>
+                              <div class="skills-head d-flex justify-content-between mb-1">
+                                <p>Seguimientos activos</p>
+                                <p>{{ seguimientos.length }}</p>
+                              </div>
+                              <div class="progress">
+                                <div class="progress-bar bg-endoscopic" role="progressbar"
+                                  [style.width.%]="seguimientos.length > 0 ? 100 : 0"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- /patient -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+  </div>
+</div>

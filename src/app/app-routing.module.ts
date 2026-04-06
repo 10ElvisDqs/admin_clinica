@@ -3,11 +3,18 @@ import { RouterModule, Routes } from '@angular/router';
 // import { AuthGuard } from './shared/gaurd/auth.guard';
 
 const routes: Routes = [
+  // Landing page pública
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'login',
+    loadChildren: () => import('./landing/landing.module').then((m) => m.LandingModule),
   },
+  // Portal del paciente
+  {
+    path: '',
+    loadChildren: () => import('./patient/patient.module').then((m) => m.PatientModule),
+  },
+  // Panel admin/médico
   {
     path: '',
     loadChildren: () => import('./core/core.module').then((m) => m.CoreModule),

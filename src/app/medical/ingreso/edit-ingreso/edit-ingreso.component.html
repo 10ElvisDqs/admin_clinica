@@ -1,0 +1,91 @@
+<div class="page-wrapper">
+  <div class="content">
+
+    <div class="page-header">
+      <div class="row">
+        <div class="col-sm-12">
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+            <li class="breadcrumb-item"><a [routerLink]="['/ingreso/list']">Ingresos</a></li>
+            <li class="breadcrumb-item active">Editar Ingreso #{{ ingreso_id }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Editar Ingreso</h4>
+            <hr>
+
+            <div *ngIf="text_validation" class="alert alert-danger alert-dismissible fade show">
+              {{ text_validation }}
+              <button type="button" class="btn-close" (click)="text_validation=''"></button>
+            </div>
+
+            <div class="row">
+
+              <!-- Paciente (solo lectura) -->
+              <div class="col-12 col-md-6 mb-3">
+                <label class="form-label">Paciente</label>
+                <input type="text" class="form-control" [value]="patient_name" disabled>
+              </div>
+
+              <!-- Doctor -->
+              <div class="col-12 col-md-6 mb-3">
+                <label class="form-label">Doctor responsable <span class="text-danger">*</span></label>
+                <select class="form-select" [(ngModel)]="doctor_id">
+                  <option value="">-- Seleccione un doctor --</option>
+                  <option *ngFor="let d of doctors" [value]="d.id">{{ d.full_name }}</option>
+                </select>
+              </div>
+
+              <!-- Fecha de Ingreso -->
+              <div class="col-12 col-md-6 mb-3">
+                <label class="form-label">Fecha y hora de ingreso <span class="text-danger">*</span></label>
+                <input type="datetime-local" class="form-control" [(ngModel)]="fecha_ingreso">
+              </div>
+
+              <!-- Sala -->
+              <div class="col-12 col-md-3 mb-3">
+                <label class="form-label">Sala</label>
+                <input type="text" class="form-control" [(ngModel)]="sala">
+              </div>
+
+              <!-- Cama -->
+              <div class="col-12 col-md-3 mb-3">
+                <label class="form-label">Cama</label>
+                <input type="text" class="form-control" [(ngModel)]="cama">
+              </div>
+
+              <!-- Motivo -->
+              <div class="col-12 mb-3">
+                <label class="form-label">Motivo de ingreso <span class="text-danger">*</span></label>
+                <textarea class="form-control" rows="3" [(ngModel)]="motivo"></textarea>
+              </div>
+
+              <!-- Observaciones -->
+              <div class="col-12 mb-3">
+                <label class="form-label">Observaciones</label>
+                <textarea class="form-control" rows="2" [(ngModel)]="observaciones"></textarea>
+              </div>
+
+            </div>
+
+            <div class="d-flex justify-content-end gap-2 mt-2">
+              <a [routerLink]="['/ingreso/list']" class="btn btn-secondary">Cancelar</a>
+              <button class="btn btn-primary" (click)="save()" [disabled]="loading">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                Guardar Cambios
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

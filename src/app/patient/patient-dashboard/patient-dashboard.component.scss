@@ -1,0 +1,5 @@
+// Sin sidebar: page-wrapper ocupa todo el ancho
+:host ::ng-deep .page-wrapper {
+  margin-left: 0 !important;
+  padding-top: 60px;
+}

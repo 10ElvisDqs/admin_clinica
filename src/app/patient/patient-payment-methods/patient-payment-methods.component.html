@@ -1,0 +1,233 @@
+<div class="page-wrapper">
+  <div class="content">
+
+    <!-- Header -->
+    <div class="page-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/patient/dashboard">Mi Portal</a></li>
+            <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+            <li class="breadcrumb-item active">Mis Métodos de Pago</li>
+          </ul>
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-primary btn-sm" (click)="openForm()" *ngIf="!showForm"
+            style="border-radius:50px; padding:7px 20px; font-weight:600;">
+            <i class="feather icon-plus me-1"></i> Agregar método
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alerta éxito -->
+    <div class="alert alert-success d-flex align-items-center gap-2 mb-3" *ngIf="success">
+      <i class="feather icon-check-circle"></i> {{ success }}
+    </div>
+
+    <!-- ── FORMULARIO AGREGAR ─────────────────────────────────────────────── -->
+    <ng-container *ngIf="showForm">
+      <div class="card mb-4" style="border-radius:16px; box-shadow:0 4px 16px rgba(0,0,0,.06);">
+        <div class="card-body">
+
+          <div class="d-flex align-items-center justify-content-between mb-4">
+            <h5 class="mb-0" style="font-weight:700;">
+              <i class="feather icon-plus-circle me-2 text-primary"></i>Nuevo método de pago
+            </h5>
+            <button class="btn btn-sm btn-outline-secondary" (click)="showForm=false">
+              <i class="feather icon-x"></i>
+            </button>
+          </div>
+
+          <div class="alert alert-danger d-flex align-items-center gap-2" *ngIf="error">
+            <i class="feather icon-alert-circle"></i> {{ error }}
+          </div>
+
+          <form [formGroup]="form" (ngSubmit)="save()">
+
+            <!-- Tipo de método -->
+            <div class="mb-4">
+              <label class="form-label fw-semibold">Tipo de método</label>
+              <div class="row g-2">
+                <div class="col-6 col-md-3" *ngFor="let t of methodTypes">
+                  <div class="card text-center" style="cursor:pointer; border-radius:12px; border:2px solid; transition:.2s;"
+                    [style.borderColor]="form.value.type === t.value ? t.color : '#e5e7eb'"
+                    [style.background]="form.value.type === t.value ? '#f8f9ff' : '#fff'"
+                    (click)="form.get('type')!.setValue(t.value)">
+                    <div class="card-body py-3">
+                      <div class="dash-boxs comman-flex-center mx-auto mb-2"
+                        style="width:40px;height:40px;border-radius:10px;"
+                        [style.background]="form.value.type === t.value ? t.color : '#f0f1f5'">
+                        <i class="feather" [class]="t.icon"
+                          [style.color]="form.value.type === t.value ? '#fff' : '#6b7280'"></i>
+                      </div>
+                      <p style="font-size:.75rem; font-weight:600; margin:0;"
+                        [style.color]="form.value.type === t.value ? t.color : '#374151'">
+                        {{ t.label }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <!-- Etiqueta / Alias -->
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-semibold">Nombre o etiqueta <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" formControlName="label"
+                  placeholder="Ej: Cuenta BNB Personal, Tigo Elvis...">
+                <div class="text-danger small mt-1" *ngIf="hasError('label')">Campo requerido.</div>
+              </div>
+
+              <!-- Banco (solo transferencia) -->
+              <div class="col-md-6 mb-3" *ngIf="selectedTypeInfo.needsAccount">
+                <label class="form-label fw-semibold">Banco <span class="text-danger">*</span></label>
+                <select class="form-select" formControlName="bank_name">
+                  <option value="">Seleccionar banco</option>
+                  <option *ngFor="let b of banks" [value]="b">{{ b }}</option>
+                </select>
+              </div>
+
+              <!-- Número de cuenta (transferencia) -->
+              <div class="col-md-6 mb-3" *ngIf="selectedTypeInfo.needsAccount">
+                <label class="form-label fw-semibold">Número de cuenta <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" formControlName="account_number"
+                  placeholder="Ej: 1234567890123">
+                <div class="text-danger small mt-1" *ngIf="hasError('account_number')">Campo requerido.</div>
+              </div>
+
+              <!-- Titular (transferencia) -->
+              <div class="col-md-6 mb-3" *ngIf="selectedTypeInfo.needsAccount">
+                <label class="form-label fw-semibold">Titular de la cuenta <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" formControlName="account_holder"
+                  placeholder="Nombre completo del titular">
+                <div class="text-danger small mt-1" *ngIf="hasError('account_holder')">Campo requerido.</div>
+              </div>
+
+              <!-- Teléfono (Tigo / QR) -->
+              <div class="col-md-6 mb-3" *ngIf="selectedTypeInfo.needsPhone">
+                <label class="form-label fw-semibold">Número de teléfono <span class="text-danger">*</span></label>
+                <input type="tel" class="form-control" formControlName="phone_number"
+                  placeholder="Ej: 76543210">
+                <div class="text-danger small mt-1" *ngIf="hasError('phone_number')">Campo requerido.</div>
+              </div>
+
+              <!-- Predeterminado -->
+              <div class="col-12 mb-3">
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="chkDefault" formControlName="is_default">
+                  <label class="form-check-label" for="chkDefault">
+                    Establecer como método predeterminado
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex gap-2 justify-content-end">
+              <button type="button" class="btn btn-outline-secondary" (click)="showForm=false">Cancelar</button>
+              <button type="submit" class="btn btn-primary" [disabled]="saving"
+                style="border-radius:50px; padding:8px 28px; font-weight:600;">
+                <span *ngIf="saving"><span class="spinner-border spinner-border-sm me-1"></span>Guardando...</span>
+                <span *ngIf="!saving"><i class="feather icon-save me-1"></i>Guardar método</span>
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- ── LISTA DE MÉTODOS ──────────────────────────────────────────────── -->
+    <div class="text-center py-5" *ngIf="loading">
+      <div class="spinner-border text-primary"></div>
+    </div>
+
+    <!-- Sin métodos -->
+    <ng-container *ngIf="!loading && methods.length === 0 && !showForm">
+      <div class="card" style="border-radius:16px; box-shadow:0 4px 16px rgba(0,0,0,.06);">
+        <div class="card-body text-center py-5">
+          <div class="dash-boxs comman-flex-center mx-auto mb-3"
+            style="width:64px;height:64px;border-radius:16px;background:#eef0ff;">
+            <i class="feather icon-credit-card" style="font-size:1.8rem;color:#2e37a4;"></i>
+          </div>
+          <h5 style="font-weight:700; color:#374151;">Sin métodos registrados</h5>
+          <p class="text-muted" style="font-size:.88rem;">Agrega tu cuenta bancaria, Tigo Money u otro método para agilizar tus reservas.</p>
+          <button class="btn btn-primary mt-2" (click)="openForm()"
+            style="border-radius:50px; padding:8px 28px; font-weight:600;">
+            <i class="feather icon-plus me-1"></i> Agregar ahora
+          </button>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Tarjetas de métodos -->
+    <div class="row" *ngIf="!loading && methods.length > 0">
+      <div class="col-md-6 col-lg-4 mb-3" *ngFor="let m of methods">
+        <div class="card h-100" style="border-radius:16px; box-shadow:0 4px 16px rgba(0,0,0,.06); overflow:hidden;">
+
+          <!-- Header color por tipo -->
+          <div style="padding:16px 20px; position:relative;"
+            [style.background]="getTypeInfo(m.type).color">
+            <div class="d-flex align-items-center gap-3">
+              <div style="width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.25);
+                           display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i class="feather" [class]="getTypeInfo(m.type).icon" style="color:#fff;font-size:1.1rem;"></i>
+              </div>
+              <div>
+                <p class="mb-0" style="color:rgba(255,255,255,.8); font-size:.72rem;">{{ getTypeInfo(m.type).label }}</p>
+                <h6 class="mb-0" style="color:#fff; font-weight:700;">{{ m.label }}</h6>
+              </div>
+            </div>
+            <!-- Badge predeterminado -->
+            <span *ngIf="m.is_default"
+              style="position:absolute;top:10px;right:12px;background:rgba(255,255,255,.25);
+                     color:#fff;border-radius:50px;padding:2px 10px;font-size:.7rem;font-weight:600;">
+              ★ Predeterminado
+            </span>
+          </div>
+
+          <div class="card-body pt-3">
+            <!-- Detalles según tipo -->
+            <div *ngIf="m.bank_name" class="d-flex align-items-center gap-2 mb-2">
+              <i class="feather icon-briefcase" style="color:#9ca3af;font-size:.85rem;"></i>
+              <span style="font-size:.83rem; color:#374151;">{{ m.bank_name }}</span>
+            </div>
+            <div *ngIf="m.account_masked" class="d-flex align-items-center gap-2 mb-2">
+              <i class="feather icon-hash" style="color:#9ca3af;font-size:.85rem;"></i>
+              <span style="font-size:.85rem; font-weight:600; letter-spacing:2px;">{{ m.account_masked }}</span>
+            </div>
+            <div *ngIf="m.account_holder" class="d-flex align-items-center gap-2 mb-2">
+              <i class="feather icon-user" style="color:#9ca3af;font-size:.85rem;"></i>
+              <span style="font-size:.83rem; color:#374151;">{{ m.account_holder }}</span>
+            </div>
+            <div *ngIf="m.phone_number" class="d-flex align-items-center gap-2 mb-2">
+              <i class="feather icon-smartphone" style="color:#9ca3af;font-size:.85rem;"></i>
+              <span style="font-size:.83rem; color:#374151;">{{ m.phone_number }}</span>
+            </div>
+            <div *ngIf="m.type === 'cash'" class="d-flex align-items-center gap-2 mb-2">
+              <i class="feather icon-info" style="color:#9ca3af;font-size:.85rem;"></i>
+              <span style="font-size:.83rem; color:#6b7280;">Pago en efectivo en recepción</span>
+            </div>
+
+            <!-- Acciones -->
+            <div class="d-flex gap-2 mt-3">
+              <button class="btn btn-sm flex-fill" (click)="setDefault(m.id)" *ngIf="!m.is_default"
+                style="background:#eef0ff;color:#2e37a4;border:none;border-radius:8px;font-size:.8rem;font-weight:600;">
+                <i class="feather icon-star me-1"></i> Predeterminar
+              </button>
+              <button class="btn btn-sm flex-fill btn-outline-danger" (click)="delete(m.id)"
+                [disabled]="deleting === m.id" style="border-radius:8px;font-size:.8rem;">
+                <span *ngIf="deleting === m.id" class="spinner-border spinner-border-sm"></span>
+                <i class="feather icon-trash-2 me-1" *ngIf="deleting !== m.id"></i>
+                <span *ngIf="deleting !== m.id">Eliminar</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,166 @@
+<div class="page-wrapper">
+  <div class="content">
+
+    <!-- Breadcrumb -->
+    <div class="page-header">
+      <div class="row">
+        <div class="col-sm-12">
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+            <li class="breadcrumb-item active">Ingresos de Pacientes</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alerta de éxito -->
+    <div *ngIf="text_success" class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ text_success }}
+      <button type="button" class="btn-close" (click)="text_success=''"></button>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card card-table show-entire">
+          <div class="card-body">
+
+            <!-- Cabecera de la tabla -->
+            <div class="page-table-header mb-2">
+              <div class="row align-items-center">
+                <div class="col">
+                  <div class="doctor-table-blk">
+                    <h3>Listado de Ingresos</h3>
+                    <div class="doctor-search-blk">
+
+                      <!-- Búsqueda -->
+                      <div class="input-block doctor-search-block">
+                        <input type="text" class="form-control" placeholder="Buscar paciente..."
+                          [(ngModel)]="searchDataValue" (keyup.enter)="searchData()">
+                        <button class="btn btn-primary ms-2" (click)="searchData()">
+                          <i class="fa fa-search"></i>
+                        </button>
+                      </div>
+
+                      <!-- Filtro por estado -->
+                      <div class="input-block ms-2" style="min-width:160px">
+                        <select class="form-select" [(ngModel)]="estadoFiltro" (change)="searchData()">
+                          <option value="">Todos los estados</option>
+                          <option value="1">Activo</option>
+                          <option value="2">Egresado</option>
+                        </select>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="col-auto d-flex">
+                  <button class="btn btn-secondary me-2" (click)="clearFilters()" title="Limpiar filtros">
+                    <i class="fa fa-refresh"></i>
+                  </button>
+                  <button class="btn btn-outline-danger me-2" (click)="generarPDF()" title="Descargar PDF">
+                    <i class="fa fa-file-pdf-o"></i> PDF
+                  </button>
+                  <a [routerLink]="['/ingreso/register']" class="btn btn-primary">
+                    <i class="fa fa-plus"></i> Nuevo Ingreso
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tabla -->
+            <div class="table-responsive">
+              <table class="table table-hover table-center mb-0">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Paciente</th>
+                    <th>Documento</th>
+                    <th>Doctor</th>
+                    <th>Fecha Ingreso</th>
+                    <th>Sala / Cama</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of ingresoList; let i = index">
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.patient?.full_name ?? '-' }}</td>
+                    <td>{{ item.patient?.n_document ?? '-' }}</td>
+                    <td>{{ item.doctor?.full_name ?? '-' }}</td>
+                    <td>{{ item.fecha_ingreso }}</td>
+                    <td>{{ item.sala ?? '-' }} / {{ item.cama ?? '-' }}</td>
+                    <td>
+                      <span class="badge" [ngClass]="item.estado == 1 ? 'bg-success' : 'bg-secondary'">
+                        {{ item.estado == 1 ? 'Activo' : 'Egresado' }}
+                      </span>
+                    </td>
+                    <td>
+                      <div class="d-flex gap-1">
+                        <a [routerLink]="['/ingreso/edit', item.id]"
+                           class="btn btn-sm btn-warning" title="Editar">
+                          <i class="fa fa-pencil"></i>
+                        </a>
+                        <button class="btn btn-sm btn-danger" title="Eliminar"
+                          data-bs-toggle="modal" data-bs-target="#deleteModal"
+                          (click)="selectIngreso(item)">
+                          <i class="fa fa-trash"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr *ngIf="ingresoList.length === 0">
+                    <td colspan="8" class="text-center text-muted py-4">No hay ingresos registrados.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Paginación -->
+            <div class="d-flex justify-content-between align-items-center mt-3" *ngIf="total > pageSize">
+              <span class="text-muted">Total: {{ total }} registros</span>
+              <nav>
+                <ul class="pagination mb-0">
+                  <li class="page-item" [class.disabled]="currentPage === 1">
+                    <button class="page-link" (click)="prevPage()">Anterior</button>
+                  </li>
+                  <li class="page-item disabled">
+                    <span class="page-link">{{ currentPage }} / {{ totalPages }}</span>
+                  </li>
+                  <li class="page-item" [class.disabled]="currentPage === totalPages">
+                    <button class="page-link" (click)="nextPage()">Siguiente</button>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal Confirmar Eliminación -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmar Eliminación</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" *ngIf="ingreso_selected">
+        ¿Desea eliminar el ingreso de
+        <strong>{{ ingreso_selected.patient?.full_name }}</strong>
+        del {{ ingreso_selected.fecha_ingreso }}?
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button class="btn btn-danger" data-bs-dismiss="modal" (click)="confirmDelete()">
+          Eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

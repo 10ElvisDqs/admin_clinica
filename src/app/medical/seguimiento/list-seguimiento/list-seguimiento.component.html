@@ -1,0 +1,157 @@
+<div class="page-wrapper">
+  <div class="content">
+
+    <div class="page-header">
+      <div class="row">
+        <div class="col-sm-12">
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+            <li class="breadcrumb-item active">Seguimientos Médicos</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="text_success" class="alert alert-success alert-dismissible fade show">
+      {{ text_success }}
+      <button type="button" class="btn-close" (click)="text_success=''"></button>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card card-table show-entire">
+          <div class="card-body">
+
+            <div class="page-table-header mb-2">
+              <div class="row align-items-center">
+                <div class="col">
+                  <div class="doctor-table-blk">
+                    <h3>Seguimientos Médicos</h3>
+                    <div class="doctor-search-blk">
+                      <div class="input-block doctor-search-block">
+                        <input type="text" class="form-control" placeholder="Buscar paciente..."
+                          [(ngModel)]="searchDataValue" (keyup.enter)="searchData()">
+                        <button class="btn btn-primary ms-2" (click)="searchData()">
+                          <i class="fa fa-search"></i>
+                        </button>
+                      </div>
+                      <div class="input-block ms-2" style="min-width:160px">
+                        <select class="form-select" [(ngModel)]="estadoFiltro" (change)="searchData()">
+                          <option value="">Todos los estados</option>
+                          <option value="1">Pendiente</option>
+                          <option value="2">Realizado</option>
+                          <option value="3">Cancelado</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-auto d-flex">
+                  <button class="btn btn-secondary me-2" (click)="clearFilters()">
+                    <i class="fa fa-refresh"></i>
+                  </button>
+                  <button class="btn btn-outline-danger me-2" (click)="generarPDF()">
+                    <i class="fa fa-file-pdf-o"></i> PDF
+                  </button>
+                  <a [routerLink]="['/seguimiento/register']" class="btn btn-primary">
+                    <i class="fa fa-plus"></i> Nuevo Seguimiento
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table table-hover table-center mb-0">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Paciente</th>
+                    <th>Documento</th>
+                    <th>Doctor</th>
+                    <th>Fecha Seguimiento</th>
+                    <th>Motivo</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of seguimientoList">
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.patient?.full_name ?? '-' }}</td>
+                    <td>{{ item.patient?.n_document ?? '-' }}</td>
+                    <td>{{ item.doctor?.full_name ?? '-' }}</td>
+                    <td>{{ item.fecha_seguimiento }}</td>
+                    <td>
+                      <span title="{{ item.motivo }}">
+                        {{ item.motivo | slice:0:50 }}{{ item.motivo?.length > 50 ? '...' : '' }}
+                      </span>
+                    </td>
+                    <td>
+                      <span class="badge" [ngClass]="getEstadoBadge(item.estado)">
+                        {{ getEstadoLabel(item.estado) }}
+                      </span>
+                    </td>
+                    <td>
+                      <div class="d-flex gap-1">
+                        <a [routerLink]="['/seguimiento/edit', item.id]"
+                           class="btn btn-sm btn-warning" title="Editar">
+                          <i class="fa fa-pencil"></i>
+                        </a>
+                        <button class="btn btn-sm btn-danger" title="Eliminar"
+                          data-bs-toggle="modal" data-bs-target="#deleteSeguimientoModal"
+                          (click)="selectSeguimiento(item)">
+                          <i class="fa fa-trash"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr *ngIf="seguimientoList.length === 0">
+                    <td colspan="8" class="text-center text-muted py-4">No hay seguimientos registrados.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mt-3" *ngIf="total > pageSize">
+              <span class="text-muted">Total: {{ total }} registros</span>
+              <nav>
+                <ul class="pagination mb-0">
+                  <li class="page-item" [class.disabled]="currentPage === 1">
+                    <button class="page-link" (click)="prevPage()">Anterior</button>
+                  </li>
+                  <li class="page-item disabled">
+                    <span class="page-link">{{ currentPage }} / {{ totalPages }}</span>
+                  </li>
+                  <li class="page-item" [class.disabled]="currentPage === totalPages">
+                    <button class="page-link" (click)="nextPage()">Siguiente</button>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteSeguimientoModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmar Eliminación</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" *ngIf="seguimiento_selected">
+        ¿Desea eliminar el seguimiento de
+        <strong>{{ seguimiento_selected.patient?.full_name }}</strong>
+        del {{ seguimiento_selected.fecha_seguimiento }}?
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button class="btn btn-danger" data-bs-dismiss="modal" (click)="confirmDelete()">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
