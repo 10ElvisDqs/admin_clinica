@@ -1,27 +1,47 @@
-# PreclinicAngular
+# admin_clinica — Frontend Angular 16
+**Clínica Nuestra Señora del Rosario**
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.1.
+Panel de administración médica. Parte del proyecto **Citas Médicas App**.
 
-## Development server
+> La guía completa de instalación y arquitectura está en `api-clinica/GUIA_PROYECTO.md`.
 
-Run `ng serve` for a dev server. Navigate to `http://192.168.100.9:4200/`. The application will automatically reload if you change any of the source files.
+---
 
-## Code scaffolding
+## Estructura esperada en disco
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Este repositorio debe estar al lado de `api-clinica/` en la misma carpeta padre:
 
-## Build
+```
+carpeta-padre/
+├── api-clinica/      ← backend Laravel + docker-compose.yml
+└── admin_clinica/    ← este repo
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Desarrollo local (sin Docker)
 
-## Running unit tests
+```bash
+npm install
+npm start        # servidor en http://192.168.100.9:4200
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Asegúrate de que `src/environments/environment.development.ts` apunte al backend:
+```typescript
+URL_SERVICIOS: 'http://127.0.0.1:8000/api'
+```
 
-## Running end-to-end tests
+## Build de producción
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```bash
+npm run build    # genera dist/preclinic-angular/
+```
 
-## Further help
+El build de producción lo hace automáticamente Docker al levantar el proyecto desde `api-clinica/`.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Correr el proyecto completo (Docker)
+
+```bash
+cd ../api-clinica
+docker-compose up -d --build
+```
+
+Ver `api-clinica/GUIA_PROYECTO.md` para instrucciones detalladas.
